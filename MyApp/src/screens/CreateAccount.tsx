@@ -7,7 +7,7 @@ import {View,
         Platform,
         Dimensions, 
         Image} from 'react-native'
-import * as Animatable from 'react-native'
+
 
 
 const CreatAccountScreen = () => {
@@ -17,7 +17,7 @@ const CreatAccountScreen = () => {
             <Text>CreateAccountScreen</Text>
             <Button
                 title = "Create Account"
-                onPress={() => alert('Button Clicked') }
+                
             />
         </View>
     )
@@ -26,7 +26,7 @@ const CreatAccountScreen = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#009387'
+      backgroundColor: '#FFFFFF'
     },
     header: {
         flex: 1,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         paddingBottom: 50
     },
     footer: {
-        flex: Platform.OS === 'ios' ? 3 : 5,
+        flex: Platform.OS === 'android' ? 3 : 5,
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#f2f2f2',
+        borderBottomColor: '#FFFFFF',
         paddingBottom: 5
     },
     textInput: {
         flex: 1,
-        marginTop: Platform.OS === 'ios' ? 0 : -12,
+        marginTop: Platform.OS === 'android' ? 0 : -12,
         paddingLeft: 10,
         color: '#05375a',
     },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     color_textPrivate: {
-        color: 'grey'
+        color: 'green'
     }
   });
 
