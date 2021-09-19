@@ -10,6 +10,7 @@
 
 import React from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -26,6 +27,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import SearchBar from './src/components/SearchBar';
 
 const Section: React.FC<{
   title: string;
@@ -51,6 +54,10 @@ const Section: React.FC<{
         ]}>
         {children}
       </Text>
+      <SearchBar
+        placeholder="Search"
+        onPress={() => Alert.alert('onPress')}
+        onChangeText={text => console.log(text)}></SearchBar>
     </View>
   );
 };
