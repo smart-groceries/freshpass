@@ -21,13 +21,8 @@ export interface Source {
 }
 
 export interface SearchBarProps extends TextInputProps {
-  darkMode?: boolean;
   placeholder?: string;
   ImageComponent?: any;
-  spinnerType?: string;
-  spinnerSize?: number;
-  spinnerColor?: string;
-  spinnerVisibility?: boolean;
   placeholderTextColor?: string;
   searchIconComponent?: React.ReactChild;
   clearIconComponent?: React.ReactChild;
@@ -55,11 +50,9 @@ export default class SearchBar extends React.Component<SearchBarProps> {
   renderSearchIcon = () => {
     const {
       onSearchPress,
-      darkMode = false,
       searchIconComponent,
       searchIconImageStyle,
       ImageComponent = Image,
-      searchIconImageSource,
     } = this.props;
     return (
       <RNBounceable style={styles.searchContainer} onPress={onSearchPress}>
@@ -79,7 +72,6 @@ export default class SearchBar extends React.Component<SearchBarProps> {
       onBlur,
       onFocus,
       textInputStyle,
-      darkMode = false,
       placeholder = 'Search',
       placeholderTextColor,
     } = this.props;
@@ -94,18 +86,18 @@ export default class SearchBar extends React.Component<SearchBarProps> {
         onBlur={onBlur}
         onFocus={onFocus}
         ref={ref => (this.inputRef = ref)}
-        style={[_textInputStyle(darkMode), textInputStyle]}
+        style={[_textInputStyle(), textInputStyle]}
         placeholder={placeholder}
       />
     );
   };
   render() {
-    const {style, darkMode = false, spinnerVisibility} = this.props;
+    const {style} = this.props;
     return (
       <RNBounceable
         {...this.props}
         bounceEffect={0.97}
-        style={[_container(darkMode), style]}
+        style={[_container(), style]}
         onPress={this.handleSearchBarPress}>
         {this.renderSearchIcon()}
         {this.renderTextInput()}
@@ -117,14 +109,11 @@ export default class SearchBar extends React.Component<SearchBarProps> {
 interface Style {
   searchContainer: ViewStyle;
   searchIconImageStyle: ImageStyle;
-  clearIconImageStyle: ImageStyle;
-  clearIconContainer: ViewStyle;
-  spinnerContainer: ViewStyle;
 }
 
-const _container = (darkMode: boolean): ViewStyle => ({
+const _container = (): ViewStyle => ({
   height: 43,
-  width: '90%',
+  width: '105%',
   // left: 16,
   // top: 135,
   borderRadius: 10,
@@ -134,10 +123,10 @@ const _container = (darkMode: boolean): ViewStyle => ({
   backgroundColor: '#F3F3F3',
 });
 
-const _textInputStyle = (darkMode: boolean): TextStyle => ({
+const _textInputStyle = (): TextStyle => ({
   width: '80%',
   marginLeft: 12,
-  color: darkMode ? '#fdfdfd' : '#19191a',
+  color: '#19191a',
 });
 
 const styles = StyleSheet.create<Style>({
@@ -147,16 +136,5 @@ const styles = StyleSheet.create<Style>({
   searchIconImageStyle: {
     width: 18,
     height: 18,
-  },
-  clearIconImageStyle: {
-    width: 15,
-    height: 15,
-  },
-  clearIconContainer: {
-    marginRight: 12,
-    marginLeft: 'auto',
-  },
-  spinnerContainer: {
-    marginLeft: 12,
   },
 });

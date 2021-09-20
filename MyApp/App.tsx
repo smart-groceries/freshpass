@@ -28,39 +28,46 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import SearchBar from './src/components/SearchBar';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-      <SearchBar
-        placeholder="Search"
-        onPress={() => Alert.alert('onPress')}
-        onChangeText={text => console.log(text)}></SearchBar>
-    </View>
-  );
-};
+import SearchBar from './src/components/SearchBar';
+import Filter from './src/components/Filter';
+import HomePage from './src/screens/HomePage';
+import HomePageScreen from './src/screens/HomePage';
+// const Section: React.FC<{
+//   title: string;
+// }> = ({children, title}) => {
+//   const isDarkMode = useColorScheme() === 'dark';
+//   return (
+//     <View style={styles.sectionContainer}>
+//       <Text
+//         style={[
+//           styles.sectionTitle,
+//           {
+//             color: isDarkMode ? Colors.white : Colors.black,
+//           },
+//         ]}>
+//         {title}
+//       </Text>
+//       <Text
+//         style={[
+//           styles.sectionDescription,
+//           {
+//             color: isDarkMode ? Colors.light : Colors.dark,
+//           },
+//         ]}>
+//         {children}
+//       </Text>
+//       <SearchBar
+//         placeholder="Search"
+//         onPress={() => Alert.alert('onPress')}
+//         onChangeText={text => console.log(text)}></SearchBar>
+//     </View>
+//   );
+// };
+
+const Stack = createStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -70,33 +77,17 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={'Home'}>
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+          options={{
+            headerTitle: props => <Text style={styles.text}>Stores</Text>,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -116,6 +107,15 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  text: {
+    fontFamily: 'VarelaRound-Regular',
+    fontSize: 40,
+    color: '#424347',
+    lineHeight: 48,
+    letterSpacing: -1,
+    left: '6.4%',
+    top: '20%',
   },
 });
 
