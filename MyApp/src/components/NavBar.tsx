@@ -38,7 +38,7 @@ export default class NavBar extends React.Component<NavBarProps> {
       ImageComponent = Image,
     } = this.props;
     return (
-      <RNBounceable onPress={onStoresPress} bounceEffect={0.97}>
+      <RNBounceable style={styles.storesIconContainer} onPress={onStoresPress}>
         {storesIconComponent || (
           <ImageComponent
             resizeMode="contain"
@@ -58,7 +58,7 @@ export default class NavBar extends React.Component<NavBarProps> {
       ImageComponent = Image,
     } = this.props;
     return (
-      <RNBounceable onPress={onListsPress} bounceEffect={0.97}>
+      <RNBounceable onPress={onListsPress}>
         {listsIconComponent || (
           <ImageComponent
             resizeMode="contain"
@@ -78,7 +78,7 @@ export default class NavBar extends React.Component<NavBarProps> {
       ImageComponent = Image,
     } = this.props;
     return (
-      <RNBounceable onPress={onAccountPress} bounceEffect={0.97}>
+      <RNBounceable onPress={onAccountPress}>
         {accountIconComponent || (
           <ImageComponent
             resizeMode="contain"
@@ -106,6 +106,7 @@ interface Style {
   storesIconImageStyle: ImageStyle;
   listsIconImageStyle: ImageStyle;
   accountIconImageStyle: ImageStyle;
+  storesIconContainer: ViewStyle;
 }
 
 const _container = (): ViewStyle => ({
@@ -120,7 +121,6 @@ const _container = (): ViewStyle => ({
 
 const styles = StyleSheet.create<Style>({
   storesIconImageStyle: {
-    flex: 1,
     width: 30,
     height: 30,
     position: 'absolute',
@@ -128,7 +128,6 @@ const styles = StyleSheet.create<Style>({
     translateY: -15,
   },
   listsIconImageStyle: {
-    flex: 1,
     width: 30,
     height: 30,
     position: 'absolute',
@@ -136,11 +135,13 @@ const styles = StyleSheet.create<Style>({
     translateY: -15,
   },
   accountIconImageStyle: {
-    flex: 1,
     width: 30,
     height: 30,
     position: 'absolute',
     translateX: -15,
     translateY: -15,
+  },
+  storesIconContainer: {
+    borderColor: '#F3F3F3',
   },
 });

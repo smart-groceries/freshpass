@@ -116,6 +116,7 @@ const _container = (): ViewStyle => ({
   width: '105%',
   // left: 16,
   // top: 135,
+  marginBottom: 5,
   borderRadius: 10,
   alignSelf: 'center',
   flexDirection: 'row',
