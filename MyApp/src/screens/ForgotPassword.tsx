@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         marginTop: 50
     },
     signIn: {
-        width: 327,
+        width: 324,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
