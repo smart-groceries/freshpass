@@ -125,15 +125,22 @@ const CreatAccountScreen = () => {
                   <TouchableOpacity
                       //onPress={() => navigation.goBack()}
                       style={[styles.signIn, {
-                          borderColor: '#009387',
+                          borderColor: '#71BF61',
+                          backgroundColor: '#71BF61',
                           borderWidth: 1,
                           marginTop: 15
                       }]}
                   >
                       <Text style={[styles.textSign, {
-                          color: '#009387'
+                          color: '#FFFFFF'
                       }]}>Sign In</Text>
                   </TouchableOpacity>
+              </View>
+              <View style={styles.textPrivate}>
+                  <Text style={styles.color_textPrivate}>
+                      Forgot Password? Click
+                  </Text>
+                  <Text style={[styles.color_textPrivate, {fontWeight: 'bold'}]}>{" "}Here</Text>
               </View>
               </ScrollView>
           
@@ -165,11 +172,13 @@ const styles = StyleSheet.create({
     text_header: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 30
+        fontSize: 30,
+        fontFamily: 'VarelaRound-regular'
     },
     text_footer: {
-        color: '#05375a',
-        fontSize: 18
+        color: '#E89023',
+        fontSize: 18,
+        fontFamily: 'VarelaRound-regular',
     },
     action: {
         flexDirection: 'row',
@@ -197,12 +206,14 @@ const styles = StyleSheet.create({
     },
     textSign: {
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily: 'VarelaRound-regular'
     },
     textPrivate: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 20
+        marginTop: 20,
+        fontFamily: 'VarelaRound-regular'
     },
     color_textPrivate: {
         color: 'green'
