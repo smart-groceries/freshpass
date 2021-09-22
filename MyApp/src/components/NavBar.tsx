@@ -7,6 +7,8 @@ import {
   ImageStyle,
   StyleSheet,
   ImageComponent,
+  Text,
+  TextStyle,
 } from 'react-native';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 
@@ -38,7 +40,7 @@ export default class NavBar extends React.Component<NavBarProps> {
       ImageComponent = Image,
     } = this.props;
     return (
-      <RNBounceable style={styles.storesIconContainer} onPress={onStoresPress}>
+      <RNBounceable onPress={onStoresPress}>
         {storesIconComponent || (
           <ImageComponent
             resizeMode="contain"
@@ -106,7 +108,6 @@ interface Style {
   storesIconImageStyle: ImageStyle;
   listsIconImageStyle: ImageStyle;
   accountIconImageStyle: ImageStyle;
-  storesIconContainer: ViewStyle;
 }
 
 const _container = (): ViewStyle => ({
@@ -123,25 +124,13 @@ const styles = StyleSheet.create<Style>({
   storesIconImageStyle: {
     width: 30,
     height: 30,
-    position: 'absolute',
-    translateX: -15,
-    translateY: -15,
   },
   listsIconImageStyle: {
     width: 30,
     height: 30,
-    position: 'absolute',
-    translateX: -15,
-    translateY: -15,
   },
   accountIconImageStyle: {
     width: 30,
     height: 30,
-    position: 'absolute',
-    translateX: -15,
-    translateY: -15,
-  },
-  storesIconContainer: {
-    borderColor: '#F3F3F3',
   },
 });
