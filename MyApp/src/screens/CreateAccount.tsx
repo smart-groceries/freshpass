@@ -42,7 +42,7 @@ const CreatAccountScreen = () => {
             });
         }
     }
-    
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content"/>
@@ -52,14 +52,24 @@ const CreatAccountScreen = () => {
               <ScrollView>
               <Text style={styles.text_footer}>Username</Text>
               <View style={styles.action}>
-                  
-                  <TextInput 
+              <TextInput 
                       placeholder="Your Username"
+                      placeholderTextColor='#3A3B3E'
                       style={styles.textInput}
                       autoCapitalize="none"
                       onChangeText={(val) => textInputChange(val)}
                   />
-                  
+              </View>
+
+              <Text style={[styles.text_footer,{marginTop: 35}]}>Email</Text>
+              <View style={styles.action}>
+              <TextInput 
+                      placeholder="Your Email"
+                      placeholderTextColor='#3A3B3E'
+                      style={styles.textInput}
+                      autoCapitalize="none"
+                      onChangeText={(val) => textInputChange(val)}
+                  />
               </View>
   
               <Text style={[styles.text_footer, {
@@ -69,6 +79,7 @@ const CreatAccountScreen = () => {
                 
                   <TextInput 
                       placeholder="Your Password"
+                      placeholderTextColor='#3A3B3E'
                       secureTextEntry={data.secureTextEntry ? true : false}
                       style={styles.textInput}
                       autoCapitalize="none"
@@ -88,6 +99,7 @@ const CreatAccountScreen = () => {
                   
                   <TextInput 
                       placeholder="Confirm Your Password"
+                      placeholderTextColor='#3A3B3E'
                       secureTextEntry={data.confirm_secureTextEntry ? true : false}
                       style={styles.textInput}
                       autoCapitalize="none"
@@ -128,7 +140,7 @@ const CreatAccountScreen = () => {
                           borderColor: '#71BF61',
                           backgroundColor: '#71BF61',
                           borderWidth: 1,
-                          marginTop: 15
+                          marginTop: 1
                       }]}
                   >
                       <Text style={[styles.textSign, {
@@ -185,13 +197,18 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#FFFFFF',
-        paddingBottom: 5
+        paddingBottom: 5,
     },
     textInput: {
         flex: 1,
         marginTop: Platform.OS === 'android' ? 0 : -12,
         paddingLeft: 10,
-        color: '#05375a',
+        width: '90%',
+        height: 66,
+        backgroundColor: '#FDF2E6',
+        fontFamily: 'VarelaRound-regular'
+
+        
     },
     button: {
         alignItems: 'center',
