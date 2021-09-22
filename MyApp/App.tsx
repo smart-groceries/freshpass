@@ -29,7 +29,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import CreatAccountScreen from "../MyApp/src/screens/CreateAccount";
+import ForgotPasswordScreen from "../MyApp/src/screens/ForgotPassword";
 
 
 
@@ -42,7 +42,7 @@ const App = () => {
 
   return (
     <ScrollView>
-      <CreatAccountScreen />
+      <ForgotPasswordScreen />
     </ScrollView>
   );
 };
