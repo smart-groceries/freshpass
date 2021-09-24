@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 #Testing App 
-/App.tsx
+App.tsx
