@@ -4,6 +4,8 @@
 
 FreshPass is a mobile application that will allow to do all your grocery shopping online and have the quickest access to fresh products. 
 
+> Note: There is a seperate backend user guide [here](https://github.com/smart-groceries/freshpass_backend)
+
 ## Tech
 - [Apollo] - Frontend GraphQL client
 - [React Native] - Frontend Framework
@@ -32,7 +34,6 @@ npx react-native run-android
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-[node.js]: <http://nodejs.org>
 [Apollo]: <https://www.apollographql.com/docs/>
 [Ligma]: <https://www.figma.com/>
 [React Native]: <https://reactnative.dev/>
