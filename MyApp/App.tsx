@@ -30,7 +30,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import CreatAccountScreen from "../MyApp/src/screens/CreateAccount";
-
+import LoginScreen from "../MyApp/src/screens/LoginScreen"
 
 
 const App = () => {
@@ -42,7 +42,7 @@ const App = () => {
 
   return (
     <ScrollView>
-      <CreatAccountScreen />
+      <LoginScreen />
     </ScrollView>
   );
 };
