@@ -1,30 +1,51 @@
 import {tSImportEqualsDeclaration} from '@babel/types';
 import * as React from 'react';
 
-import {View, Text, StyleSheet, Image, Alert} from 'react-native';
+import {View, Text, StyleSheet, Image, Alert, ViewStyle} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SearchBar from '../components/SearchBar';
 import NavBar from '../components/NavBar';
+import Store from '../components/Store';
 
-const HomePageScreen = () => {
-  return (
-    <View style={styles.screen}>
-      <View style={styles.sectionContainer}>
-        <SearchBar
-          placeholder="Search"
-          onPress={() => Alert.alert('onPress')}
-          onChangeText={text => console.log(text)}></SearchBar>
+export interface HomePageProps {
+  style?: ViewStyle | Array<ViewStyle> | undefined;
+}
+
+export default class HomePage extends React.Component<HomePageProps> {
+  render = () => {
+    const {style} = this.props;
+    return (
+      <View style={styles.screen}>
+        <View style={styles.sectionContainer}>
+          <SearchBar
+            placeholder="Search"
+            onPress={() => Alert.alert('onPress')}
+            onChangeText={text => console.log(text)}></SearchBar>
+        </View>
+        <ScrollView contentContainerStyle={[_container(), style]}>
+          <Store></Store>
+          <Store></Store>
+          <Store></Store>
+          <Store></Store>
+          <Store></Store>
+          <Store></Store>
+          <Store></Store>
+        </ScrollView>
+        <NavBar />
       </View>
-      <ScrollView>
-        {/* <Text>
-          Stores will go Here testsadfasdfsdfasfsdafdafasdfasdfasdfasfasdfasd
-        </Text> */}
-      </ScrollView>
-      <NavBar />
-    </View>
-  );
-};
+    );
+  };
+}
 
+const _container = (): ViewStyle => ({
+  alignItems: 'flex-start',
+  flexWrap: 'wrap',
+  flexDirection: 'row',
+  alignContent: 'center',
+  marginTop: 5,
+  marginRight: 10,
+  marginLeft: 10,
+});
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -44,5 +65,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
 });
-
-export default HomePageScreen;

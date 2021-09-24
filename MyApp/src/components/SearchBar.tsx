@@ -116,6 +116,7 @@ const _container = (): ViewStyle => ({
   width: '105%',
   // left: 16,
   // top: 135,
+  marginBottom: 5,
   borderRadius: 10,
   alignSelf: 'center',
   flexDirection: 'row',
@@ -127,6 +128,7 @@ const _textInputStyle = (): TextStyle => ({
   width: '80%',
   marginLeft: 12,
   color: '#19191a',
+  fontFamily: 'varelaround-regular',
 });
 
 const styles = StyleSheet.create<Style>({

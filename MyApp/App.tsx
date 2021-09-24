@@ -10,6 +10,7 @@
 
 import React from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -17,8 +18,6 @@ import {
   Text,
   useColorScheme,
   View,
-  TextInput,
-  Image
 } from 'react-native';
 
 import {
@@ -29,9 +28,46 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import ForgotPasswordScreen from "../MyApp/src/screens/ForgotPassword";
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
+import SearchBar from './src/components/SearchBar';
+import Filter from './src/components/Filter';
+import HomePage from './src/screens/HomePage';
+import HomePageScreen from './src/screens/HomePage';
+// const Section: React.FC<{
+//   title: string;
+// }> = ({children, title}) => {
+//   const isDarkMode = useColorScheme() === 'dark';
+//   return (
+//     <View style={styles.sectionContainer}>
+//       <Text
+//         style={[
+//           styles.sectionTitle,
+//           {
+//             color: isDarkMode ? Colors.white : Colors.black,
+//           },
+//         ]}>
+//         {title}
+//       </Text>
+//       <Text
+//         style={[
+//           styles.sectionDescription,
+//           {
+//             color: isDarkMode ? Colors.light : Colors.dark,
+//           },
+//         ]}>
+//         {children}
+//       </Text>
+//       <SearchBar
+//         placeholder="Search"
+//         onPress={() => Alert.alert('onPress')}
+//         onChangeText={text => console.log(text)}></SearchBar>
+//     </View>
+//   );
+// };
 
+const Stack = createStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -41,9 +77,17 @@ const App = () => {
   };
 
   return (
-    <ScrollView>
-      <ForgotPasswordScreen />
-    </ScrollView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={'Home'}>
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+          options={{
+            headerTitle: props => <Text style={styles.text}>Stores</Text>,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -63,6 +107,15 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  text: {
+    fontFamily: 'VarelaRound-Regular',
+    fontSize: 40,
+    color: '#424347',
+    lineHeight: 48,
+    letterSpacing: -1,
+    left: '6.4%',
+    top: '20%',
   },
 });
 
