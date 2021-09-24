@@ -6,6 +6,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import SearchBar from '../components/SearchBar';
 import NavBar from '../components/NavBar';
 import Store from '../components/Store';
+import FilterIcon from '../components/Filter';
 
 export interface HomePageProps {
   style?: ViewStyle | Array<ViewStyle> | undefined;
@@ -21,6 +22,7 @@ export default class HomePage extends React.Component<HomePageProps> {
             placeholder="Search"
             onPress={() => Alert.alert('onPress')}
             onChangeText={text => console.log(text)}></SearchBar>
+          <FilterIcon></FilterIcon>
         </View>
         <ScrollView contentContainerStyle={[_container(), style]}>
           <Store></Store>
@@ -42,6 +44,7 @@ const _container = (): ViewStyle => ({
   flexWrap: 'wrap',
   flexDirection: 'row',
   alignContent: 'center',
+  justifyContent: 'space-evenly',
   marginTop: 5,
   marginRight: 10,
   marginLeft: 10,
@@ -62,6 +65,9 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     marginTop: '5%',
-    paddingHorizontal: 24,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    //alignItems: 'flex-start',
   },
 });

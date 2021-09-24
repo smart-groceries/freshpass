@@ -111,7 +111,7 @@ interface Style {
 }
 
 const _container = (): ViewStyle => ({
-  height: 75,
+  height: 55,
   bottom: 0,
   alignItems: 'center',
   //display: 'flex',

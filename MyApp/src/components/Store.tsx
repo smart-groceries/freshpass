@@ -60,8 +60,9 @@ const _container = (): ViewStyle => ({
   height: 168,
   width: '45%',
   //   borderRadius: 7,
-  margin: 9,
+  //margin: 9,
   backgroundColor: '#F3F3F3',
+  margin: 5,
 });
 
 // const styles = StyleSheet.create<Style>({

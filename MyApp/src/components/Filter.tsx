@@ -3,7 +3,7 @@ import * as React from 'react';
 import {View, Image, ViewStyle, ImageStyle, StyleSheet} from 'react-native';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 
-export interface FilterProps {
+export interface FilterIconProps {
   ImageComponent?: any;
   filterIconComponent?: React.ReactChild;
   style?: ViewStyle | Array<ViewStyle> | undefined;
@@ -12,7 +12,7 @@ export interface FilterProps {
   onFilterPress?: () => void;
 }
 
-export default class Filter extends React.Component<FilterProps> {
+export default class FilterIcon extends React.Component<FilterIconProps> {
   handleFilterPress = () => {
     this.props.onPress;
   };
@@ -22,7 +22,7 @@ export default class Filter extends React.Component<FilterProps> {
       onFilterPress,
       filterIconComponent,
       filterIconImageStyle,
-      ImageComponent,
+      ImageComponent = Image,
     } = this.props;
     return (
       <RNBounceable style={styles.filterContainer} onPress={onFilterPress}>
@@ -56,16 +56,20 @@ interface Style {
 }
 
 const _container = (): ViewStyle => ({
+  //flex: 1,
   height: 43,
   width: 43,
   borderRadius: 10,
+  marginBottom: 5,
+  marginLeft: 5,
   backgroundColor: '#F3F3F3',
-  flexDirection: 'row',
+  alignItems: 'center',
+  alignSelf: 'center',
 });
 
 const styles = StyleSheet.create<Style>({
   filterContainer: {
-    marginLeft: 12,
+    margin: 12,
   },
   filterIconImageStyle: {
     width: 18,

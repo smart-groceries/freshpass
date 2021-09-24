@@ -94,14 +94,10 @@ export default class SearchBar extends React.Component<SearchBarProps> {
   render() {
     const {style} = this.props;
     return (
-      <RNBounceable
-        {...this.props}
-        bounceEffect={0.97}
-        style={[_container(), style]}
-        onPress={this.handleSearchBarPress}>
+      <View {...this.props} style={[_container(), style]}>
         {this.renderSearchIcon()}
         {this.renderTextInput()}
-      </RNBounceable>
+      </View>
     );
   }
 }
@@ -112,10 +108,12 @@ interface Style {
 }
 
 const _container = (): ViewStyle => ({
+  // flex: 3,
   height: 43,
-  width: '105%',
+  width: '85%',
   // left: 16,
   // top: 135,
+  marginRight: 5,
   marginBottom: 5,
   borderRadius: 10,
   alignSelf: 'center',
