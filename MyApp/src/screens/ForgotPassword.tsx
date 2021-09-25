@@ -9,7 +9,8 @@ import {
     Platform,
     StyleSheet,
     ScrollView,
-    StatusBar
+    StatusBar,
+    Image
 } from 'react-native';
 
 
@@ -46,12 +47,11 @@ const ForgotPasswordScreen = () => {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content"/>
-          <View style={styles.header}>
-              <Text style={styles.text_header}>Register Now!</Text>
-          </View>
+              <View style={styles.imageContainer}>    
+                  <Image source={require('../assets/freshpass_logo.png')}/>
+              </View>
               <ScrollView>
-
-              <Text style={[styles.color_textPrivate,{marginTop: 150}]}>Enter your email to receive a password reset link:</Text>
+              <Text style={[styles.color_textPrivate,{marginTop: 50}]}>Enter your email to receive a password reset link:</Text>
               <Text style={[styles.text_footer,{marginTop: 25}]}>Email</Text>
               <View style={styles.action}>
               <TextInput 
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 12,
+        borderRadius: 50,
         left: 1
     },
     textSign: {
@@ -184,7 +184,14 @@ const styles = StyleSheet.create({
         color: '#B3B3B3',
         textAlign: 'center',
         fontFamily: 'VarelaRound-regular'
-    }
+    },
+    imageContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        resizeMode: 'contain',
+        marginTop: 200,
+      }
   });
 
 
