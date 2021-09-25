@@ -51,8 +51,8 @@ const ForgotPasswordScreen = () => {
                   <Image source={require('../assets/freshpass_logo.png')}/>
               </View>
               <ScrollView>
-              <Text style={[styles.color_textPrivate,{marginTop: 50}]}>Enter your email to receive a password reset link:</Text>
-              <Text style={[styles.text_footer,{marginTop: 25}, {marginLeft: 7}]}>Email</Text>
+              <Text style={[styles.color_textPrivate,{marginTop: 25}]}>Enter your email to receive a password reset link:</Text>
+              <Text style={[styles.text_footer,{marginTop: 25}, {marginLeft: 17}]}>Email</Text>
               <View style={[styles.action, {marginTop: 14}]}>
               <TextInput 
                       placeholder="Your Email"
@@ -65,10 +65,6 @@ const ForgotPasswordScreen = () => {
 
 
               <View style={styles.button}>
-                  <TouchableOpacity
-                      style={styles.signIn}
-                      onPress={() => {}}
-                  >
                   {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
                       style={styles.signIn}
@@ -77,11 +73,10 @@ const ForgotPasswordScreen = () => {
                           color:'#fff'
                       }]}>Sign Up</Text>
                   </LinearGradient> */}
-                  </TouchableOpacity>
   
                   <TouchableOpacity
                       //onPress={() => navigation.goBack()}
-                      style={[styles.signIn, {
+                      style={[styles.reset, {
                           borderColor: '#71BF61',
                           backgroundColor: '#71BF61',
                           borderWidth: 1,
@@ -152,15 +147,14 @@ const styles = StyleSheet.create({
         fontFamily: 'VarelaRound-regular',
         borderRadius: 12,
         position: 'absolute',
-        width: 327,
-        left: 24,
-
+        width: 324,
+        left: 34,
     },
     button: {
         alignItems: 'center',
         marginTop: 50
     },
-    signIn: {
+    reset: {
         width: 324,
         height: 50,
         justifyContent: 'center',
@@ -190,7 +184,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         resizeMode: 'contain',
-        marginTop: 200,
+        marginTop: 175,
       }
   });
 
