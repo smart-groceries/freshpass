@@ -83,14 +83,18 @@ const ForgotPasswordScreen = () => {
                           marginTop: 225
                       }]}
                   >
-                      <Text style={[styles.textSign, {
+                      <Text style={[styles.textResetButton, {
                           color: '#FFFFFF'
                       }]}>Reset</Text>
                   </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                      //onPress={() => navigation.goBack()}
+              >
                   <Text style={[styles.color_textPrivate,{marginTop: 25}]}>
                       Cancel
                   </Text>
+               </TouchableOpacity>
               </ScrollView>
           
         </View>
@@ -162,7 +166,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         left: 1
     },
-    textSign: {
+    textResetButton: {
         fontSize: 18,
         fontWeight: 'bold',
         fontFamily: 'VarelaRound-regular'
