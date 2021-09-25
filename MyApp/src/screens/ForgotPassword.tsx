@@ -52,8 +52,8 @@ const ForgotPasswordScreen = () => {
               </View>
               <ScrollView>
               <Text style={[styles.color_textPrivate,{marginTop: 50}]}>Enter your email to receive a password reset link:</Text>
-              <Text style={[styles.text_footer,{marginTop: 25}]}>Email</Text>
-              <View style={styles.action}>
+              <Text style={[styles.text_footer,{marginTop: 25}, {marginLeft: 7}]}>Email</Text>
+              <View style={[styles.action, {marginTop: 14}]}>
               <TextInput 
                       placeholder="Your Email"
                       placeholderTextColor='#3A3B3E'
