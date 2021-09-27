@@ -26,7 +26,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ForgotPasswordScreen from './src/screens/ForgotPassword';
 import CreatAccountScreen from './src/screens/CreateAccount';
 import LoginScreen from './src/screens/LoginScreen'
-
+import ShoppingLists from './src/screens/ShoppingLists';
 import NavBar from './src/components/NavBar';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -66,7 +66,7 @@ function ShoppingListsStackScreen() {
       headerShown:false
     }}
     >
-      <ShoppingListsStack.Screen name ="ShoppingLists" component = {LoginScreen}/>
+      <ShoppingListsStack.Screen name ="ShoppingLists" component = {ShoppingLists}/>
     </ShoppingListsStack.Navigator>
   )
 }

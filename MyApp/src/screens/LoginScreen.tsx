@@ -135,7 +135,16 @@ const styles = StyleSheet.create({
     left: 1
 },
 
+button: {
+  alignItems: 'center',
+  marginTop: 50
+},
 
+textSign: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  fontFamily: 'VarelaRound-regular'
+},
 
 // /* Rectangle 2 */
 username_container:{
