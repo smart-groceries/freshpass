@@ -11,7 +11,7 @@ import {
   TextStyle,
 } from 'react-native';
 import RNBounceable from '@freakycoder/react-native-bounceable';
-
+ 
 export interface NavBarProps {
   ImageComponent?: any;
   storesIconComponent?: React.ReactChild;

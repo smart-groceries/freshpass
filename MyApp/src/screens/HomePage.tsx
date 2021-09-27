@@ -4,7 +4,6 @@ import * as React from 'react';
 import {View, Text, StyleSheet, Image, Alert, ViewStyle} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import SearchBar from '../components/SearchBar';
-import NavBar from '../components/NavBar';
 import Store from '../components/Store';
 import FilterIcon from '../components/Filter';
 
@@ -33,7 +32,6 @@ export default class HomePage extends React.Component<HomePageProps> {
           <Store></Store>
           <Store></Store>
         </ScrollView>
-        <NavBar />
       </View>
     );
   };

@@ -20,76 +20,47 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import SearchBar from './src/components/SearchBar';
-import Filter from './src/components/Filter';
-import HomePage from './src/screens/HomePage';
-import HomePageScreen from './src/screens/HomePage';
-// const Section: React.FC<{
-//   title: string;
-// }> = ({children, title}) => {
-//   const isDarkMode = useColorScheme() === 'dark';
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//       <SearchBar
-//         placeholder="Search"
-//         onPress={() => Alert.alert('onPress')}
-//         onChangeText={text => console.log(text)}></SearchBar>
-//     </View>
-//   );
-// };
+import ForgotPasswordScreen from './src/screens/ForgotPassword';
+import CreatAccountScreen from './src/screens/CreateAccount';
+import NavBar from './src/components/NavBar';
+import { createStackNavigator } from '@react-navigation/stack';
+const HomeStack = createStackNavigator();
 
-const Stack = createStackNavigator();
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={ForgotPasswordScreen} />
+      <HomeStack.Screen name="Details" component={CreatAccountScreen} />
+    </HomeStack.Navigator>
+  );
+}
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+const SettingsStack = createStackNavigator();
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+function SettingsStackScreen() {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Settings" component={CreatAccountScreen} />
+      <SettingsStack.Screen name="Details" component={ForgotPasswordScreen} />
+    </SettingsStack.Navigator>
+  );
+}
 
+const Tab = createBottomTabNavigator();
+
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Home'}>
-        <Stack.Screen
-          name="Home"
-          component={HomePage}
-          options={{
-            headerTitle: props => <Text style={styles.text}>Stores</Text>,
-          }}
-        />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeStackScreen} />
+        <Tab.Screen name="Settings" component={SettingsStackScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -118,5 +89,3 @@ const styles = StyleSheet.create({
     top: '20%',
   },
 });
-
-export default App;
