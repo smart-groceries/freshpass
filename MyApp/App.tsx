@@ -25,28 +25,50 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import ForgotPasswordScreen from './src/screens/ForgotPassword';
 import CreatAccountScreen from './src/screens/CreateAccount';
+import LoginScreen from './src/screens/LoginScreen'
+
 import NavBar from './src/components/NavBar';
 import { createStackNavigator } from '@react-navigation/stack';
-const HomeStack = createStackNavigator();
 
-function HomeStackScreen() {
+const StoreStack = createStackNavigator();
+
+function StoreStackScreen() {
+  
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={ForgotPasswordScreen} />
-      <HomeStack.Screen name="Details" component={CreatAccountScreen} />
-    </HomeStack.Navigator>
+    <StoreStack.Navigator
+    screenOptions={{
+      headerShown:false
+    }}>
+      <StoreStack.Screen name="Home" component={ForgotPasswordScreen} />
+    </StoreStack.Navigator>
   );
 }
 
-const SettingsStack = createStackNavigator();
+const AccountStack = createStackNavigator();
 
-function SettingsStackScreen() {
+function AccountStackScreen() {
   return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={CreatAccountScreen} />
-      <SettingsStack.Screen name="Details" component={ForgotPasswordScreen} />
-    </SettingsStack.Navigator>
+    <AccountStack.Navigator
+    screenOptions={{
+      headerShown:false
+    }}>
+      <AccountStack.Screen name="Account" component={CreatAccountScreen} />
+    </AccountStack.Navigator>
   );
+}
+
+const ShoppingListsStack = createStackNavigator();
+
+function ShoppingListsStackScreen() {
+  return(
+    <ShoppingListsStack.Navigator
+    screenOptions={{
+      headerShown:false
+    }}
+    >
+      <ShoppingListsStack.Screen name ="ShoppingLists" component = {LoginScreen}/>
+    </ShoppingListsStack.Navigator>
+  )
 }
 
 const Tab = createBottomTabNavigator();
@@ -54,9 +76,31 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Settings" component={SettingsStackScreen} />
+      <Tab.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+      >
+        <Tab.Screen name="Account" 
+          component={StoreStackScreen}
+          // options= {{
+          //   tabBarButton: (props) =><NavBar/>,
+          // }}
+        />
+        
+        <Tab.Screen name="Settings" 
+          component={AccountStackScreen}
+          // options= {{
+          //   tabBarButton: (props) => <NavBar/>
+          // }} 
+        />
+
+        <Tab.Screen name="Shopping Lists" 
+          component={ShoppingListsStackScreen}
+          // options= {{
+          //   tabBarButton: (props) => <NavBar/>
+          // }} 
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

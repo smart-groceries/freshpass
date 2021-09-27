@@ -93,9 +93,6 @@ const ForgotPasswordScreen = () => {
                       }]}>Reset</Text>
                   </TouchableOpacity>
               </View>
-                  <Text style={[styles.color_textPrivate,{marginTop: 25}]}>
-                      Cancel
-                  </Text>
               </ScrollView>
           
         </View>
