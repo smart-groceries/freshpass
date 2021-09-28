@@ -31,7 +31,7 @@ import NavBar from './src/components/NavBar';
 import { createStackNavigator } from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
-
+import CartView from './src/screens/CartView';
 const StoreStack = createStackNavigator();
 
 function StoreStackScreen() {
@@ -68,7 +68,7 @@ function ShoppingListsStackScreen() {
       headerShown:true
     }}
     >
-      <ShoppingListsStack.Screen name ="ShoppingLists" component = {ShoppingLists}/>
+      <ShoppingListsStack.Screen name ="Cart" component = {CartView}/>
     </ShoppingListsStack.Navigator>
   )
 }
