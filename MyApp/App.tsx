@@ -29,6 +29,7 @@ import LoginScreen from './src/screens/LoginScreen'
 import ShoppingLists from './src/screens/ShoppingLists';
 import NavBar from './src/components/NavBar';
 import { createStackNavigator } from '@react-navigation/stack';
+import Payments from './src/screens/Payments';
 
 const StoreStack = createStackNavigator();
 
@@ -52,7 +53,7 @@ function AccountStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <AccountStack.Screen name="Account" component={CreatAccountScreen} />
+      <AccountStack.Screen name="Account" component={Payments} />
     </AccountStack.Navigator>
   );
 }
