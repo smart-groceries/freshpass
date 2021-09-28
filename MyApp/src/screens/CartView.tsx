@@ -41,7 +41,6 @@ export default class CartView extends React.Component<CartProp>{
                 <GroceryItem></GroceryItem>
                 <GroceryItem></GroceryItem>
                 <GroceryItem></GroceryItem>
-
             </ScrollView>
         </View>
         )

@@ -32,6 +32,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
+import EditItem from './src/screens/EditItem';
+import { AppRegistry } from 'react-native';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+// Initialize Apollo Client
+const client = new ApolloClient({
+  uri: 'localhost:4000/graphql',
+  cache: new InMemoryCache()
+});
+
 const StoreStack = createStackNavigator();
 
 function StoreStackScreen() {
@@ -54,7 +64,7 @@ function AccountStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <AccountStack.Screen name="Account" component={Payments} />
+      <AccountStack.Screen name="Account" component={EditItem} />
     </AccountStack.Navigator>
   );
 }
@@ -107,6 +117,8 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+AppRegistry.registerComponent('MyApplication', () => App);
 
 const styles = StyleSheet.create({
   sectionContainer: {
