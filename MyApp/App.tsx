@@ -30,6 +30,7 @@ import ShoppingLists from './src/screens/ShoppingLists';
 import NavBar from './src/components/NavBar';
 import { createStackNavigator } from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
+import AddPayment from './src/screens/AddPayment';
 
 const StoreStack = createStackNavigator();
 
@@ -40,7 +41,7 @@ function StoreStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <StoreStack.Screen name="Home" component={ForgotPasswordScreen} />
+      <StoreStack.Screen name="Home" component={AddPayment} />
     </StoreStack.Navigator>
   );
 }

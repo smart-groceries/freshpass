@@ -46,11 +46,8 @@ const styles = StyleSheet.create({
     NoPaymentText: {
         "width": 325,
         "left":25,
-        "top": "34.38%",
-        "bottom": "62.54%",
         "fontFamily": "varelaround-regular",
         "fontSize": 20,
-        "lineHeight": 25,
         "display": "flex",
         "alignItems": "center",
         "textAlign":"center",
@@ -59,13 +56,10 @@ const styles = StyleSheet.create({
     NoPaymentSubtext: {
         "left": 25,
         "right": 25,
-        "top": "39.3%",
-        "bottom": "58.48%",
         "fontFamily": "varelaround-regular",
         "fontStyle": "normal",
         "fontWeight": "normal",
         "fontSize": 13,
-        "lineHeight": 18,
         "textAlign": "center",
         "color": "#999999"
     },
