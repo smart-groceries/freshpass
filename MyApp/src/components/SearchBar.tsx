@@ -119,7 +119,7 @@ const _container = (): ViewStyle => ({
   alignSelf: 'center',
   flexDirection: 'row',
   alignItems: 'center',
-  backgroundColor: '#F3F3F3',
+  backgroundColor: '#f0f0f0',
 });
 
 const _textInputStyle = (): TextStyle => ({

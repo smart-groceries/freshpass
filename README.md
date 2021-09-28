@@ -30,8 +30,21 @@ Then to build and run the application use
 npx react-native run-android 
 ```
 ## Development
+If you are having issues with the android building the gradle try 
 
-
+```sh
+cd android
+./gradlew clean
+```
+Install React Native Dependecies
+> Bruh can yall stop adding so many dependencies
+```sh
+npm install react-native
+npm install react-native-screens react-native-safe-area-context
+npm install @react-navigation/native-stack
+npm install @react-navigation/bottom-tabs
+npm install @freakycoder/react-native-bounceable
+```
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
 [Apollo]: <https://www.apollographql.com/docs/>

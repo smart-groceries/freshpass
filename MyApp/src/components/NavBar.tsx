@@ -11,7 +11,7 @@ import {
   TextStyle,
 } from 'react-native';
 import RNBounceable from '@freakycoder/react-native-bounceable';
-
+ 
 export interface NavBarProps {
   ImageComponent?: any;
   storesIconComponent?: React.ReactChild;
@@ -39,6 +39,7 @@ export default class NavBar extends React.Component<NavBarProps> {
       storesIconImageStyle,
       ImageComponent = Image,
     } = this.props;
+    
     return (
       <RNBounceable onPress={onStoresPress}>
         {storesIconComponent || (
@@ -52,53 +53,53 @@ export default class NavBar extends React.Component<NavBarProps> {
     );
   };
 
-  renderListsIcon = () => {
-    const {
-      onListsPress,
-      listsIconComponent,
-      listsIconImageStyle,
-      ImageComponent = Image,
-    } = this.props;
-    return (
-      <RNBounceable onPress={onListsPress}>
-        {listsIconComponent || (
-          <ImageComponent
-            resizeMode="contain"
-            source={require('./assets/lists_icon.png')}
-            style={[styles.listsIconImageStyle, listsIconImageStyle]}
-          />
-        )}
-      </RNBounceable>
-    );
-  };
+  // renderListsIcon = () => {
+  //   const {
+  //     onListsPress,
+  //     listsIconComponent,
+  //     listsIconImageStyle,
+  //     ImageComponent = Image,
+  //   } = this.props;
+  //   return (
+  //     <RNBounceable onPress={onListsPress}>
+  //       {listsIconComponent || (
+  //         <ImageComponent
+  //           resizeMode="contain"
+  //           source={require('./assets/lists_icon.png')}
+  //           style={[styles.listsIconImageStyle, listsIconImageStyle]}
+  //         />
+  //       )}
+  //     </RNBounceable>
+  //   );
+  // };
 
-  renderAccountIcon = () => {
-    const {
-      onAccountPress,
-      accountIconComponent,
-      accountIconImageStyle,
-      ImageComponent = Image,
-    } = this.props;
-    return (
-      <RNBounceable onPress={onAccountPress}>
-        {accountIconComponent || (
-          <ImageComponent
-            resizeMode="contain"
-            source={require('./assets/account_icon.png')}
-            style={[styles.accountIconImageStyle, accountIconImageStyle]}
-          />
-        )}
-      </RNBounceable>
-    );
-  };
+  // renderAccountIcon = () => {
+  //   const {
+  //     onAccountPress,
+  //     accountIconComponent,
+  //     accountIconImageStyle,
+  //     ImageComponent = Image,
+  //   } = this.props;
+  //   return (
+  //     <RNBounceable onPress={onAccountPress}>
+  //       {accountIconComponent || (
+  //         <ImageComponent
+  //           resizeMode="contain"
+  //           source={require('./assets/account_icon.png')}
+  //           style={[styles.accountIconImageStyle, accountIconImageStyle]}
+  //         />
+  //       )}
+  //     </RNBounceable>
+  //   );
+  // };
 
   render() {
     const {style} = this.props;
     return (
       <View {...this.props} style={[_container(), style]}>
-        {this.renderAccountIcon()}
+        {/* {this.renderAccountIcon()} */}
         {this.renderStoresIcon()}
-        {this.renderListsIcon()}
+        {/* {this.renderListsIcon()} */}
       </View>
     );
   }
@@ -113,8 +114,9 @@ interface Style {
 const _container = (): ViewStyle => ({
   height: 55,
   bottom: 0,
+  flex:1,
   alignItems: 'center',
-  //display: 'flex',
+  display: 'flex',
   backgroundColor: '#F3F3F3',
   justifyContent: 'space-evenly',
   flexDirection: 'row',
@@ -122,8 +124,7 @@ const _container = (): ViewStyle => ({
 
 const styles = StyleSheet.create<Style>({
   storesIconImageStyle: {
-    width: 30,
-    height: 30,
+    flex:1
   },
   listsIconImageStyle: {
     width: 30,

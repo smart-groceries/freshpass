@@ -88,13 +88,6 @@ const ForgotPasswordScreen = () => {
                       }]}>Reset</Text>
                   </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                      //onPress={() => navigation.goBack()}
-              >
-                  <Text style={[styles.color_textPrivate,{marginTop: 25}]}>
-                      Cancel
-                  </Text>
-               </TouchableOpacity>
               </ScrollView>
           
         </View>

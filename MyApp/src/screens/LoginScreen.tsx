@@ -41,9 +41,35 @@ export default function App() {
             <Text style={styles.create_acc_button}>Create New Account?</Text>
           </TouchableOpacity>
 
-        <TouchableOpacity style={styles.loginBtn}>
-              <Text style={styles.loginBtn}>LOGIN</Text>
-        </TouchableOpacity>
+          <View style={styles.button}>
+                  <TouchableOpacity
+                      style={styles.signIn}
+                      onPress={() => {}}
+                  >
+                  {/* <LinearGradient
+                      colors={['#08d4c4', '#01ab9d']}
+                      style={styles.signIn}
+                  >
+                      <Text style={[styles.textSign, {
+                          color:'#fff'
+                      }]}>Sign Up</Text>
+                  </LinearGradient> */}
+                  </TouchableOpacity>
+  
+                  <TouchableOpacity
+                      //onPress={() => navigation.goBack()}
+                      style={[styles.signIn, {
+                          borderColor: '#71BF61',
+                          backgroundColor: '#71BF61',
+                          borderWidth: 1,
+                          marginTop: 225
+                      }]}
+                  >
+                      <Text style={[styles.textSign, {
+                          color: '#FFFFFF'
+                      }]}>Sign In</Text>
+                  </TouchableOpacity>
+              </View>
 
     </View>
   );
@@ -100,9 +126,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#32a838",
   },
 
+  signIn: {
+    width: 324,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    left: 1
+},
 
+button: {
+  alignItems: 'center',
+  marginTop: 50
+},
 
-
+textSign: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  fontFamily: 'VarelaRound-regular'
+},
 
 // /* Rectangle 2 */
 username_container:{

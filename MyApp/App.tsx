@@ -20,76 +20,93 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import SearchBar from './src/components/SearchBar';
-import Filter from './src/components/Filter';
-import HomePage from './src/screens/HomePage';
-import HomePageScreen from './src/screens/HomePage';
-// const Section: React.FC<{
-//   title: string;
-// }> = ({children, title}) => {
-//   const isDarkMode = useColorScheme() === 'dark';
-//   return (
-//     <View style={styles.sectionContainer}>
-//       <Text
-//         style={[
-//           styles.sectionTitle,
-//           {
-//             color: isDarkMode ? Colors.white : Colors.black,
-//           },
-//         ]}>
-//         {title}
-//       </Text>
-//       <Text
-//         style={[
-//           styles.sectionDescription,
-//           {
-//             color: isDarkMode ? Colors.light : Colors.dark,
-//           },
-//         ]}>
-//         {children}
-//       </Text>
-//       <SearchBar
-//         placeholder="Search"
-//         onPress={() => Alert.alert('onPress')}
-//         onChangeText={text => console.log(text)}></SearchBar>
-//     </View>
-//   );
-// };
+import ForgotPasswordScreen from './src/screens/ForgotPassword';
+import CreatAccountScreen from './src/screens/CreateAccount';
+import LoginScreen from './src/screens/LoginScreen'
+import ShoppingLists from './src/screens/ShoppingLists';
+import NavBar from './src/components/NavBar';
+import { createStackNavigator } from '@react-navigation/stack';
+import Payments from './src/screens/Payments';
+import AddPayment from './src/screens/AddPayment';
 
-const Stack = createStackNavigator();
+const StoreStack = createStackNavigator();
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+function StoreStackScreen() {
+  
+  return (
+    <StoreStack.Navigator
+    screenOptions={{
+      headerShown:false
+    }}>
+      <StoreStack.Screen name="Home" component={AddPayment} />
+    </StoreStack.Navigator>
+  );
+}
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const AccountStack = createStackNavigator();
 
+function AccountStackScreen() {
+  return (
+    <AccountStack.Navigator
+    screenOptions={{
+      headerShown:false
+    }}>
+      <AccountStack.Screen name="Account" component={Payments} />
+    </AccountStack.Navigator>
+  );
+}
+
+const ShoppingListsStack = createStackNavigator();
+
+function ShoppingListsStackScreen() {
+  return(
+    <ShoppingListsStack.Navigator
+    screenOptions={{
+      headerShown:true
+    }}
+    >
+      <ShoppingListsStack.Screen name ="ShoppingLists" component = {ShoppingLists}/>
+    </ShoppingListsStack.Navigator>
+  )
+}
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Home'}>
-        <Stack.Screen
-          name="Home"
-          component={HomePage}
-          options={{
-            headerTitle: props => <Text style={styles.text}>Stores</Text>,
-          }}
+      <Tab.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+      >
+        <Tab.Screen name="Account" 
+          component={StoreStackScreen}
+          // options= {{
+          //   tabBarButton: (props) =><NavBar/>,
+          // }}
         />
-      </Stack.Navigator>
+        
+        <Tab.Screen name="Settings" 
+          component={AccountStackScreen}
+          // options= {{
+          //   tabBarButton: (props) => <NavBar/>
+          // }} 
+        />
+
+        <Tab.Screen name="Shopping Lists" 
+          component={ShoppingListsStackScreen}
+          // options= {{
+          //   tabBarButton: (props) => <NavBar/>
+          // }} 
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -118,5 +135,3 @@ const styles = StyleSheet.create({
     top: '20%',
   },
 });
-
-export default App;
