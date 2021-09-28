@@ -29,21 +29,21 @@ export default function AddPayment() {
    
     return (
         <View style={styles.container}> 
+            <View style={styles.container_}>
             <View style={styles.inputView}>
-            <View>
             <TextInput
                 style={styles.inputName}
                 placeholder="Name on Card"
-                placeholderTextColor="#003f5c"
+                placeholderTextColor="#E4E4E4"
                 onChangeText={(name) => setName(name)}
             />
             </View>
 
-            <View>
+            <View style={styles.inputView}>
             <TextInput
                 style={styles.inputCard}
                 placeholder="Card Number"
-                placeholderTextColor="#003f5c"
+                placeholderTextColor="#E4E4E4"
                 onChangeText={(carnumber) => setEmail(carnumber)}
             />
             </View>
@@ -54,14 +54,14 @@ export default function AddPayment() {
                 <TextInput
                     style={styles.inputMonth}
                     placeholder="Month"
-                    placeholderTextColor="#003f5c"
+                    placeholderTextColor="#E4E4E4"
                     onChangeText={(Month) => setMonth(Month)}
                 />
 
                     <TextInput
                     style={styles.inputYear}
                     placeholder="Year"
-                    placeholderTextColor="#003f5c"
+                    placeholderTextColor="#E4E4E4"
                     onChangeText={(year) => setYear(year)}
                 />
             </View>
@@ -70,25 +70,19 @@ export default function AddPayment() {
             <TextInput
                 style={styles.inputCVC}
                 placeholder="CVC"
-                placeholderTextColor="#003f5c"
+                placeholderTextColor="#E4E4E4"
                 onChangeText={(Month) => setMonth(Month)}
             />
-                <Text>
-                    3 or 4 digits usually found near the st
+                <Text style={styles.cvcText}>
+                    3 or 4 digits usually {"\n"}found near the strip
                 </Text>
             </View>
 
             <View style={styles.AddPayContainer}>
                 <TouchableOpacity
                     //onPress={() => navigation.goBack()}
-                    style={[styles.signIn, {
-                    borderColor: '#71BF61',
-                    backgroundColor: '#71BF61',
-                    borderWidth: 1,
-                    marginTop: 225}]}>
-                    <Text style={[styles.textSign, {
-                        color: '#FFFFFF'
-                    }]}>Sign In</Text>
+                    style={styles.signIn}>
+                    <Text style={styles.textSign}>Add Now</Text>
                 </TouchableOpacity>
             </View>
       </View>
@@ -107,7 +101,7 @@ const styles = StyleSheet.create({
     },
 
     AddPayContainer:{
-        flex:3
+        flex:1
     },
     
     loginBtn: {
@@ -125,8 +119,11 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 12,
-        left: 1
+        borderRadius: 50,
+        left: 1,
+        backgroundColor: '#E89023',
+        opacity:0.5,
+        marginTop: 225
     },
 
     button: {
@@ -137,7 +134,9 @@ const styles = StyleSheet.create({
     textSign: {
         fontSize: 18,
         fontWeight: 'bold',
-        fontFamily: 'VarelaRound-regular'
+        fontFamily: 'VarelaRound-regular',
+        // opacity:100,
+        color: '#E89023',
     },
     container: {
         flex: 1,
@@ -150,17 +149,24 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
 
+    container_:{
+        backgroundColor:'white',
+        width: "100%",
+        marginBottom: 10,
+        marginStart:10,
+        marginEnd:10,
+        alignItems: "center",
+
+    },
     inputView: {
         width: "80%",
         marginBottom: 10,
         marginStart:10,
         marginEnd:10,
 
-        alignItems: "center",
-        backgroundColor: "#FDF2E6",
-        borderRadius:12,
-        justifyContent: 'space-around'
-
+        alignItems:'center',
+        borderRadius:10,
+        justifyContent: 'space-around',
     },
 
     inputView2: {
@@ -173,58 +179,74 @@ const styles = StyleSheet.create({
         paddingLeft:10,
         padding:20,
         flexDirection:"row",
-        backgroundColor: "#FDF2E6",
-        borderRadius:12,
-        justifyContent: 'space-around'
+        backgroundColor: "white",
+        borderRadius:2,
+        justifyContent: 'space-around',
     },
     inputName:{
-        marginBottom: 10,
-        marginStart:10,
-        marginEnd:10,  
-        padding:10,
-        alignItems: "center",
-        backgroundColor: "#FDF2E6",
-        borderRadius:12,
+        width:'100%',
+        alignItems:"flex-start",
+        backgroundColor: "white",
+        borderRightColor:'red',
+        borderRadius:2,
+        borderColor:'#E4E4E4',
+        borderWidth: 1
     },
     inputCard:{
-        marginBottom: 10,
-        marginStart:10,
-        marginEnd:10,  
-        padding:10,
-        alignItems: "center",
-        backgroundColor: "#FDF2E6",
-        borderRadius:12,
+        width:'100%',
+        alignItems: "flex-start",
+        backgroundColor: "white",
+        borderRadius:2,
+        borderColor:'#E4E4E4',
+        borderWidth: 1
     },
     inputYear:{
-
+        
         flex:1,
         alignItems: "center",
-        backgroundColor: "#FDF2E6",
-        borderRadius:12,
+        backgroundColor: "white",
+        borderRadius:2,
         width:10,
-
+        borderColor:'#E4E4E4',
+        borderWidth: 1,
+        justifyContent:'space-between',
+        
     },
     inputMonth:{
-
+        justifyContent:'space-between',
         flex:1,
         width:5,
         alignItems: "center",
-        backgroundColor: "#FDF2E6",
-        borderRadius:12,
+        backgroundColor: "white",
+        borderRadius:2,
+        borderColor:'#E4E4E4',
+        borderWidth: 1
     },
 
     inputCVC:{
         marginBottom: 10,
         marginStart:10,
         marginEnd:10,  
-        
+        width:"40%",
         alignItems: "center",
-        backgroundColor: "#FDF2E6",
-        borderRadius:12,
+        backgroundColor: "white",
+        borderRadius:2,
+        borderColor:'#E4E4E4',
+        borderWidth: 1
     },
     TextInput: {
-        flex: 1,
+        width: "30%",
+        alignContent:'center',
+        marginBottom: 10,
+        marginStart:10,
+        marginEnd:10,  
+        
         padding: 5,
         fontFamily:'VarelaRound-regular'
     },  
+    cvcText:{
+        color:"#E4E4E4",
+        fontSize:12,
+        fontWeight:'bold',
+    }
 });
