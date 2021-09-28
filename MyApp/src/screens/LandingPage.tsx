@@ -17,7 +17,7 @@ import {
 
 
 
-const ForgotPasswordScreen = () => {
+const LandingPage = () => {
 
     const [data, setData] = React.useState({
         username: '',
@@ -51,19 +51,11 @@ const ForgotPasswordScreen = () => {
                   <Image source={require('../assets/freshpass_logo.png')}/>
               </View>
               <ScrollView>
-              <Text style={[styles.color_textPrivate,{marginTop: 25}]}>Enter your email to receive a password reset link:</Text>
-              <Text style={[styles.text_footer,{marginTop: 25}, {marginLeft: 17}]}>Email</Text>
-              <View style={[styles.action, {marginTop: 14}]}>
-              <TextInput 
-                      placeholder="Your Email"
-                      placeholderTextColor='#3A3B3E'
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      onChangeText={(val) => textInputChange(val)}
-                  />
-              </View>
-
-
+              <Text style={[styles.previewText,{marginTop: 25},{fontWeight: 'bold'},{fontSize: 20}]}>Grocery Shopping Reimagined</Text>
+              <Text style={[styles.previewText,{marginTop: 25},{fontSize: 14}]}>Traditionally, a trip to the grocery store is</Text>
+              <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>filled with long lines and wasted time</Text>
+              <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>searching. With FreshPass, that is a thing</Text>
+              <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>of the past.</Text>
               <View style={styles.button}>
                   {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
@@ -76,25 +68,31 @@ const ForgotPasswordScreen = () => {
   
                   <TouchableOpacity
                       //onPress={() => navigation.goBack()}
-                      style={[styles.reset, {
-                          borderColor: '#71BF61',
-                          backgroundColor: '#71BF61',
+                      style={[styles.signUp, {
+                          borderColor: '#E89023',
+                          backgroundColor: '#E89023',
                           borderWidth: 1,
                           marginTop: 225
                       }]}
                   >
-                      <Text style={[styles.textResetButton, {
+                      <Text style={[styles.textButton, {
                           color: '#FFFFFF'
-                      }]}>Reset</Text>
+                      }]}>Sign In</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                      //onPress={() => navigation.goBack()}
+                      style={[styles.signUp, {
+                          borderColor: '#71BF61',
+                          backgroundColor: '#71BF61',
+                          borderWidth: 1,
+                          marginTop: 20
+                      }]}
+                  >
+                      <Text style={[styles.textButton, {
+                          color: '#FFFFFF'
+                      }]}>Sign Up</Text>
                   </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                      //onPress={() => navigation.goBack()}
-              >
-                  <Text style={[styles.color_textPrivate,{marginTop: 25}]}>
-                      Cancel
-                  </Text>
-               </TouchableOpacity>
               </ScrollView>
           
         </View>
@@ -155,19 +153,18 @@ const styles = StyleSheet.create({
         left: 34,
     },
     button: {
-        alignItems: 'center',
-        marginTop: 50
+        alignItems: 'center'
     },
-    reset: {
+    signUp: {
         width: 324,
-        height: 50,
+        height: 55,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
         left: 1
     },
-    textResetButton: {
-        fontSize: 18,
+    textButton: {
+        fontSize: 16,
         fontWeight: 'bold',
         fontFamily: 'VarelaRound-regular'
     },
@@ -178,7 +175,7 @@ const styles = StyleSheet.create({
         fontFamily: 'VarelaRound-regular',
         textAlign: 'center'
     },
-    color_textPrivate: {
+    previewText: {
         color: '#B3B3B3',
         textAlign: 'center',
         fontFamily: 'VarelaRound-regular'
@@ -194,4 +191,4 @@ const styles = StyleSheet.create({
 
 
 
-export default ForgotPasswordScreen;
+export default LandingPage;
