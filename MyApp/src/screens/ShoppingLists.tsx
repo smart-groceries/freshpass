@@ -11,8 +11,11 @@ import {
     ScrollView,
     StatusBar,
     ScrollViewBase,
-    ViewStyle
+    ViewStyle,
+    Alert
 } from 'react-native';
+import FilterIcon from '../components/Filter';
+import SearchBar from '../components/SearchBar';
 import ShoppingList from '../components/ShoppingList';
 
 export interface Shopping {
@@ -23,6 +26,15 @@ export default class ShoppingLists extends React.Component<Shopping>{
     render = () =>{
         const {style} = this.props;
         return(
+        <View>
+            <View style = {styles.sectionContainer}>
+                <SearchBar
+                    placeholder="Search"
+                    onPress={() => Alert.alert('onPress')}
+                    onChangeText={text => console.log(text)}>  
+                </SearchBar>
+                <FilterIcon></FilterIcon>
+            </View>
             <ScrollView>
                 <ShoppingList></ShoppingList>
                 <ShoppingList></ShoppingList>
@@ -40,8 +52,8 @@ export default class ShoppingLists extends React.Component<Shopping>{
                 <ShoppingList></ShoppingList>
                 <ShoppingList></ShoppingList>
                 <ShoppingList></ShoppingList>
-
             </ScrollView>
+        </View>
         )
     }
 
@@ -62,11 +74,10 @@ const styles = StyleSheet.create({
       top: '20%',
     },
     sectionContainer: {
-      marginTop: '5%',
-      paddingHorizontal: 20,
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      backgroundColor: "#FFFFFF"
       //alignItems: 'flex-start',
     },
+    
   });
   

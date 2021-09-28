@@ -31,8 +31,8 @@ export default class ShoppingList extends React.Component<ShoppingListProps>{
         return (
             <View style = {[styles.List,{flexDirection:"row"}]}>
                 <View style = {[styles.listInfoContainer,{flexDirection:"column"}]}>
-                    <Text>List Name {this.props.ListNumber}</Text>
-                    <Text>{this.props.ListNumber}200 Items Saved</Text>
+                    <Text style = {styles.ListNameText}>List Name {this.props.ListNumber}</Text>
+                    <Text style = {styles.ItemsSavedText}>{this.props.ListNumber}200 Items Saved</Text>
                 </View>
                 <View>
                 <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -71,29 +71,37 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "space-between",
         paddingVertical: 20,
-        borderBottomColor:"#DDDDDD",
+        backgroundColor:"#FFFFFF",
+        borderBottomColor:"#000000",
         borderBottomWidth: StyleSheet.hairlineWidth
-
-    },
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      paddingHorizontal: 10
     },
     button: {
-      alignItems: "center",
+      alignItems: "baseline",
       backgroundColor: "#DDDDDD",
       padding: 7,
       borderRadius: 20,
       paddingEnd: 40,
       paddingStart: 40
     },
-    countContainer: {
-      alignItems: "center",
-      padding: 10
-    },
     listInfoContainer: {
         flex: 1,
-        alignContent: "flex-start"
+        alignContent: "flex-start",
+        fontFamily: 'VarelaRound-Regular',
+
+    },
+    ListNameText:{
+        flex:1,
+        fontSize:16,
+        paddingLeft:15,
+        color:"black",
+        
+        fontFamily: 'VarelaRound-Regular',
+
+    },
+    ItemsSavedText:{
+        flex:1,
+        paddingLeft:20,
+        fontFamily: 'VarelaRound-Regular',
+        color:"grey"
     }
   });

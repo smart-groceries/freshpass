@@ -63,7 +63,7 @@ function ShoppingListsStackScreen() {
   return(
     <ShoppingListsStack.Navigator
     screenOptions={{
-      headerShown:false
+      headerShown:true
     }}
     >
       <ShoppingListsStack.Screen name ="ShoppingLists" component = {ShoppingLists}/>
