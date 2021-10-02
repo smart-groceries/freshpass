@@ -8,7 +8,7 @@ export default function EditItem(){
     return(
         <View>
             <Image
-            source={require('./../components/assets/store_icon.png')}/>
+            source={require('./../assets/store_icon.png')}/>
             
             <TextInput
             style={styles.TextInput}

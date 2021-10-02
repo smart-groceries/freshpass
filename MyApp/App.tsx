@@ -11,6 +11,7 @@
 import React from 'react';
 import {
   Alert,
+  AppRegistry,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -33,14 +34,14 @@ import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
 import EditItem from './src/screens/EditItem';
-import { AppRegistry } from 'react-native';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+// import { AppRegistry } from 'react-native';
+// import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-// Initialize Apollo Client
-const client = new ApolloClient({
-  uri: 'localhost:4000/graphql',
-  cache: new InMemoryCache()
-});
+// // Initialize Apollo Client
+// const client = new ApolloClient({
+//   uri: 'localhost:4000/graphql',
+//   cache: new InMemoryCache()
+// });
 
 const StoreStack = createStackNavigator();
 
@@ -51,7 +52,7 @@ function StoreStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <StoreStack.Screen name="Home" component={AddPayment} />
+      <StoreStack.Screen name="Home" component={CreatAccountScreen} />
     </StoreStack.Navigator>
   );
 }
@@ -64,7 +65,7 @@ function AccountStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <AccountStack.Screen name="Account" component={EditItem} />
+      <AccountStack.Screen name="Account" component={ForgotPasswordScreen} />
     </AccountStack.Navigator>
   );
 }

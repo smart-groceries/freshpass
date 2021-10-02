@@ -31,7 +31,7 @@ export default class Store extends React.Component<StoreProps> {
         {storeIconComponent || (
           <ImageComponent
             resizeMode="contain"
-            source={require('./assets/store_icon.png')}
+            source={require('./../assets/store_icon.png')}
           />
         )}
       </View>
