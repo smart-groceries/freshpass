@@ -56,8 +56,8 @@ export default class PaymentConfirmation extends React.Component<PaymentConfirma
       <View style={[_container(), style]}>
         <View style={styles.checkMarkContainer}>
           <Image source={require('../assets/checkmark.png')}></Image>
-          <Text style={styles.validatedText}>Order Validated!</Text>
         </View>
+        <Text style={styles.validatedText}>Order Validated!</Text>
         <Text style={styles.orderNumber}>Order Number: #{orderNumber}</Text>
         <View style={styles.orderedItemsContainer}>
           <Text style={styles.orderedItems}>Ordered Items</Text>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create<Style>({
     color: '#71BF61',
     fontSize: 25,
     fontFamily: 'varelaround-regular',
-    marginTop: 5,
+    marginTop: 30,
   },
   checkMarkContainer: {
     marginTop: 10,
@@ -168,6 +168,7 @@ const styles = StyleSheet.create<Style>({
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.33,
+    margin: 10,
   },
   exit: {
     fontFamily: 'varelaround-regular',
