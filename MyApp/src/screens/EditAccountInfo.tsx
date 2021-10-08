@@ -25,14 +25,16 @@ const EditAccountInfoScreen = () => {
         username: 'hello2',
         name: 'hello3',
         password: 'hello4',
-        stateHasBeenChanged: false
+        stateHasBeenChanged: false,
+        inInitialState: true
     });
 
     const changedEmail = (val:any) => {
             setData({
                 ...data,
                 email: val,
-                stateHasBeenChanged: true
+                stateHasBeenChanged: true,
+                inInitialState: false
             });
     }
 
@@ -40,7 +42,8 @@ const EditAccountInfoScreen = () => {
         setData({
             ...data,
             username: val,
-            stateHasBeenChanged: true
+            stateHasBeenChanged: true,
+            inInitialState: false
         });
     }
 
@@ -48,16 +51,43 @@ const EditAccountInfoScreen = () => {
         setData({
             ...data,
             name: val,
-            stateHasBeenChanged: true
+            stateHasBeenChanged: true,
+            inInitialState: false
         });
     }
 
     const saveState = () => {
         setData({
             ...data,
-            stateHasBeenChanged: false
+            stateHasBeenChanged: false,
+            inInitialState: false
         });
     }
+
+    const getSaveStyling = () => {
+        if (data.stateHasBeenChanged == false)   {
+            return styles.greyedOutSave
+        } else {
+            return styles.save
+        }
+    }
+
+    const getSaveTextStyling = () => {
+        if (data.stateHasBeenChanged == false)   {
+            return styles.greyedOutTextSaveButton
+        } else {
+            return styles.textSaveButton
+        }
+    }
+
+    const getSavedNotif = () => {
+        if ((data.stateHasBeenChanged == false) && (data.inInitialState == false))   {
+            return styles.savedNotif
+        } else {
+            return styles.hiddenSavedNotif
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -118,10 +148,15 @@ const EditAccountInfoScreen = () => {
                 </TouchableOpacity>
               </View>
 
+
+              <View style = {[{marginTop: 60}, {justifyContent: 'center'}, {alignItems: 'center'}]}>
+                  <Text style={getSavedNotif()}>Account Info Saved!</Text>
+              </View>
+
               <View style={styles.button}>
                   {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
-                      style={styles.signIn}
+                      style={styles.signI
                   >
                       <Text style={[styles.textSign, {
                           color:'#fff'
@@ -130,9 +165,9 @@ const EditAccountInfoScreen = () => {
   
                   <TouchableOpacity
                       onPress={() => saveState()}
-                      style={styles.save}
+                      style={getSaveStyling()}
                   >
-                      <Text style={styles.textSaveButton}>Save</Text>
+                      <Text style={getSaveTextStyling()}>Save</Text>
                   </TouchableOpacity>
               </View>
               </ScrollView>
@@ -196,7 +231,7 @@ const styles = StyleSheet.create({
         borderColor: '#F8F8F8',
         backgroundColor: '#F8F8F8',
         borderWidth: 1,
-        marginTop: 175,
+        marginTop: 100,
         left: 1       
     },
     save: {
@@ -208,7 +243,7 @@ const styles = StyleSheet.create({
         borderColor: '#71BF61',
         backgroundColor: '#71BF61',
         borderWidth: 1,
-        marginTop: 175,
+        marginTop: 100,
         left: 1
     },
     textSaveButton: {
@@ -229,6 +264,16 @@ const styles = StyleSheet.create({
     },
     forgotPasswordButtonText: {
         color: '#B3B3B3'
+    },
+    savedNotif: {
+        color: '#424347',
+        fontSize: 16,
+        fontFamily: 'VarelaRound-regular',
+    },
+    hiddenSavedNotif: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontFamily: 'VarelaRound-regular',
     }
   });
 
