@@ -148,20 +148,6 @@ const styles = StyleSheet.create({
       flex: 1, 
       backgroundColor: '#FFFFFF'
     },
-    header: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 50
-    },
-    footer: {
-        flex: Platform.OS === 'android' ? 3 : 5,
-        backgroundColor: '#fff',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        paddingHorizontal: 20,
-        paddingVertical: 30
-    },
     text_header: {
         color: '#424347',
         fontWeight: 'bold',
@@ -236,25 +222,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'VarelaRound-regular',
         color: '#DCDCDC'
-    },
-    textPrivate: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 20,
-        fontFamily: 'VarelaRound-regular',
-        textAlign: 'center'
-    },
-    color_textPrivate: {
-        color: '#B3B3B3',
-        textAlign: 'center',
-        fontFamily: 'VarelaRound-regular'
-    },
-    imageContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        resizeMode: 'contain',
-        marginTop: 175,
     },
     forgotPasswordButton: {
         marginTop: 40,
