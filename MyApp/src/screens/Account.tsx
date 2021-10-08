@@ -38,9 +38,8 @@ const AccountScreen = () => {
                     <Text style={[styles.userInfoText,{fontSize: 14}]}>{data.email}</Text>
                   </View>
               </View>
-
+            <TouchableOpacity>
             <View style={[styles.accountEditOption,{marginTop: 48}, {left: 24}]}>
-               
               <Image
                     source={require('../assets/credit_card.png')} 
                 />
@@ -53,7 +52,10 @@ const AccountScreen = () => {
                     style={{left: 160}}
                 />
             </View>
+            </TouchableOpacity>
 
+
+            <TouchableOpacity>
             <View style={[styles.accountEditOption,{marginTop: 28}, {left: 24}]}>
                
               <Image
@@ -68,6 +70,7 @@ const AccountScreen = () => {
                     style={{left: 110}}
                 />
             </View>
+            </TouchableOpacity>
               
               <View style={[styles.logOutButton, {marginTop: 430}]}>
               <TouchableOpacity>
