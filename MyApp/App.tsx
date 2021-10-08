@@ -34,14 +34,14 @@ import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
 import EditItem from './src/screens/EditItem';
-import { AppRegistry } from 'react-native';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+// import { AppRegistry } from 'react-native';
+// import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-// Initialize Apollo Client
-const client = new ApolloClient({
-  uri: 'localhost:4000/graphql',
-  cache: new InMemoryCache()
-});
+// // Initialize Apollo Client
+// const client = new ApolloClient({
+//   uri: 'localhost:4000/graphql',
+//   cache: new InMemoryCache()
+// });
 
 const StoreStack = createStackNavigator();
 
