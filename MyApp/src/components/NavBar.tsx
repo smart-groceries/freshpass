@@ -85,7 +85,7 @@ export default class NavBar extends React.Component<NavBarProps> {
         {accountIconComponent || (
           <ImageComponent
             resizeMode="contain"
-            source={require('./assets/account_icon.png')}
+            source={require('./assets/account_icon_light.png')}
             style={[styles.accountIconImageStyle, accountIconImageStyle]}
           />
         )}
