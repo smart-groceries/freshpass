@@ -38,15 +38,42 @@ const AccountScreen = () => {
                     <Text style={[styles.userInfoText,{fontSize: 14}]}>{data.email}</Text>
                   </View>
               </View>
-            <StatusBar backgroundColor='#009387' barStyle="light-content"/>
-              <ScrollView>
-            
-              <View style={styles.logOutButton}>
+
+            <View style={[styles.accountEditOption,{marginTop: 48}, {left: 24}]}>
+               
+              <Image
+                    source={require('../assets/credit_card.png')} 
+                />
+                  <View style={[{flexDirection: 'column'},{borderColor: '#999999'}]}>
+                    <Text style={[styles.userInfoText,{fontSize: 15}]}>Payment Methods</Text>
+                    <Text style={[styles.userInfoText,{color: '#999999'},{fontSize: 11}, {marginTop: 2}]}>See currently saved cards</Text>
+                  </View>
+                <Image
+                    source={require('../assets/chevron_pointing_right.png')}
+                    style={{left: 160}}
+                />
+            </View>
+
+            <View style={[styles.accountEditOption,{marginTop: 28}, {left: 24}]}>
+               
+              <Image
+                    source={require('../assets/account_icon_dark.png')} 
+                />
+                  <View style={[{flexDirection: 'column'},{borderColor: '#999999'}]}>
+                    <Text style={[styles.userInfoText,{fontSize: 15}]}>Account Information</Text>
+                    <Text style={[styles.userInfoText,{color: '#999999'},{fontSize: 11}, {marginTop: 2}]}>Edit Username, Email, and Password</Text>
+                  </View>
+                <Image
+                    source={require('../assets/chevron_pointing_right.png')}
+                    style={{left: 110}}
+                />
+            </View>
+              
+              <View style={[styles.logOutButton, {marginTop: 430}]}>
               <TouchableOpacity>
-                    <Text style={styles.logOutButtonText}>Logout</Text>
-                </TouchableOpacity>
+                        <Text style={styles.logOutButtonText}>Logout</Text>
+              </TouchableOpacity>
               </View>
-              </ScrollView>
           
         </View>
       );
@@ -155,6 +182,11 @@ const styles = StyleSheet.create({
         color: '#424347',
         fontFamily: 'VarelaRound-regular',
         left: 16
+    },
+    accountEditOption: {
+        left: 16,
+        flexDirection: 'row',
+        alignItems: 'center'
     }
   });
 
