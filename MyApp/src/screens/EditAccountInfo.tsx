@@ -62,8 +62,8 @@ const EditAccountInfoScreen = () => {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+            <Text style={[styles.text_header,{marginTop: 60}]}>Account Info</Text>
               <ScrollView>
-              <Text style={[styles.text_header,{marginTop: 60}]}>Account Info</Text>
               <Text style={[styles.text_footer,{marginTop: 50}, {marginLeft: 17}]}>Email</Text>
               <View style={[styles.action, {marginTop: 14}]}>
               <TextInput
