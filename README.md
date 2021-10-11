@@ -20,6 +20,8 @@ First you must follow the installation proccess for your platform for [React-Nat
 ```sh
 npm install react-native
 ```
+Install the AWS CLI 
+[Link Here](https://aws.amazon.com/cli/)
 ### _Run_
 In order to run the app you can run the application by just using the run-android command, but to run Metro in a seperate console use this
 ```sh

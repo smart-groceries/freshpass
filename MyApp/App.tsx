@@ -73,6 +73,7 @@ function AccountStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
+
       <AccountStack.Screen name="Account" component={EditItem} />
     </AccountStack.Navigator>
   );

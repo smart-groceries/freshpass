@@ -26,12 +26,15 @@ export default class Payments extends React.Component<Payment>{
     render = () =>{
         return(
             <View>
+                <View style={styles.TextContainer}>
                 <Text style={styles.NoPaymentText}>No Payment Info Found</Text>
-                <Text style={styles.NoPaymentSubtext}>You can add and edit payments during checkout????</Text>
+                <Text style={styles.NoPaymentSubtext}>You can add and edit payments during checkout</Text>
+                </View>
+
                 <View style={styles.PaymentMethodContainer}>
                     <Image
                     style={styles.searchIconImageStyle}
-                    source={require('./../components/assets/store_icon.png')}/>
+                    source={require('./../assets/iconplus.png')}/>
                     <Text style ={styles.AddPaymentText}>Add Payment Method</Text>
                 </View>
             </View>
@@ -42,25 +45,33 @@ export default class Payments extends React.Component<Payment>{
 
 const styles = StyleSheet.create({
 
-
+    TextContainer:{
+        "width": "90%",
+        "height": 150,
+        "top": 100,    
+    },
     NoPaymentText: {
-        "width": 325,
-        "left":25,
+        "width": "90%",
+        bottom:"20%",
         "fontFamily": "varelaround-regular",
         "fontSize": 20,
+        left:20,
+        top:"70%",
         "display": "flex",
         "alignItems": "center",
         "textAlign":"center",
         "color": "#151522"
     },
     NoPaymentSubtext: {
-        "left": 25,
-        "right": 25,
+        "width": "90%",
+        top:"90%",
+        left:20,
         "fontFamily": "varelaround-regular",
         "fontStyle": "normal",
         "fontWeight": "normal",
         "fontSize": 13,
         "textAlign": "center",
+        "alignItems": "center",
         "color": "#999999"
     },
     PaymentMethodContainer: {
