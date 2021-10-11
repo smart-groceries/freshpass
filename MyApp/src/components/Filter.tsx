@@ -29,7 +29,7 @@ export default class FilterIcon extends React.Component<FilterIconProps> {
         {filterIconComponent || (
           <ImageComponent
             resizeMode="contain"
-            source={require('./assets/filter_icon.png')}
+            source={require('./../assets/filter_icon.png')}
             style={[styles.filterIconImageStyle, filterIconImageStyle]}
           />
         )}

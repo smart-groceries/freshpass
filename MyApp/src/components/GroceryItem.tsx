@@ -26,7 +26,7 @@ export default function GroceryItem() {
                         <Text> Number </Text>
                         <TouchableHighlight><Text>+</Text></TouchableHighlight>
                         <TouchableHighlight>
-                            <Image resizeMode='contain' source={require('./assets/filter_icon.png')}/>
+                            <Image resizeMode='contain' source={require('./../assets/filter_icon.png')}/>
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -34,7 +34,7 @@ export default function GroceryItem() {
                     <Image
                     style={styles.image}
                     resizeMode="contain"
-                    source={require('./assets/store_icon.png')}>
+                    source={require('./../assets/store_icon.png')}>
                     </Image>
                 </View>
         </View>
