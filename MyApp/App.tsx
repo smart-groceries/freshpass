@@ -11,7 +11,6 @@
 import React from 'react';
 import {
   Alert,
-  AppRegistry,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -24,6 +23,7 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+
 import ForgotPasswordScreen from './src/screens/ForgotPassword';
 import CreatAccountScreen from './src/screens/CreateAccount';
 import LoginScreen from './src/screens/LoginScreen'
@@ -34,14 +34,22 @@ import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
 import EditItem from './src/screens/EditItem';
-// import { AppRegistry } from 'react-native';
-// import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { AppRegistry } from 'react-native';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import LandingPage from './src/screens/LandingPage';
+import HomePage from './src/screens/HomePage';
 
-// // Initialize Apollo Client
-// const client = new ApolloClient({
-//   uri: 'localhost:4000/graphql',
-//   cache: new InMemoryCache()
-// });
+
+
+
+// Initialize Apollo Client
+const client = new ApolloClient({
+  uri: 'localhost:4000/graphql',
+  cache: new InMemoryCache()
+});
+
+
 
 const StoreStack = createStackNavigator();
 
@@ -65,7 +73,8 @@ function AccountStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <AccountStack.Screen name="Account" component={Payments} />
+
+      <AccountStack.Screen name="Account" component={EditItem} />
     </AccountStack.Navigator>
   );
 }
@@ -84,6 +93,7 @@ function ShoppingListsStackScreen() {
   )
 }
 
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -93,6 +103,8 @@ export default function App() {
       screenOptions={{
         headerShown: false
       }}
+
+      
       >
         <Tab.Screen name="Account" 
           component={StoreStackScreen}
@@ -108,12 +120,24 @@ export default function App() {
           // }} 
         />
 
-        <Tab.Screen name="Shopping Lists" 
+        {/* <Tab.Screen name="Shopping Lists" 
           component={ShoppingListsStackScreen}
           // options= {{
           //   tabBarButton: (props) => <NavBar/>
           // }} 
-        />
+        /> */}
+
+        <Tab.Screen
+                name="Cart View"
+                component={ShoppingListsStackScreen}
+                options={{
+                  tabBarLabel: 'Home',
+                  
+                  tabBarIcon: ({ color }) => (
+                    <MaterialCommunityIcons name="account" color= "black" size={26} />
+                  ),
+                }}
+              />
       </Tab.Navigator>
     </NavigationContainer>
   );
