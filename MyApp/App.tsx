@@ -52,7 +52,7 @@ function StoreStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <StoreStack.Screen name="Home" component={CreatAccountScreen} />
+      <StoreStack.Screen name="Home" component={AddPayment} />
     </StoreStack.Navigator>
   );
 }
@@ -65,7 +65,7 @@ function AccountStackScreen() {
     screenOptions={{
       headerShown:false
     }}>
-      <AccountStack.Screen name="Account" component={ForgotPasswordScreen} />
+      <AccountStack.Screen name="Account" component={Payments} />
     </AccountStack.Navigator>
   );
 }
