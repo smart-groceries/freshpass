@@ -46,6 +46,8 @@ npm install react-native-screens react-native-safe-area-context
 npm install @react-navigation/native-stack
 npm install @react-navigation/bottom-tabs
 npm install @freakycoder/react-native-bounceable
+npm install react-native-numeric-input --save
+npm install --save react-native-vector-icons --legacy-peer-deps
 ```
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
