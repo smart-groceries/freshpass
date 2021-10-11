@@ -68,7 +68,7 @@ const Item :FC<Props> = () => {
                     <Image
                     style={styles.image}
                     resizeMode="contain"
-                    source={require('./assets/macncheese.png')}>
+                    source={require('./../assets/macncheese.png')}>
                     </Image>
                 </View>
         </View>
