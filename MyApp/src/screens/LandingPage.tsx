@@ -13,7 +13,7 @@ import {
     Image
 } from 'react-native';
 
-import LottieSuccessAnimation from '../components/lottie-components/success'
+import LottieCartAnimation from '../components/lottie-components/cart';
 
 
 
@@ -32,7 +32,7 @@ const LandingPage = () => {
               <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>filled with long lines and wasted time</Text>
               <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>searching. With FreshPass, that is a thing</Text>
               <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>of the past.</Text>
-                <LottieSuccessAnimation/>
+              <LottieCartAnimation/>
               <View style={styles.button}>
                   {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
@@ -161,11 +161,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         resizeMode: 'contain',
-        marginTop: 175,
-    },
-    storeLottie: {
-        width: 100,
-        height: 100
+        marginTop: 75,
+      }
     }
   });
 
