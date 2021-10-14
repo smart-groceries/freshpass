@@ -13,6 +13,7 @@ import {
     Image
 } from 'react-native';
 
+import LottieSuccessAnimation from '../components/lottie-components/success'
 
 
 
@@ -22,7 +23,7 @@ const LandingPage = () => {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content"/>
-              <View style={styles.imageContainer}>    
+              <View style={styles.imageContainer}>
                   <Image source={require('../assets/freshpass_logo.png')}/>
               </View>
               <ScrollView>
@@ -31,6 +32,7 @@ const LandingPage = () => {
               <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>filled with long lines and wasted time</Text>
               <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>searching. With FreshPass, that is a thing</Text>
               <Text style={[styles.previewText,{marginTop: 5},{fontSize: 14}]}>of the past.</Text>
+                <LottieSuccessAnimation/>
               <View style={styles.button}>
                   {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
@@ -40,14 +42,13 @@ const LandingPage = () => {
                           color:'#fff'
                       }]}>Sign Up</Text>
                   </LinearGradient> */}
-  
                   <TouchableOpacity
                       //onPress={() => navigation.goBack()}
                       style={[styles.signUp, {
                           borderColor: '#E89023',
                           backgroundColor: '#E89023',
                           borderWidth: 1,
-                          marginTop: 225
+                          marginTop: 125
                       }]}
                   >
                       <Text style={[styles.textButton, {
@@ -161,7 +162,11 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'contain',
         marginTop: 175,
-      }
+    },
+    storeLottie: {
+        width: 100,
+        height: 100
+    }
   });
 
 
