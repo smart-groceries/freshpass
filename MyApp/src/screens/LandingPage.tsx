@@ -12,7 +12,7 @@ import {
     StatusBar,
     Image
 } from 'react-native';
-
+import LottieView from 'lottie-react-native';
 
 
 
@@ -22,7 +22,7 @@ const LandingPage = () => {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content"/>
-              <View style={styles.imageContainer}>    
+              <View style={styles.imageContainer}>
                   <Image source={require('../assets/freshpass_logo.png')}/>
               </View>
               <ScrollView>
@@ -40,14 +40,19 @@ const LandingPage = () => {
                           color:'#fff'
                       }]}>Sign Up</Text>
                   </LinearGradient> */}
-  
+                  <LottieView
+                    style={styles.storeLottie}
+                    source={require('../assets/lotties/success.json')}
+                    autoPlay
+                    loop
+                 />
                   <TouchableOpacity
                       //onPress={() => navigation.goBack()}
                       style={[styles.signUp, {
                           borderColor: '#E89023',
                           backgroundColor: '#E89023',
                           borderWidth: 1,
-                          marginTop: 225
+                          marginTop: 125
                       }]}
                   >
                       <Text style={[styles.textButton, {
@@ -161,7 +166,11 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'contain',
         marginTop: 175,
-      }
+    },
+    storeLottie: {
+        width: 100,
+        height: 100
+    }
   });
 
 
