@@ -33,6 +33,8 @@ import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
 import EditItem from './src/screens/EditItem';
+import StoreLocator from './src/screens/StoreLocator';
+import MapView from 'react-native-maps';
 import { AppRegistry } from 'react-native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
@@ -78,10 +80,18 @@ function ShoppingListsStackScreen() {
       headerShown:true
     }}
     >
-      <ShoppingListsStack.Screen name ="Cart" component = {CartView}/>
+      <ShoppingListsStack.Screen name ="Shopping Lists" component = {CartView}/>
     </ShoppingListsStack.Navigator>
   )
 }
+
+// const StoreLocatorStack = createStackNavigator();
+
+// function StoreLocatorScreen() {
+//   return (
+//     <StoreLocator/>
+//   );
+// }
 
 const Tab = createBottomTabNavigator();
 
@@ -107,7 +117,7 @@ export default function App() {
           // }} 
         />
 
-        <Tab.Screen name="Shopping Lists" 
+        <Tab.Screen name="Shopping List" 
           component={ShoppingListsStackScreen}
           // options= {{
           //   tabBarButton: (props) => <NavBar/>
