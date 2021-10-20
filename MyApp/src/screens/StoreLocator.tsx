@@ -13,26 +13,21 @@ export default function StoreLocator() {
         latitudeDelta: 0.015,
         longitudeDelta: 0.04,
       }} >
-
         <Marker coordinate = {{latitude: 33.76151900699398,
         longitude: -118.11636383180144}}
-        image={require('./../assets/store_icon.png')}
-        >
+        image={require('./../assets/store_icon.png')}>
           <Callout>
             <Text style ={styles.storename}>6290 Pacific Coast Hwy</Text>
           </Callout>
         </Marker>
         <Marker coordinate = {{latitude: 33.79385160286719,
         longitude: -118.14131296720306}}
-        image={require('./../assets/store_icon.png')}
-        >
+        image={require('./../assets/store_icon.png')}>
           <Callout>
             <Text style ={styles.storename}>1930 N. Lakewood Blvd</Text>
           </Callout>
         </Marker>
-
       </MapView>
-
     </View>
   );
 }
