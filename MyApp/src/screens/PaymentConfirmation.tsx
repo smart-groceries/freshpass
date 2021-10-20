@@ -168,7 +168,6 @@ const styles = StyleSheet.create<Style>({
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.33,
-    margin: 10,
   },
   exit: {
     fontFamily: 'varelaround-regular',
