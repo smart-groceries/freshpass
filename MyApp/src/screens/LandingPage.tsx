@@ -13,9 +13,8 @@ import {
   Image,
 } from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import LottieSuccessAnimation from '../components/lottie-components/success';
+// import LottieSuccessAnimation from '../components/lottie-components/success';
 import {RootStackParamList} from '../navigation/RootStackParamList';
-
 type Props = {navigation: StackNavigationProp<RootStackParamList, 'Landing'>};
 const LandingPage = ({navigation}: Props) => {
   return (

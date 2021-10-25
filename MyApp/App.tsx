@@ -11,6 +11,7 @@
 import React from 'react';
 import {
   Alert,
+  ImageComponent,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -18,103 +19,122 @@ import {
   Text,
   useColorScheme,
   View,
+  Image,
+  Route,
 } from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import ForgotPasswordScreen from './src/screens/ForgotPassword';
-import CreatAccountScreen from './src/screens/CreateAccount';
-import LoginScreen from './src/screens/LoginScreen'
+import CreateAccountScreen from './src/screens/CreateAccount';
+import LoginScreen from './src/screens/LoginScreen';
 import ShoppingLists from './src/screens/ShoppingLists';
 import NavBar from './src/components/NavBar';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
 import EditItem from './src/screens/EditItem';
-import { AppRegistry } from 'react-native';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {AppRegistry} from 'react-native';
+import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import LandingPage from './src/screens/LandingPage';
+import HomePage from './src/screens/HomePage';
+import RNBounceable from '@freakycoder/react-native-bounceable';
+import AccountScreen from './src/screens/Account';
+import PaymentConfirmation from './src/screens/PaymentConfirmation';
+import OrderRejected from './src/screens/OrderRejected';
+import {MenuProvider} from 'react-native-popup-menu';
+// import GrocerAccountScreen from './src/screens/GrocerAccount';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from './src/navigation/RootStackParamList';
 
 // Initialize Apollo Client
 const client = new ApolloClient({
   uri: 'localhost:4000/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
-const StoreStack = createStackNavigator();
-
-function StoreStackScreen() {
-  
+// home screens with nav bar
+function HomeTabs() {
   return (
-    <StoreStack.Navigator
-    screenOptions={{
-      headerShown:false
-    }}>
-      <StoreStack.Screen name="Home" component={AddPayment} />
-    </StoreStack.Navigator>
+    <Tab.Navigator
+      initialRouteName="Stores"
+      screenOptions={({route}) => ({
+        tabBarIcon: () => {
+          let iconName = require('./src/assets/account_icon.png');
+          if (route.name === 'Account') {
+            iconName = require('./src/assets/account_icon.png');
+          } else if (route.name === 'Stores') {
+            iconName = require('./src/assets/stores_icon.png');
+          } else if (route.name === 'Shopping Lists') {
+            iconName = require('./src/assets/lists_icon.png');
+          }
+          return (
+            <Image
+              resizeMode="contain"
+              source={iconName}
+              style={styles.navIcons}></Image>
+          );
+        },
+        headerShown: true,
+        tabBarActiveTintColor: 'black',
+        // tabBarButton: props => (
+        //   <RNBounceable>
+        //     <ButtonIcon {this.iconName}></ButtonIcon>
+        //   </RNBounceable>
+        // ),
+      })}>
+      <Tab.Screen name="Account" component={AccountScreen} />
+
+      <Tab.Screen name="Stores" component={HomePage} />
+
+      <Tab.Screen name="Shopping Lists" component={ShoppingLists} />
+    </Tab.Navigator>
   );
-}
-
-const AccountStack = createStackNavigator();
-
-function AccountStackScreen() {
-  return (
-    <AccountStack.Navigator
-    screenOptions={{
-      headerShown:false
-    }}>
-      <AccountStack.Screen name="Account" component={EditItem} />
-    </AccountStack.Navigator>
-  );
-}
-
-const ShoppingListsStack = createStackNavigator();
-
-function ShoppingListsStackScreen() {
-  return(
-    <ShoppingListsStack.Navigator
-    screenOptions={{
-      headerShown:true
-    }}
-    >
-      <ShoppingListsStack.Screen name ="Cart" component = {CartView}/>
-    </ShoppingListsStack.Navigator>
-  )
 }
 
 const Tab = createBottomTabNavigator();
 
+const Stack = createNativeStackNavigator();
+
+// export type Props = NativeStackScreenProps<stackParamList, 'Landing'>;
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-      screenOptions={{
-        headerShown: false
-      }}
-      >
-        <Tab.Screen name="Account" 
-          component={StoreStackScreen}
-          // options= {{
-          //   tabBarButton: (props) =><NavBar/>,
-          // }}
-        />
-        
-        <Tab.Screen name="Settings" 
-          component={AccountStackScreen}
-          // options= {{
-          //   tabBarButton: (props) => <NavBar/>
-          // }} 
-        />
-
-        <Tab.Screen name="Shopping Lists" 
-          component={ShoppingListsStackScreen}
-          // options= {{
-          //   tabBarButton: (props) => <NavBar/>
-          // }} 
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <MenuProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Landing"
+            component={LandingPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Create"
+            component={CreateAccountScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeTabs}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Forgot"
+            component={ForgotPasswordScreen}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </MenuProvider>
   );
 }
 
@@ -145,5 +165,13 @@ const styles = StyleSheet.create({
     letterSpacing: -1,
     left: '6.4%',
     top: '20%',
+  },
+  navIcons: {
+    width: 25,
+    height: 25,
+  },
+  navBar: {
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 });

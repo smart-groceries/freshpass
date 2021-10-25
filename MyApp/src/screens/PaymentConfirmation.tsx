@@ -12,19 +12,6 @@ import {
 } from 'react-native';
 import {useState} from 'react';
 
-export interface PaymentConfirmationProps {
-  style?: ViewStyle | Array<ViewStyle> | undefined;
-  ImageComponent?: any;
-  openListIcon?: React.ReactChild;
-  openListIconImageStyle?: ImageStyle | Array<ImageStyle>;
-  orderNumber?: string;
-  subtotal?: string;
-  tax?: string;
-  total?: string;
-  navigation?: any;
-  onExitPress?: () => void;
-  onOpenPress?: () => void;
-}
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 

@@ -1,18 +1,18 @@
-import React from 'react'
-import { 
-    View, 
-    Text, 
-    Button, 
-    TouchableOpacity, 
-    Dimensions,
-    TextInput,
-    Platform,
-    StyleSheet,
-    ScrollView,
-    StatusBar,
-    ScrollViewBase,
-    ViewStyle,
-    Alert
+import React from 'react';
+import {
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  Dimensions,
+  TextInput,
+  Platform,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  ScrollViewBase,
+  ViewStyle,
+  Alert,
 } from 'react-native';
 import FilterIcon from '../components/Filter';
 import SearchBar from '../components/SearchBar';
@@ -49,8 +49,6 @@ const ShoppingLists = () => {
     </View>
   );
 };
-
-}
 
 const styles = StyleSheet.create({
   screen: {
