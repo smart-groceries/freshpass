@@ -59,7 +59,7 @@ export default class SearchBar extends React.Component<SearchBarProps> {
         {searchIconComponent || (
           <ImageComponent
             resizeMode="contain"
-            source={require('./assets/search_icon.png')}
+            source={require('./../assets/search_icon.png')}
             style={[styles.searchIconImageStyle, searchIconImageStyle]}
           />
         )}

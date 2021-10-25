@@ -50,6 +50,14 @@ const ShoppingLists = () => {
   );
 };
 
+// const _container = (): ViewStyle => ({
+//   alignItems: 'flex-start',
+//   flexDirection: 'column',
+//   alignContent: 'center',
+//   marginTop: 5,
+//   marginHorizontal: 10,
+// });
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,

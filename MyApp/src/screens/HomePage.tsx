@@ -62,16 +62,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     //alignItems: 'flex-start',
   },
-  _container: {
-    alignItems: 'flex-start',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'space-evenly',
-    marginTop: 5,
-    marginRight: 10,
-    marginLeft: 10,
-  },
+  // _container: {
+  //   alignItems: 'flex-start',
+  //   flexWrap: 'wrap',
+  //   flexDirection: 'row',
+  //   alignContent: 'center',
+  //   justifyContent: 'space-evenly',
+  //   marginTop: 5,
+  //   marginRight: 10,
+  //   marginLeft: 10,
+  // },
 });
 
 export default HomePage;

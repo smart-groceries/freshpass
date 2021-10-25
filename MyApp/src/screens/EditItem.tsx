@@ -8,7 +8,8 @@ export default function EditItem(){
     return(
         <View>
             <Image
-            source={require('./../components/assets/store_icon.png')}/>
+            style = {styles.image}
+            source={require('./../assets/macncheese.png')}/>
             
             <TextInput
             style={styles.TextInput}
@@ -37,9 +38,6 @@ export default function EditItem(){
 
             <TouchableHighlight 
             style={styles.SaveButton}
-            activeOpacity={0.1}
-            underlayColor="#DDDDDD"
-            // onPress = {onPress}>
             >
                 <Text style={styles.SaveText}>Save</Text>
             </TouchableHighlight>
@@ -48,24 +46,43 @@ export default function EditItem(){
 }
 
 const styles = StyleSheet.create({
+    image:{
+        alignSelf:'center'
+    },
+
     TextInput:{
+        width:"90%",
+        left:20,
+        marginTop:20,
         borderRadius:4,
-        borderColor:'grey',
+        borderColor:'black',
         borderWidth:1,
-        color:'black'
+        color:'black',
+        alignContent:"center",
+        alignItems:"center"
     },
     IDText:{
+        width:"90%",
+        left:20,
+        marginTop:20,
         borderRadius:4,
-        borderColor:'grey',
+        borderColor:'black',
         borderWidth:1,
+
         color:'black',
         backgroundColor:'grey'
     },
     SaveButton:{
         borderRadius:50,
         backgroundColor:'orange',
+        width:"90%",
+        left:20,
+        marginTop:20,
+        borderColor:'black',
+        borderWidth:1,
+        padding: 10
     },
     SaveText:{
-
+        textAlign:'center',
     }
 })

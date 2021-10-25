@@ -17,6 +17,7 @@ import {
 import FilterIcon from '../components/Filter';
 import SearchBar from '../components/SearchBar';
 import GroceryItem from '../components/GroceryItem';
+import NumericInput from 'react-native-numeric-input';
 
 export interface CartProp {
   style?: ViewStyle | Array<ViewStyle> | undefined;

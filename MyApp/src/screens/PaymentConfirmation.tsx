@@ -96,7 +96,7 @@ const styles = StyleSheet.create<Style>({
     color: '#71BF61',
     fontSize: 25,
     fontFamily: 'varelaround-regular',
-    marginTop: 5,
+    marginTop: 30,
   },
   checkMarkContainer: {
     marginTop: 20,
