@@ -1,7 +1,23 @@
 import * as React from 'react';
 
-import {View, Image, ViewStyle, ImageStyle, StyleSheet} from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  ViewStyle,
+  ImageStyle,
+  StyleSheet,
+  Alert,
+  TextStyle,
+} from 'react-native';
 import RNBounceable from '@freakycoder/react-native-bounceable';
+import {
+  Menu,
+  MenuOptions,
+  MenuProvider,
+  MenuTrigger,
+  MenuOption,
+} from 'react-native-popup-menu';
 
 export interface FilterIconProps {
   ImageComponent?: any;
@@ -13,9 +29,7 @@ export interface FilterIconProps {
 }
 
 export default class FilterIcon extends React.Component<FilterIconProps> {
-  handleFilterPress = () => {
-    this.props.onPress;
-  };
+  handleFilterPress = () => {};
 
   renderFilterIcon = () => {
     const {
@@ -25,15 +39,15 @@ export default class FilterIcon extends React.Component<FilterIconProps> {
       ImageComponent = Image,
     } = this.props;
     return (
-      <RNBounceable style={styles.filterContainer} onPress={onFilterPress}>
+      <View style={styles.filterContainer}>
         {filterIconComponent || (
           <ImageComponent
             resizeMode="contain"
-            source={require('./assets/filter_icon.png')}
+            source={require('./../assets/filter_icon.png')}
             style={[styles.filterIconImageStyle, filterIconImageStyle]}
           />
         )}
-      </RNBounceable>
+      </View>
     );
   };
   render() {
@@ -41,10 +55,20 @@ export default class FilterIcon extends React.Component<FilterIconProps> {
     return (
       <RNBounceable
         {...this.props}
-        bounceEffect={0.97}
+        // bounceEffect={0.97}
         style={[_container(), style]}
         onPress={this.handleFilterPress}>
-        {this.renderFilterIcon()}
+        <Menu>
+          <MenuTrigger>{this.renderFilterIcon()}</MenuTrigger>
+          <MenuOptions>
+            <MenuOption>
+              <Text style={styles.menuText}>Closest</Text>
+            </MenuOption>
+            <MenuOption>
+              <Text style={styles.menuText}>Farthest</Text>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
       </RNBounceable>
     );
   }
@@ -53,6 +77,7 @@ export default class FilterIcon extends React.Component<FilterIconProps> {
 interface Style {
   filterContainer: ViewStyle;
   filterIconImageStyle: ImageStyle;
+  menuText: TextStyle;
 }
 
 const _container = (): ViewStyle => ({
@@ -74,5 +99,9 @@ const styles = StyleSheet.create<Style>({
   filterIconImageStyle: {
     width: 18,
     height: 18,
+  },
+  menuText: {
+    fontFamily: 'varelaround-regular',
+    color: '#424347',
   },
 });

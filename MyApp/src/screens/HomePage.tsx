@@ -7,35 +7,28 @@ import SearchBar from '../components/SearchBar';
 import Store from '../components/Store';
 import FilterIcon from '../components/Filter';
 
-export interface HomePageProps {
-  style?: ViewStyle | Array<ViewStyle> | undefined;
-}
-
-export default class HomePage extends React.Component<HomePageProps> {
-  render = () => {
-    const {style} = this.props;
-    return (
-      <View style={styles.screen}>
-        <View style={styles.sectionContainer}>
-          <SearchBar
-            placeholder="Search"
-            onPress={() => Alert.alert('onPress')}
-            onChangeText={text => console.log(text)}></SearchBar>
-          <FilterIcon></FilterIcon>
-        </View>
-        <ScrollView contentContainerStyle={[_container(), style]}>
-          <Store></Store>
-          <Store></Store>
-          <Store></Store>
-          <Store></Store>
-          <Store></Store>
-          <Store></Store>
-          <Store></Store>
-        </ScrollView>
+const HomePage = () => {
+  return (
+    <View style={styles.screen}>
+      <View style={styles.sectionContainer}>
+        <SearchBar
+          placeholder="Search"
+          onPress={() => Alert.alert('onPress')}
+          onChangeText={text => console.log(text)}></SearchBar>
+        <FilterIcon></FilterIcon>
       </View>
-    );
-  };
-}
+      <ScrollView contentContainerStyle={[_container()]}>
+        <Store></Store>
+        <Store></Store>
+        <Store></Store>
+        <Store></Store>
+        <Store></Store>
+        <Store></Store>
+        <Store></Store>
+      </ScrollView>
+    </View>
+  );
+};
 
 const _container = (): ViewStyle => ({
   alignItems: 'flex-start',
@@ -80,3 +73,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+export default HomePage;

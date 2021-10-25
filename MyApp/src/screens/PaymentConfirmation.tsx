@@ -10,6 +10,7 @@ import {
   ImageStyle,
   TextStyle,
 } from 'react-native';
+import {useState} from 'react';
 
 export interface PaymentConfirmationProps {
   style?: ViewStyle | Array<ViewStyle> | undefined;
@@ -20,70 +21,65 @@ export interface PaymentConfirmationProps {
   subtotal?: string;
   tax?: string;
   total?: string;
+  navigation?: any;
   onExitPress?: () => void;
   onOpenPress?: () => void;
 }
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-export default class PaymentConfirmation extends React.Component<PaymentConfirmationProps> {
-  renderOpenListIcon = () => {
-    const {
-      onOpenPress,
-      openListIcon,
-      openListIconImageStyle,
-      ImageComponent = Image,
-    } = this.props;
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'PaymentConfirm'>;
+};
+const PaymentConfirmation = ({navigation}: Props) => {
+  const [orderNumber, setOrderNumber] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [tax, setTax] = useState(0);
+  const renderOpenListIcon = () => {
     return (
       <View style={styles.openListContainer}>
-        <ImageComponent
+        <Image
           resizeMode="contain"
           source={require('../assets/add_icon.png')}
-          style={
-            (styles.openListIconImageStyle, openListIconImageStyle)
-          }></ImageComponent>
+          style={styles.openListIconImageStyle}></Image>
       </View>
     );
   };
 
-  render = () => {
-    const {
-      style,
-      orderNumber = '0000',
-      subtotal = '$0',
-      tax = '$0',
-      total = '$0',
-    } = this.props;
-    return (
-      <View style={[_container(), style]}>
-        <View style={styles.checkMarkContainer}>
-          <Image source={require('../assets/checkmark.png')}></Image>
-          <Text style={styles.validatedText}>Order Validated!</Text>
-        </View>
-        <Text style={styles.orderNumber}>Order Number: #{orderNumber}</Text>
-        <View style={styles.orderedItemsContainer}>
-          <Text style={styles.orderedItems}>Ordered Items</Text>
-          {this.renderOpenListIcon()}
-        </View>
-        <View style={styles.totalContainer}>
-          <View style={styles.subTotalContainer}>
-            <Text style={styles.subtotal}>Subtotal</Text>
-            <Text style={styles.subtotal}>{subtotal}</Text>
-          </View>
-          <View style={styles.subTotalContainer}>
-            <Text style={styles.subtotal}>Tax</Text>
-            <Text style={styles.subtotal}>{tax}</Text>
-          </View>
-          <View style={styles.subTotalContainer}>
-            <Text style={styles.orderedItems}>Total</Text>
-            <Text style={styles.orderedItems}>{total}</Text>
-          </View>
-        </View>
-        <RNBounceable style={styles.exitContainer}>
-          <Text style={styles.exit}>Exit</Text>
-        </RNBounceable>
+  return (
+    <View style={[_container()]}>
+      <View style={styles.checkMarkContainer}>
+        <Image source={require('../assets/checkmark.png')}></Image>
       </View>
-    );
-  };
-}
+      <Text style={styles.validatedText}>Order Validated!</Text>
+      <Text style={styles.orderNumber}>Order Number: #{orderNumber}</Text>
+      <View style={styles.orderedItemsContainer}>
+        <Text style={styles.orderedItems}>Ordered Items</Text>
+        {renderOpenListIcon()}
+      </View>
+      <View style={styles.totalContainer}>
+        <View style={styles.subTotalContainer}>
+          <Text style={styles.subtotal}>Subtotal</Text>
+          <Text style={styles.subtotal}>{subtotal}</Text>
+        </View>
+        <View style={styles.subTotalContainer}>
+          <Text style={styles.subtotal}>Tax</Text>
+          <Text style={styles.subtotal}>{tax}</Text>
+        </View>
+        <View style={styles.subTotalContainer}>
+          <Text style={styles.orderedItems}>Total</Text>
+          <Text style={styles.orderedItems}>{total}</Text>
+        </View>
+      </View>
+      <RNBounceable
+        style={styles.exitContainer}
+        onPress={() => navigation.navigate('Home')}>
+        <Text style={styles.exit}>Exit</Text>
+      </RNBounceable>
+    </View>
+  );
+};
 
 interface Style {
   openListContainer: ViewStyle;
@@ -116,7 +112,7 @@ const styles = StyleSheet.create<Style>({
     marginTop: 5,
   },
   checkMarkContainer: {
-    marginTop: 10,
+    marginTop: 20,
   },
   orderNumber: {
     fontSize: 15,
@@ -168,6 +164,7 @@ const styles = StyleSheet.create<Style>({
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.33,
+    margin: 20,
   },
   exit: {
     fontFamily: 'varelaround-regular',
@@ -181,3 +178,5 @@ const styles = StyleSheet.create<Style>({
     display: 'flex',
   },
 });
+
+export default PaymentConfirmation;
