@@ -50,6 +50,7 @@ import {MenuProvider} from 'react-native-popup-menu';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from './src/navigation/RootStackParamList';
+import EditAccountInfoScreen from './src/screens/EditAccountInfo';
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -131,6 +132,16 @@ export default function App() {
             name="Forgot"
             component={ForgotPasswordScreen}
             options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="PaymentMethods"
+            component={Payments}
+            options={{headerShown: true, title: 'Payment Methods'}}
+          />
+          <Stack.Screen
+            name="EditAccount"
+            component={EditAccountInfoScreen}
+            options={{headerShown: true, title: 'Account Information'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -13,8 +13,14 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const AccountScreen = () => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'Account'>;
+};
+
+const AccountScreen = ({navigation}: Props) => {
   const [data, setData] = React.useState({
     email: 'johndoe@gmail.com',
     name: 'John Doe',
@@ -37,7 +43,7 @@ const AccountScreen = () => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('PaymentMethods')}>
         <View style={[styles.accountEditOption, {marginTop: 48}, {left: 24}]}>
           <Image source={require('../assets/credit_card.png')} />
           <View style={[{flexDirection: 'column'}, {borderColor: '#999999'}]}>
@@ -61,7 +67,7 @@ const AccountScreen = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('EditAccount')}>
         <View style={[styles.accountEditOption, {marginTop: 28}, {left: 24}]}>
           <Image source={require('../assets/account_icon_dark.png')} />
           <View style={[{flexDirection: 'column'}, {borderColor: '#999999'}]}>
