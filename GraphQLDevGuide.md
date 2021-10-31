@@ -33,23 +33,23 @@ Overall, we could have chosen REST instead as our API format - however we simply
 ### Step 1: Writing GraphQL Code in AppSync
 All GraphQL queries will be declared in AppSync. To do this,
 
-		1. Launch AWS AppSync from the AWS Console
-		2. Open the "Schema" Tab
-		3. For any data type that you will be using, you will need to define the type.
-			- Before I explain how to do this, for any type that you’re defining, double check that it has not already been defined. If it hasn’t, move on to the next bullet point
-			- GraphQL uses a simple JSONesque format to define types. Each value is defined by the format `nameOfElement: DataType`, with an optional `!` argument that, when used, means that the element is non-nullable. Use this format to define the values in your data type.
-		4. Define your query or mutation by adding a new line into the cooresponding `Query` or `Mutation` type
-			- The format for these are `functionName(nameOfElement1: DataType1, nameOfElement2: DataType2, ...): ReturnType `
-		5. To your newly defined query or mutation, add an additional argument called `name`, that is of type `String!`
-			- The reason why we add this is that lambda has no functionality built in to detect what query or mutation called it. As a result, we need to somehow inform lambda what query needs to be ran whenever we call it - so we simply supply the name of the query in the name argument. This will be explained in later sections as well, but for now, make sure that you have that field
-		![Example of some entries in the `Query` type](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/query-example.png?raw=True)
-		6. Once you are finished adding in your GraphQL code,  you can push your code to AWS’s servers by clicking the “Save Schema” button
-		![Before the schema is saved](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/presave-schema.png?raw=True)
-		![After the schema is saved](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/saved-schema.png?raw=True)
-		7. The final step is to add the Lambda function as the resolver for the query -essentially this tells AppSync how to get a response for the query. This can be done in a few simple steps:
-			- Navigate to your new query or mutation in the  “Resolvers” panel on the right of the schema,	and click the “Attach” button
-			![The "Attach" Button](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/resolvers-attach.png?raw=True)
-			- Click the “Data Source Name” dropdown
-			- Select “LambdaLigma”
-			- Click the “Save Resolver” button
-			![The Resolver Settings Page](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/resolvers-settings.png?raw=True)
+1. Launch AWS AppSync from the AWS Console
+2. Open the "Schema" Tab
+3. For any data type that you will be using, you will need to define the type.
+	- Before I explain how to do this, for any type that you’re defining, double check that it has not already been defined. If it hasn’t, move on to the next bullet point
+	- GraphQL uses a simple JSONesque format to define types. Each value is defined by the format `nameOfElement: DataType`, with an optional `!` argument that, when used, means that the element is non-nullable. Use this format to define the values in your data type.
+4. Define your query or mutation by adding a new line into the cooresponding `Query` or `Mutation` type
+	- The format for these are `functionName(nameOfElement1: DataType1, nameOfElement2: DataType2, ...): ReturnType `
+5. To your newly defined query or mutation, add an additional argument called `name`, that is of type `String!`
+	- The reason why we add this is that lambda has no functionality built in to detect what query or mutation called it. As a result, we need to somehow inform lambda what query needs to be ran whenever we call it - so we simply supply the name of the query in the name argument. This will be explained in later sections as well, but for now, make sure that you have that field
+	![Example of some entries in the `Query` type](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/query-example.png?raw=True)
+6. Once you are finished adding in your GraphQL code,  you can push your code to AWS’s servers by clicking the “Save Schema” button
+	![Before the schema is saved](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/presave-schema.png?raw=True)
+	![After the schema is saved](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/saved-schema.png?raw=True)
+7. The final step is to add the Lambda function as the resolver for the query -essentially this tells AppSync how to get a response for the query. This can be done in a few simple steps:
+	- Navigate to your new query or mutation in the  “Resolvers” panel on the right of the schema,	and click the “Attach” button
+	![The "Attach" Button](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/resolvers-attach.png?raw=True)
+	- Click the “Data Source Name” dropdown
+	- Select “LambdaLigma”
+	- Click the “Save Resolver” button
+	![The Resolver Settings Page](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/resolvers-settings.png?raw=True)
