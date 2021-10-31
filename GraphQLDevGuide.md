@@ -53,3 +53,33 @@ All GraphQL queries will be declared in AppSync. To do this,
 	- Select “LambdaLigma”
 	- Click the “Save Resolver” button
 	![The Resolver Settings Page](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/resolvers-settings.png?raw=True)
+
+### Step 2: Write Server Code
+You will now need to add the logic that the Lambda function will use to evaluate your DB call. There are two functions that you need to write for any given query or mutation:
+- A function that can return the proper DB query
+- A function that, when supplied with the DB’s response, returns the proper response for the lambda to return
+
+1. Launch the “getParking” Lambda function
+2. Scroll to the bottom, and find the section of code that’s denoted as either “QUERIES” or “MUTATIONS”. This is where your code will go. If you’re writing a query, then you will add your code to the “QUERIES” section, and if you’re writing a mutation, you’ll add your code to the “MUTATIONS” section.
+	![The Queries code block](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/queries-in-lambda.png?raw=True)
+3. Write a function that formats the SQL query you want to run. 
+	![A sample query function](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/lambda-sql-query.png?raw=True)
+4. Write a function that formats the structure of the response you want to return to AppSync. This will be some JSON object that supplies all the needed fields that are defined in the GraphQL schema on AppSync
+	![A sample response function](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/lambda-resp-sample.png?raw=True)
+5. Scroll up to the main handler function of the lambda function, and find the switch statement.
+6. Add a case to the switch statement.
+- Note: The switch statement will use whatever value is supplied in the `name` field of the graphQL query/mutation that was defined in AppSync. The reason why the `name` argument is supplied is because that’s the only way that the lambda can determine which query called it - so just make sure that every time the client app calls the query, the name argument it supplies matches the case that is defined here
+7. In your new case in the switch statement, set `query` equal to the output of the function that defines the DB query you want to run
+8. Set the `respFunc` variable to *the function that will return the response to your query*
+- Notice that when defining the `query` variable, your case statement will be calling the function and then setting query equal to its return value, while the `respFunc` variable is actually a function itself. This is because `respFunc` cannot be called until we actually have the result from the DB call.
+	![A sample of how the switch is formatted](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/lambda-switch-example.png?raw=True)
+9. You’re now finished writing the server side code. To push your code to AWS’s servers, simply click the “Deploy” button
+- Note: Do not use the orange “Test” button supplied in the Lambda function to test your code - it won’t work. This is because the Lambda’s built-in testing is done by defining a JSON object that will get passed in to the lambda. Defining that JSON object isn’t worth your time, since you can just test through AppSync and not have to write anything new. 
+	![The lambda before the the changes are deployed](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/lambda-pre-save.png?raw=True)
+	![The lambda after the the changes are deployed](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/lambda-save.png?raw=True)
+
+### Step 3: Test Backend Code from AppSync
+1. Launch AppSync and select the “Queries” tab
+2. Select the query you just wrote, and enter in your test values
+3. Click the play button to have your query be sent to the lambda function
+	![Sample of the query being tested](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/testing-sample.png?raw=True)
