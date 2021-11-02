@@ -8,4 +8,8 @@ export type RootStackParamList = {
   Account: undefined;
   EditAccount: undefined;
   PaymentMethods: undefined;
+  AddPayment: undefined;
+  OrderRejected: undefined;
+  CartView: undefined;
+  Lists: undefined;
 };

@@ -125,12 +125,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 30,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   text_footer: {
     color: '#E89023',
     fontSize: 18,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 24,
   },
   action: {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     height: 66,
     backgroundColor: '#FDF2E6',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     borderRadius: 12,
     position: 'absolute',
     width: 324,
@@ -166,19 +166,19 @@ const styles = StyleSheet.create({
   textButton: {
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   textPrivate: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 20,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     textAlign: 'center',
   },
   previewText: {
     color: '#B3B3B3',
     textAlign: 'center',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   imageContainer: {
     justifyContent: 'center',

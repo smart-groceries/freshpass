@@ -11,8 +11,14 @@ import {
   TextStyle,
 } from 'react-native';
 import {useState} from 'react';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const OrderRejected = () => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'OrderRejected'>;
+};
+
+const OrderRejected = ({navigation}: Props) => {
   const [orderNumber, setOrderNumber] = useState(0);
   return (
     <View style={[_container()]}>
@@ -31,10 +37,14 @@ const OrderRejected = () => {
           please return your items to their proper location and leave.
         </Text>
       </View>
-      <RNBounceable style={styles.buttonContainer}>
+      <RNBounceable
+        style={styles.buttonContainer}
+        onPress={() => navigation.navigate('CartView')}>
         <Text style={styles.buttonText}>Back to Cart</Text>
       </RNBounceable>
-      <RNBounceable style={styles.buttonContainer}>
+      <RNBounceable
+        style={styles.buttonContainer}
+        onPress={() => navigation.navigate('Home')}>
         <Text style={styles.buttonText}>Cancel Session</Text>
       </RNBounceable>
     </View>
@@ -66,13 +76,13 @@ const styles = StyleSheet.create<Style>({
   rejectedText: {
     color: '#E89023',
     fontSize: 25,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     marginTop: 30,
     alignSelf: 'center',
   },
   orderNumber: {
     fontSize: 15,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#BBBBBB',
   },
   paragraphContainer: {
@@ -85,7 +95,7 @@ const styles = StyleSheet.create<Style>({
   },
   paragraph: {
     fontSize: 15,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#BBBBBB',
     justifyContent: 'center',
     textAlign: 'center',
@@ -101,7 +111,7 @@ const styles = StyleSheet.create<Style>({
     margin: 5,
   },
   buttonText: {
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     fontSize: 20,
     color: '#E89023',
   },

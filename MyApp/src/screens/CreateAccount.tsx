@@ -52,8 +52,8 @@ const CreateAccountScreen = ({navigation}: Props) => {
           <Image source={require('../assets/freshpass_logo.png')} />
         </View>
         <View>
-          <Text style={styles.text_footer}>Username</Text>
           <View style={styles.action}>
+            <Text style={styles.text_footer}>Username</Text>
             <TextInput
               placeholder="Your Username"
               placeholderTextColor="#3A3B3E"
@@ -63,8 +63,8 @@ const CreateAccountScreen = ({navigation}: Props) => {
             />
           </View>
 
-          <Text style={[styles.text_footer]}>Email</Text>
           <View style={styles.action}>
+            <Text style={[styles.text_footer]}>Email</Text>
             <TextInput
               placeholder="Your Email"
               placeholderTextColor="#3A3B3E"
@@ -74,8 +74,8 @@ const CreateAccountScreen = ({navigation}: Props) => {
             />
           </View>
 
-          <Text style={[styles.text_footer]}>Password</Text>
           <View style={styles.action}>
+            <Text style={[styles.text_footer]}>Password</Text>
             <TextInput
               placeholder="Your Password"
               placeholderTextColor="#3A3B3E"
@@ -89,8 +89,8 @@ const CreateAccountScreen = ({navigation}: Props) => {
             ></TouchableOpacity>
           </View>
 
-          <Text style={[styles.text_footer]}>Confirm Password</Text>
           <View style={styles.action}>
+            <Text style={[styles.text_footer]}>Confirm Password</Text>
             <TextInput
               placeholder="Confirm Your Password"
               placeholderTextColor="#3A3B3E"
@@ -190,15 +190,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 30,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   text_footer: {
     color: '#E89023',
     fontSize: 18,
-    fontFamily: 'VarelaRound-regular',
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 10,
+    fontFamily: 'VarelaRound-Regular',
+    margin: 5,
   },
   action: {
     // flexDirection: 'row',
@@ -206,9 +204,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     // borderBottomColor: '#FFFFFF',
     // paddingBottom: 5,
-
-    backgroundColor: '#FDF2E6',
-    borderRadius: 12,
+    margin: 10,
     width: 324,
   },
   textInput: {
@@ -216,8 +212,10 @@ const styles = StyleSheet.create({
     // marginTop: Platform.OS === 'android' ? 0 : -12,
     paddingLeft: 10,
     width: '90%',
-    height: 66,
-    fontFamily: 'VarelaRound-regular',
+    height: 55,
+    fontFamily: 'VarelaRound-Regular',
+    backgroundColor: '#FDF2E6',
+    borderRadius: 12,
   },
   button: {
     alignItems: 'center',
@@ -233,14 +231,14 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   textPrivate: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     margin: 20,
     justifyContent: 'center',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   color_textPrivate: {
     color: 'green',

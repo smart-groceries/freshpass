@@ -95,7 +95,7 @@ const styles = StyleSheet.create<Style>({
   validatedText: {
     color: '#71BF61',
     fontSize: 25,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     marginTop: 30,
   },
   checkMarkContainer: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create<Style>({
   },
   orderNumber: {
     fontSize: 15,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#BBBBBB',
   },
   orderedItemsContainer: {
@@ -121,13 +121,13 @@ const styles = StyleSheet.create<Style>({
   },
   orderedItems: {
     fontSize: 20,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     marginHorizontal: 20,
     marginVertical: 3,
   },
   subtotal: {
     fontSize: 15,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#BBBBBB',
     marginHorizontal: 20,
     marginVertical: 3,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create<Style>({
     margin: 20,
   },
   exit: {
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     fontSize: 20,
     color: '#71BF61',
   },

@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
 
   linkContainer: {
-    margin: 15,
+    margin: 10,
   },
 
   inputView: {
@@ -113,14 +113,17 @@ const styles = StyleSheet.create({
   },
 
   TextInput: {
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
+    width: 300,
+    flex: 1,
+    textAlign: 'center',
   },
 
   forgot_button: {
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   create_acc_button: {
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
 
   loginBtn: {
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
 
   // /* Rectangle 2 */

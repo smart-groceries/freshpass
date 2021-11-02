@@ -38,7 +38,7 @@ import CartView from './src/screens/CartView';
 import EditItem from './src/screens/EditItem';
 import {AppRegistry} from 'react-native';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LandingPage from './src/screens/LandingPage';
 import HomePage from './src/screens/HomePage';
 import RNBounceable from '@freakycoder/react-native-bounceable';
@@ -70,7 +70,7 @@ function HomeTabs() {
             iconName = require('./src/assets/account_icon.png');
           } else if (route.name === 'Stores') {
             iconName = require('./src/assets/stores_icon.png');
-          } else if (route.name === 'Shopping Lists') {
+          } else if (route.name === 'Lists') {
             iconName = require('./src/assets/lists_icon.png');
           }
           return (
@@ -81,18 +81,16 @@ function HomeTabs() {
           );
         },
         headerShown: true,
+        headerTitleStyle: {fontFamily: 'VarelaRound-Regular'},
         tabBarActiveTintColor: 'black',
-        // tabBarButton: props => (
-        //   <RNBounceable>
-        //     <ButtonIcon {this.iconName}></ButtonIcon>
-        //   </RNBounceable>
-        // ),
+        tabBarLabelStyle: {fontFamily: 'VarelaRound-Regular'},
+        tabBarActiveBackgroundColor: '#F3F3F3',
       })}>
       <Tab.Screen name="Account" component={AccountScreen} />
 
       <Tab.Screen name="Stores" component={HomePage} />
 
-      <Tab.Screen name="Shopping Lists" component={ShoppingLists} />
+      <Tab.Screen name="Lists" component={ShoppingLists} />
     </Tab.Navigator>
   );
 }
@@ -107,11 +105,16 @@ export default function App() {
   return (
     <MenuProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerTitleStyle: {fontFamily: 'VarelaRound-Regular'},
+          }}>
           <Stack.Screen
             name="Landing"
             component={LandingPage}
-            options={{headerShown: false}}
+            options={{
+              headerShown: false,
+            }}
           />
           <Stack.Screen
             name="Login"
@@ -142,6 +145,11 @@ export default function App() {
             name="EditAccount"
             component={EditAccountInfoScreen}
             options={{headerShown: true, title: 'Account Information'}}
+          />
+          <Stack.Screen
+            name="AddPayment"
+            component={AddPayment}
+            options={{headerShown: true, title: 'Add Payment'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

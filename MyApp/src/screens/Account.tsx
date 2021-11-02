@@ -91,11 +91,16 @@ const AccountScreen = ({navigation}: Props) => {
         </View>
       </TouchableOpacity>
 
-      <View style={[styles.logOutButton, {marginTop: 430}]}>
-        <TouchableOpacity>
-          <Text style={styles.logOutButtonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
+      {/* <View style={[styles.logOutButton]}> */}
+      <TouchableOpacity
+        style={styles.logOutButton}
+        onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.logOutButtonText}>Logout</Text>
+      </TouchableOpacity>
+      {/* </View> */}
+      {/* <TouchableOpacity style = {styles.}>
+        <Text>Sign Out</Text>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -107,18 +112,18 @@ const styles = StyleSheet.create({
   },
   text_header: {
     color: '#424347',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     fontSize: 40,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'left',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 20,
   },
   text_footer: {
     color: '#424347',
     fontSize: 16,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 24,
   },
   action: {
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     height: 50,
     backgroundColor: '#F5F5F5',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     borderRadius: 5,
     position: 'absolute',
     width: 324,
@@ -171,23 +176,28 @@ const styles = StyleSheet.create({
   textSaveButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#FFFFFF',
   },
   greyedOutTextSaveButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#DCDCDC',
   },
   logOutButton: {
-    marginTop: 40,
+    marginTop: 125,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#71BF61',
+    width: 324,
+    height: 55,
+    borderRadius: 12,
+    alignSelf: 'center',
   },
   logOutButtonText: {
     color: '#424347',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     fontSize: 20,
   },
   userInfo: {
@@ -196,7 +206,7 @@ const styles = StyleSheet.create({
   },
   userInfoText: {
     color: '#424347',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 16,
   },
   accountEditOption: {

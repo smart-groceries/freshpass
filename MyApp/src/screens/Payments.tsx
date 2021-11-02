@@ -16,8 +16,14 @@ import {
   ImageComponent,
   Image,
 } from 'react-native';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const Payments = () => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'PaymentMethods'>;
+};
+
+const Payments = ({navigation}: Props) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.TextContainer}>
@@ -26,7 +32,7 @@ const Payments = () => {
           You can add and edit payments during checkout
         </Text>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('AddPayment')}>
         <View style={styles.PaymentMethodContainer}>
           <Image
             style={styles.searchIconImageStyle}
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
   NoPaymentText: {
     width: '90%',
     // bottom: '20%',
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     fontSize: 20,
     // left: 20,
     // top: '70%',
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
     width: '90%',
     // top: '90%',
     // left: 20,
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 13,
@@ -102,7 +108,7 @@ const styles = StyleSheet.create({
     top: '70%',
     left: '20%',
     position: 'absolute',
-    fontFamily: 'varelaround-regular',
+    fontFamily: 'VarelaRound-Regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 20,

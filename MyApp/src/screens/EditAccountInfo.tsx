@@ -205,12 +205,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   text_footer: {
     color: '#424347',
     fontSize: 16,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 24,
   },
   action: {
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     height: 50,
     backgroundColor: '#F5F5F5',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     borderRadius: 5,
     position: 'absolute',
     width: 324,
@@ -263,13 +263,13 @@ const styles = StyleSheet.create({
   textSaveButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#FFFFFF',
   },
   greyedOutTextSaveButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#DCDCDC',
   },
   forgotPasswordButton: {
@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
   savedNotif: {
     color: '#424347',
     fontSize: 16,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
   hiddenSavedNotif: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
   },
 });
 
