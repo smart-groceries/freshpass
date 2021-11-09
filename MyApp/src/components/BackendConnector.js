@@ -25,11 +25,7 @@ const BackendConnector = () => {
         cache: new InMemoryCache()
     })
 
-    return (
-        <ApolloProvider client={BackendConnector}>
-            
-        </ApolloProvider>
-    )
+    return client
 }
 
 
