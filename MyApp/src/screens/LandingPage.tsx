@@ -21,26 +21,6 @@ import { GET_USER_BY_ID } from '../graphql/queries';
 
 type Props = {navigation: StackNavigationProp<RootStackParamList, 'Landing'>};
 
-function TestFunc() {
-  const { error, loading, data } = useQuery(GET_USER_BY_ID, {
-    variables: {
-      id: "1"
-    }
-  });
-
-  if (loading) return <Text>Loading</Text>
-  if (error) return <Text>Error Loading - {error.message}</Text>
-
-  return (
-      <View>
-        <Text>id is {data.getUserById.id}</Text>
-        <Text>fname is {data.getUserById.first_name}</Text>
-        <Text>lname is {data.getUserById.last_name}</Text>
-      </View>
-  );
-}
-
-
 const LandingPage = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
@@ -61,7 +41,6 @@ const LandingPage = ({navigation}: Props) => {
         <Text style={[styles.previewText, {marginTop: 25}, {fontSize: 14}]}>
           Traditionally, a trip to the grocery store is
         </Text>
-        <TestFunc/>
         <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
           filled with long lines and wasted time
         </Text>
