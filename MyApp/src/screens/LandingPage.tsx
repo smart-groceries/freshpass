@@ -15,7 +15,12 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 // import LottieSuccessAnimation from '../components/lottie-components/success';
 import {RootStackParamList} from '../navigation/RootStackParamList';
+import { useQuery } from '@apollo/client';
+import { GET_USER_BY_ID } from '../graphql/queries';
+
+
 type Props = {navigation: StackNavigationProp<RootStackParamList, 'Landing'>};
+
 const LandingPage = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
