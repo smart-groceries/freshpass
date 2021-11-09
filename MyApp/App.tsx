@@ -37,7 +37,7 @@ import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
 import EditItem from './src/screens/EditItem';
 import {AppRegistry} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+//import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LandingPage from './src/screens/LandingPage';
 import HomePage from './src/screens/HomePage';
 import RNBounceable from '@freakycoder/react-native-bounceable';
@@ -52,30 +52,29 @@ import {RootStackParamList} from './src/navigation/RootStackParamList';
 import EditAccountInfoScreen from './src/screens/EditAccountInfo';
 
 import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
-import AppSync from './src/graphql/AppSyncConfig.js';
-import { TEST_QUERY } from './src/graphql/queries';
-
-import { graphql } from 'react-apollo';
+import AppSyncConfig from './src/graphql/AppSyncConfig.js';
 import { ApolloLink } from 'apollo-link';
-import { createAuthLink } from 'aws-appsync-auth-link';
+import { createAuthLink } from 'aws/appsync/auth-link';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { TEST_QUERY } from './src/graphql/queries';
 
-const url = AppSync.ApiUrl;
-  const region = AppSync.Region;
-  const auth = {
+const url = AppSyncConfig.ApiUrl;
+const region = AppSyncConfig.Region;
+const auth = {
     type: 'API_KEY',
-    apiKey: AppSync.ApiKey
-  };
-  const link = ApolloLink.from([
+    apiKey: AppSyncConfig.ApiKey
+};
+
+const link = ApolloLink.from([
     createAuthLink({ url, region, auth }), 
     createHttpLink({ uri: url })
-  ]);
-  const client = new ApolloClient({
+]);
+
+const client = new ApolloClient({
     link,
     cache: new InMemoryCache()
-  });
-
+})
 
 
 
