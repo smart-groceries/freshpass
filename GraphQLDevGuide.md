@@ -100,7 +100,7 @@ You will now need to add the logic that the Lambda function will use to evaluate
 
 	![Sample of selecting fields](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/field-selection.png?raw=True)
 
-		- For example, this is the final input for the `getUserByID` query
+	- For example, this is the final input for the `getUserByID` query
 
 	![Another field selection](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/field-selection-2.png?raw=True)
 
@@ -112,12 +112,13 @@ You will now need to add the logic that the Lambda function will use to evaluate
 	- Essentially, follow the format below, except any arguments that were passed in to `MyQuery` that are expecting a text input, switch those to be expecting a variable
 	- In our example, the signature  `query MyQuery($id: ID = "") ` was created from AppSync. We want to switch that to be `query MyQuery($id: ID!)` instead
 	- For more details about the formatting, refer to [this website](https://www.apollographql.com/docs/react/data/queries/)
-	![Sample query in code](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-query-in-code.png.png?raw=True)
+
+	![Sample query in code](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-query-in-code.png?raw=True)
 
 3. Import the query with  `import { queryName } from '../graphql/queries';` wherever you are planning on using the code
 	![Sample import](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/import-statement.png?raw=True)
 4. Call the query in the code
-	- Follow the format photographed below
+	- Follow the format photographed below	
 	![Sample call in code](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-call.png?raw=True)
 	- When you are actually implementing your code, you might want to write this as a function, and then supply the argument as a prop
 	![Sample of function usage](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-function.png?raw=True)
