@@ -31,6 +31,7 @@
     "react": "17.0.2",
     "react-apollo": "^3.1.5",
     "react-native": "^0.65.1",
+    "react-native-check-box": "^2.1.7",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-maps": "0.29.3",
     "react-native-numeric-input": "^1.9.0",

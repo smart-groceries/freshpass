@@ -23,10 +23,10 @@ type Props = {
 
 const EditAccountInfoScreen = ({navigation}: Props) => {
   const [data, setData] = React.useState({
-    email: 'hello1',
-    username: 'hello2',
-    name: 'hello3',
-    password: 'hello4',
+    email: 'test@email.com',
+    username: 'test',
+    name: 'test',
+    password: 'test',
     stateHasBeenChanged: false,
     inInitialState: true,
   });
@@ -93,7 +93,7 @@ const EditAccountInfoScreen = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
-      <Text style={[styles.text_header, {marginTop: 60}]}>Account Info</Text>
+      {/* <Text style={[styles.text_header, {marginTop: 60}]}>Account Info</Text> */}
       <ScrollView>
         <Text style={[styles.text_footer, {marginTop: 50}, {marginLeft: 17}]}>
           Email

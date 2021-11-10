@@ -57,7 +57,7 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
         <Text style={[styles.text_footer, {marginTop: 25}, {marginLeft: 17}]}>
           Email
         </Text>
-        <View style={[styles.action, {marginTop: 14}]}>
+        <View style={styles.action}>
           <TextInput
             placeholder="Your Email"
             placeholderTextColor="#3A3B3E"

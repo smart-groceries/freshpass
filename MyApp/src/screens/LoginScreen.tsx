@@ -1,5 +1,5 @@
 import {typeAlias} from '@babel/types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/core';
 import {
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import {Dispatch} from 'react';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -19,6 +20,20 @@ type Props = {
 export default function App({navigation}: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  // const handleLogin = () => {
+  //   setLoading(true);
+  // };
+  // useEffect(() => {
+  //   let timer = setTimeout(() => {}, 0);
+  //   if (loading) {
+  //     timer = setTimeout(() => {
+  //       dispatch({type: 'LOGIN', data: {email, password}});
+  //       setLoading(false);
+  //     }, 1000);
+  //   }
+  //   return () => clearTimeout(timer);
+  // }, [loading]);
 
   return (
     <View style={styles.container}>
@@ -91,10 +106,12 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    width: '100%',
+    // width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 25,
+    marginTop: 150,
+    resizeMode: 'contain',
+    flex: 1,
   },
 
   linkContainer: {

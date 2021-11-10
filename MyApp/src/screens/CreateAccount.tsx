@@ -51,56 +51,56 @@ const CreateAccountScreen = ({navigation}: Props) => {
         <View style={styles.imageContainer}>
           <Image source={require('../assets/freshpass_logo.png')} />
         </View>
-        <View>
-          <View style={styles.action}>
-            <Text style={styles.text_footer}>Username</Text>
-            <TextInput
-              placeholder="Your Username"
-              placeholderTextColor="#3A3B3E"
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={val => textInputChange(val)}
-            />
-          </View>
-
-          <View style={styles.action}>
-            <Text style={[styles.text_footer]}>Email</Text>
-            <TextInput
-              placeholder="Your Email"
-              placeholderTextColor="#3A3B3E"
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={val => textInputChange(val)}
-            />
-          </View>
-
-          <View style={styles.action}>
-            <Text style={[styles.text_footer]}>Password</Text>
-            <TextInput
-              placeholder="Your Password"
-              placeholderTextColor="#3A3B3E"
-              secureTextEntry={data.secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              //onChangeText={(val) => handlePasswordChange(val)}
-            />
-            <TouchableOpacity
-            //onPress={updateSecureTextEntry}
-            ></TouchableOpacity>
-          </View>
-
-          <View style={styles.action}>
-            <Text style={[styles.text_footer]}>Confirm Password</Text>
-            <TextInput
-              placeholder="Confirm Your Password"
-              placeholderTextColor="#3A3B3E"
-              secureTextEntry={data.confirm_secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-            />
-            <TouchableOpacity></TouchableOpacity>
-          </View>
+        {/* <View> */}
+        <View style={styles.action}>
+          <Text style={styles.text_footer}>Username</Text>
+          <TextInput
+            placeholder="Your Username"
+            placeholderTextColor="#3A3B3E"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={val => textInputChange(val)}
+          />
         </View>
+
+        <View style={styles.action}>
+          <Text style={[styles.text_footer]}>Email</Text>
+          <TextInput
+            placeholder="Your Email"
+            placeholderTextColor="#3A3B3E"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={val => textInputChange(val)}
+          />
+        </View>
+
+        <View style={styles.action}>
+          <Text style={[styles.text_footer]}>Password</Text>
+          <TextInput
+            placeholder="Your Password"
+            placeholderTextColor="#3A3B3E"
+            secureTextEntry={data.secureTextEntry ? true : false}
+            style={styles.textInput}
+            autoCapitalize="none"
+            //onChangeText={(val) => handlePasswordChange(val)}
+          />
+          <TouchableOpacity
+          //onPress={updateSecureTextEntry}
+          ></TouchableOpacity>
+        </View>
+
+        <View style={styles.action}>
+          <Text style={[styles.text_footer]}>Confirm Password</Text>
+          <TextInput
+            placeholder="Confirm Your Password"
+            placeholderTextColor="#3A3B3E"
+            secureTextEntry={data.confirm_secureTextEntry ? true : false}
+            style={styles.textInput}
+            autoCapitalize="none"
+          />
+          <TouchableOpacity></TouchableOpacity>
+        </View>
+        {/* </View> */}
         <View style={styles.textPrivate}>
           <Text style={styles.color_textPrivate}>
             By signing up you agree to our
@@ -162,8 +162,11 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     resizeMode: 'contain',
+    flex: 1,
     // position: 'absolute',
-    // justifyContent: 'center',
+    justifyContent: 'center',
+    // marginTop: 100,
+    // backgroundColor: 'black',
   },
 
   scrollContainer: {
@@ -211,7 +214,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // marginTop: Platform.OS === 'android' ? 0 : -12,
     paddingLeft: 10,
-    width: '90%',
     height: 55,
     fontFamily: 'VarelaRound-Regular',
     backgroundColor: '#FDF2E6',

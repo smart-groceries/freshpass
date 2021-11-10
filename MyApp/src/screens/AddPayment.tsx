@@ -7,17 +7,13 @@ import {
   TextInput,
   Platform,
   StyleSheet,
-  ScrollView,
-  StatusBar,
-  ScrollViewBase,
-  ViewStyle,
-  Alert,
-  ImageComponent,
-  Image,
+  Switch,
   KeyboardAvoidingView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
+import {placeholder} from '@babel/types';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function AddPayment() {
   const [email, setEmail] = useState('');
@@ -109,15 +105,47 @@ export default function AddPayment() {
     //     </TouchableOpacity>
     //   </View>
     // </View>
+    <KeyboardAvoidingView style={styles.mainContainer} behavior="padding">
+      <TextInput style={styles.inputField} placeholder={'Name on Card'} />
+      <TextInput
+        style={styles.inputField}
+        placeholder={'Card Number'}
+        keyboardType="numeric"
+      />
 
-    <View style={styles.mainContainer}>
-      <TextInput
-        style={styles.inputField}
-        placeholder={'Name on Card'}></TextInput>
-      <TextInput
-        style={styles.inputField}
-        placeholder={'Card Number'}></TextInput>
-    </View>
+      <View style={styles.rowContainer}>
+        <TextInput
+          style={styles.inputField2}
+          placeholder={'Month'}
+          keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.inputField2}
+          placeholder={'Year'}
+          keyboardType="numeric"
+        />
+      </View>
+      <View style={styles.rowContainer}>
+        <TextInput
+          style={styles.inputField2}
+          placeholder={'CVC'}
+          keyboardType="numeric"
+        />
+        <Text style={styles.securityText}>
+          3 or 4 digits usually found on the signataure strip
+        </Text>
+      </View>
+      <View style={styles.default}>
+        <Switch
+          trackColor={{false: '#E89023', true: '#71BF61'}}
+          thumbColor="#BBBBBB"
+          ios_backgroundColor="#3e3e3e"></Switch>
+        <Text style={styles.securityText}>SET AS DEFAULT</Text>
+      </View>
+      <TouchableOpacity style={styles.addButton}>
+        <Text style={styles.buttonText}>Add Method</Text>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -127,6 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
+    padding: 25,
   },
   inputField: {
     alignItems: 'center',
@@ -137,9 +166,49 @@ const styles = StyleSheet.create({
     margin: 15,
     fontFamily: 'VarelaRound-Regular',
   },
-  placeHolder: {},
-  pickerContainer: {
-    borderWidth: 1,
+  inputField2: {
     width: '40%',
+    borderWidth: 1,
+    borderColor: '#BBBBBB',
+    margin: 15,
+    fontFamily: 'VarelaRound-Regular',
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 324,
+    justifyContent: 'center',
+  },
+  securityText: {
+    justifyContent: 'center',
+    flex: 1,
+    flexWrap: 'wrap',
+    margin: 10,
+    fontFamily: 'VarelaRound-Regular',
+    // padding: 0,
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  default: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 200,
+    // margin: 100,
+    // backgroundColor: 'black',
+  },
+  addButton: {
+    width: 324,
+    height: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FDF2E6',
+    margin: 30,
+    borderRadius: 15,
+  },
+  buttonText: {
+    fontFamily: 'VarelaRound-Regular',
+    fontSize: 18,
   },
 });
