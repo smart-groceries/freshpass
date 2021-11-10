@@ -83,3 +83,46 @@ You will now need to add the logic that the Lambda function will use to evaluate
 2. Select the query you just wrote, and enter in your test values
 3. Click the play button to have your query be sent to the lambda function
 	![Sample of the query being tested](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/testing-sample.png?raw=True)
+
+### Step 4: Integrating GraphQL on the Client App
+1. Get the query from AppSync
+	- Open up AppSync, and navigate to the “Queries” tab
+	- Select the query you want to implement, and only that query
+	- For any arguments that will be passed as a variable from the client code, hover to the right of the variable’s declaration, and a `$` will appear. Click that, and then your argument should look as follows
+
+	![Sample of how the code looks when the dollar sign is being used](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/get-id-dollar-sign.png?raw=True)
+
+	- Hard code in any values that need to be passed to the backend, but are not going to be variable. For every query, there will be at least one of these - the queries name
+
+	![Sample of how the code looks when you hard code in a value](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/hard-code-name.png?raw=True)
+
+	- Select the fields that you want to have returned
+
+	![Sample of selecting fields](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/field-selection.png?raw=True)
+
+	- For example, this is the final input for the `getUserByID` query
+
+	![Another field selection](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/field-selection-2.png?raw=True)
+
+	- This will generate a query on the other side of your screen, that will look something like what I’ve shown below. Copy that whole thing.
+		
+	![Sample generated query](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-generated-query.png?raw=True)
+
+2. Add the query or mutation to the proper file that is predefined in the client project ( `freshpass/MyApp/src/graphql/queries.js` or `freshpass/MyApp/src/graphql/mutations.js`)
+	- Essentially, follow the format below, except any arguments that were passed in to `MyQuery` that are expecting a text input, switch those to be expecting a variable
+	- In our example, the signature  `query MyQuery($id: ID = "") ` was created from AppSync. We want to switch that to be `query MyQuery($id: ID!)` instead
+	- For more details about the formatting, refer to [this website](https://www.apollographql.com/docs/react/data/queries/)
+
+	![Sample query in code](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-query-in-code.png?raw=True)
+
+3. Import the query with  `import { queryName } from '../graphql/queries';` wherever you are planning on using the code
+	![Sample import](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/import-statement.png?raw=True)
+4. Call the query in the code
+	- Follow the format photographed below	
+	![Sample call in code](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-call.png?raw=True)
+	- When you are actually implementing your code, you might want to write this as a function, and then supply the argument as a prop
+	![Sample of function usage](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/sample-function.png?raw=True)
+5. Run your code to verify that it's working
+![Screenshot of code](https://github.com/smart-groceries/freshpass/blob/main/dev-guide-images/screenshot-sample.png?raw=True)
+
+

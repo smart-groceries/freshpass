@@ -1,3 +1,4 @@
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {
   View,
@@ -12,16 +13,37 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
-// import LottieSuccessAnimation from '../components/lottie-components/success';
 import {RootStackParamList} from '../navigation/RootStackParamList';
-import { useQuery } from '@apollo/client';
-import { GET_USER_BY_ID } from '../graphql/queries';
+import {StackNavigationProp} from '@react-navigation/stack';
 
+// type Props = {
+//   navigation: StackNavigationProp<RootStackParamList, 'PasswordReset'>;
+// };
 
-type Props = {navigation: StackNavigationProp<RootStackParamList, 'Landing'>};
+const PasswordLinkSent = () => {
+  const [data, setData] = React.useState({
+    email: '',
+    check_textInputChange: false,
+    secureTextEntry: true,
+    confirm_secureTextEntry: true,
+  });
 
-const LandingPage = ({navigation}: Props) => {
+  const textInputChange = (val: any) => {
+    if (val.length !== 0) {
+      setData({
+        ...data,
+        email: val,
+        check_textInputChange: true,
+      });
+    } else {
+      setData({
+        ...data,
+        email: val,
+        check_textInputChange: false,
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
@@ -29,27 +51,13 @@ const LandingPage = ({navigation}: Props) => {
         <Image source={require('../assets/freshpass_logo.png')} />
       </View>
       <ScrollView>
-        <Text
-          style={[
-            styles.previewText,
-            {marginTop: 25},
-            {fontWeight: 'bold'},
-            {fontSize: 20},
-          ]}>
-          Grocery Shopping Reimagined
+        <Text style={[styles.color_textPrivate, {marginTop: 25}]}>
+          A link has been sent to your email.{"\n"}Please reset your password.
         </Text>
-        <Text style={[styles.previewText, {marginTop: 25}, {fontSize: 14}]}>
-          Traditionally, a trip to the grocery store is
-        </Text>
-        <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
-          filled with long lines and wasted time
-        </Text>
-        <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
-          searching. With FreshPass, that is a thing
-        </Text>
-        <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
-          of the past.
-        </Text>
+        <View style={[styles.action, {marginTop: 14}]}>
+          
+        </View>
+
         <View style={styles.button}>
           {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
@@ -59,47 +67,32 @@ const LandingPage = ({navigation}: Props) => {
                           color:'#fff'
                       }]}>Sign Up</Text>
                   </LinearGradient> */}
+
           <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
+            //onPress={() => navigation.goBack()}
             style={[
-              styles.signUp,
-              {
-                borderColor: '#E89023',
-                backgroundColor: '#E89023',
-                borderWidth: 1,
-                marginTop: 125,
-              },
-            ]}>
-            <Text
-              style={[
-                styles.textButton,
-                {
-                  color: '#FFFFFF',
-                },
-              ]}>
-              Sign In
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Create')}
-            style={[
-              styles.signUp,
+              styles.reset,
               {
                 borderColor: '#71BF61',
                 backgroundColor: '#71BF61',
                 borderWidth: 1,
-                marginTop: 20,
+                marginTop: 15,
               },
             ]}>
             <Text
               style={[
-                styles.textButton,
+                styles.textResetButton,
                 {
                   color: '#FFFFFF',
                 },
               ]}>
-              Sign Up
+              Log In
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.linkContainer}
+            >
+            <Text style={styles.link}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -111,6 +104,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+    alignItems: 'center',
   },
   header: {
     flex: 1,
@@ -126,17 +120,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
+
+  link: {
+    fontFamily: 'varelaround-regular',
+    // fontWeight: 'bold',
+  },
+  linkContainer: {
+    margin: 10,
+  },
   text_header: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 30,
-    fontFamily: 'VarelaRound-Regular',
+    fontFamily: 'VarelaRound-regular',
   },
   text_footer: {
     color: '#E89023',
     fontSize: 18,
-    fontFamily: 'VarelaRound-Regular',
-    left: 24,
+    fontFamily: 'VarelaRound-regular',
+    left: -10,
   },
   action: {
     flexDirection: 'row',
@@ -151,39 +153,40 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     height: 66,
     backgroundColor: '#FDF2E6',
-    fontFamily: 'VarelaRound-Regular',
+    fontFamily: 'VarelaRound-regular',
     borderRadius: 12,
     position: 'absolute',
     width: 324,
-    left: 34,
+    // left: 34,
   },
   button: {
     alignItems: 'center',
+    marginTop: 50,
   },
-  signUp: {
+  reset: {
     width: 324,
-    height: 55,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
     left: 1,
   },
-  textButton: {
-    fontSize: 16,
+  textResetButton: {
+    fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-Regular',
+    fontFamily: 'VarelaRound-regular',
   },
   textPrivate: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 20,
-    fontFamily: 'VarelaRound-Regular',
+    fontFamily: 'VarelaRound-regular',
     textAlign: 'center',
   },
-  previewText: {
+  color_textPrivate: {
     color: '#B3B3B3',
     textAlign: 'center',
-    fontFamily: 'VarelaRound-Regular',
+    fontFamily: 'VarelaRound-regular',
   },
   imageContainer: {
     justifyContent: 'center',
@@ -192,10 +195,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginTop: 175,
   },
-  storeLottie: {
-    width: 100,
-    height: 100,
-  },
 });
 
-export default LandingPage;
+export default PasswordLinkSent;
