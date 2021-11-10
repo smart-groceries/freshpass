@@ -126,7 +126,7 @@ const _textInputStyle = (): TextStyle => ({
   width: '80%',
   marginLeft: 12,
   color: '#19191a',
-  fontFamily: 'varelaround-regular',
+  fontFamily: 'VarelaRound-Regular',
 });
 
 const styles = StyleSheet.create<Style>({

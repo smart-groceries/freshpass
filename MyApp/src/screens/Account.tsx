@@ -13,8 +13,14 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const AccountScreen = () => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'Account'>;
+};
+
+const AccountScreen = ({navigation}: Props) => {
   const [data, setData] = React.useState({
     email: 'johndoe@gmail.com',
     name: 'John Doe',
@@ -37,7 +43,7 @@ const AccountScreen = () => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('PaymentMethods')}>
         <View style={[styles.accountEditOption, {marginTop: 48}, {left: 24}]}>
           <Image source={require('../assets/credit_card.png')} />
           <View style={[{flexDirection: 'column'}, {borderColor: '#999999'}]}>
@@ -61,7 +67,7 @@ const AccountScreen = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('EditAccount')}>
         <View style={[styles.accountEditOption, {marginTop: 28}, {left: 24}]}>
           <Image source={require('../assets/account_icon_dark.png')} />
           <View style={[{flexDirection: 'column'}, {borderColor: '#999999'}]}>
@@ -85,11 +91,16 @@ const AccountScreen = () => {
         </View>
       </TouchableOpacity>
 
-      <View style={[styles.logOutButton, {marginTop: 430}]}>
-        <TouchableOpacity>
-          <Text style={styles.logOutButtonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
+      {/* <View style={[styles.logOutButton]}> */}
+      <TouchableOpacity
+        style={styles.logOutButton}
+        onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.logOutButtonText}>Logout</Text>
+      </TouchableOpacity>
+      {/* </View> */}
+      {/* <TouchableOpacity style = {styles.}>
+        <Text>Sign Out</Text>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -101,18 +112,18 @@ const styles = StyleSheet.create({
   },
   text_header: {
     color: '#424347',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     fontSize: 40,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'left',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 20,
   },
   text_footer: {
     color: '#424347',
     fontSize: 16,
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 24,
   },
   action: {
@@ -128,7 +139,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     height: 50,
     backgroundColor: '#F5F5F5',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     borderRadius: 5,
     position: 'absolute',
     width: 324,
@@ -165,23 +176,28 @@ const styles = StyleSheet.create({
   textSaveButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#FFFFFF',
   },
   greyedOutTextSaveButton: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     color: '#DCDCDC',
   },
   logOutButton: {
-    marginTop: 40,
+    marginTop: 125,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#71BF61',
+    width: 324,
+    height: 55,
+    borderRadius: 12,
+    alignSelf: 'center',
   },
   logOutButtonText: {
     color: '#424347',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     fontSize: 20,
   },
   userInfo: {
@@ -190,7 +206,7 @@ const styles = StyleSheet.create({
   },
   userInfoText: {
     color: '#424347',
-    fontFamily: 'VarelaRound-regular',
+    fontFamily: 'VarelaRound-Regular',
     left: 16,
   },
   accountEditOption: {

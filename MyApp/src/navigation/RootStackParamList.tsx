@@ -5,4 +5,11 @@ export type RootStackParamList = {
   Create: undefined;
   Forgot: undefined;
   PaymentConfirm: undefined;
+  Account: undefined;
+  EditAccount: undefined;
+  PaymentMethods: undefined;
+  AddPayment: undefined;
+  OrderRejected: undefined;
+  CartView: undefined;
+  Lists: undefined;
 };
