@@ -7,20 +7,10 @@
  *
  * @format
  */
-
 import React from 'react';
 import {
-  Alert,
-  ImageComponent,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
   Image,
-  Route,
 } from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -52,12 +42,12 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from './src/navigation/RootStackParamList';
 import EditAccountInfoScreen from './src/screens/EditAccountInfo';
 
-import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
+// import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
 import AppSyncConfig from './src/graphql/AppSyncConfig.js';
 import { ApolloLink } from 'apollo-link';
 import { createAuthLink } from 'aws-appsync-auth-link';
 import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from "apollo-cache-inmemory";
+// import { InMemoryCache } from "apollo-cache-inmemory";
 import BackendConnector from './src/components/BackendConnector';
 
 

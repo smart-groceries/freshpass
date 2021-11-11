@@ -12,6 +12,8 @@ import {
 import {Dispatch} from 'react';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {GET_USER_BY_ID,CREATE_ACCOUNT} from '../graphql/queries';
+import { useQuery } from '@apollo/client';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
@@ -20,7 +22,15 @@ type Props = {
 export default function App({navigation}: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const{error,loading,data} = useQuery(CREATE_ACCOUNT,{
+    variables:{
+      uname: "test",
+      pass: "thisprobablyshouldbeahash",
+      fname: "omar",
+      lname: "dominguez", 
+      email: "odomardominguezod@gmail.com"
+    }
+  });
   // const handleLogin = () => {
   //   setLoading(true);
   // };
@@ -34,6 +44,9 @@ export default function App({navigation}: Props) {
   //   }
   //   return () => clearTimeout(timer);
   // }, [loading]);
+  if(loading) return <Text>Creating Account</Text>
+  if(error) return <Text> ${error.message}</Text>
+
 
   return (
     <View style={styles.container}>
@@ -85,8 +98,8 @@ export default function App({navigation}: Props) {
 
       <TouchableOpacity
         style={styles.linkContainer}
-        onPress={() => navigation.navigate('Create')}>
-        <Text style={styles.create_acc_button}>Create New Account?</Text>
+        onPress={() => navigation.navigate('Create') }>
+        <Text style={styles.create_acc_button}> {data.createAccount.id} Account?</Text>
       </TouchableOpacity>
       {/* </View> */}
     </View>
