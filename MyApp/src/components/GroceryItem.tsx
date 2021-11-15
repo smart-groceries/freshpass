@@ -24,6 +24,7 @@ interface Props{
 }
 
 const Item :FC<Props> = () => {
+    const [testName, setTestName] = React.useState("Kraft");
     const [name, setName] = React.useState<string | null>(null);
     const [brand, setBrand] = React.useState<string | null>(null);
     const [price, setPrice] = React.useState<number | null>(null);
@@ -33,7 +34,7 @@ const Item :FC<Props> = () => {
         
         <View style={styles.GroceryItemContainer}>
                 <View style={styles.LeftContainer} >
-                    <Text>Mac & Cheese - Kraft</Text>
+                    <Text> {testName} </Text>
                     <View style={styles.priceContainer}>
                         <Text>$5 ~ </Text>
                         <Text>Aisle 1</Text>

@@ -41,6 +41,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from './src/navigation/RootStackParamList';
 import EditAccountInfoScreen from './src/screens/EditAccountInfo';
+import StoreLocator from './src/screens/StoreLocator';
 
 // import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
 import AppSyncConfig from './src/graphql/AppSyncConfig.js';
@@ -63,8 +64,8 @@ function HomeTabs() {
             iconName = require('./src/assets/account_icon.png');
           } else if (route.name === 'Stores') {
             iconName = require('./src/assets/stores_icon.png');
-          } else if (route.name === 'Lists') {
-            iconName = require('./src/assets/lists_icon.png');
+          } else if (route.name === 'Store Locator') {
+            iconName = require('./src/assets/store-locator-icon.png');
           }
           return (
             <Image
@@ -83,7 +84,7 @@ function HomeTabs() {
 
       <Tab.Screen name="Stores" component={HomePage} />
 
-      <Tab.Screen name="Lists" component={ShoppingLists} />
+      <Tab.Screen name="Store Locator" component={StoreLocator} />
     </Tab.Navigator>
   );
 }
