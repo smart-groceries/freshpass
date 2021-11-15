@@ -8,29 +8,34 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {Dispatch} from 'react';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {GET_USER_BY_ID,CREATE_ACCOUNT} from '../graphql/queries';
-import { useQuery } from '@apollo/client';
+import {GET_USER_BY_ID, CREATE_ACCOUNT} from '../graphql/queries';
+import {useQuery} from '@apollo/client';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
 };
 
 export default function App({navigation}: Props) {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('0');
   const [password, setPassword] = useState('');
-  const{error,loading,data} = useQuery(CREATE_ACCOUNT,{
-    variables:{
-      uname: "test",
-      pass: "thisprobablyshouldbeahash",
-      fname: "omar",
-      lname: "dominguez", 
-      email: "odomardominguezod@gmail.com"
-    }
+  const {error, loading, data} = useQuery(GET_USER_BY_ID, {
+    variables: {id: email},
   });
+  // const{error,loading,data} = useQuery(CREATE_ACCOUNT,{
+  //   variables:{
+  //     uname: "test",
+  //     pass: "thisprobablyshouldbeahash",
+  //     fname: "omar",
+  //     lname: "dominguez",
+  //     email: "odomardominguezod@gmail.com"
+  //   }
+  // });
   // const handleLogin = () => {
   //   setLoading(true);
   // };
@@ -44,9 +49,17 @@ export default function App({navigation}: Props) {
   //   }
   //   return () => clearTimeout(timer);
   // }, [loading]);
-  if(loading) return <Text>Creating Account</Text>
-  if(error) return <Text> ${error.message}</Text>
-
+  // if(loading) return <Text>Creating Account</Text>
+  // if(error) return <Text> ${error.message}</Text>
+  // const getUser = (email: string) => String;
+  // {
+  //   const {error, loading, data} = useQuery(GET_USER_BY_ID, {
+  //     variables: {id: email},
+  //   });
+  //   if (loading) return Alert.alert('Loading');
+  //   if (error) return Alert.alert('User not found');
+  //   return data;
+  // }
 
   return (
     <View style={styles.container}>
@@ -78,7 +91,25 @@ export default function App({navigation}: Props) {
         onPress={() => {}}></TouchableOpacity> */}
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => {
+          if (loading)
+            return (
+              <View>
+                <ActivityIndicator size="large" color="#71BF61" />
+              </View>
+            );
+          if (error)
+            // return (
+            //   <View>
+            //     <Text>User not found.</Text>
+            //   </View>
+            // );
+            return Alert.alert(
+              'User not found.',
+              "User with that E-Mail was not found. Make sure you are using a valid E-Mail address. Click 'Forgot Password' to reset your password or create an account if you don't have one.",
+            );
+          navigation.navigate('Home');
+        }}
         style={[styles.signIn]}>
         <Text
           style={[
@@ -98,8 +129,8 @@ export default function App({navigation}: Props) {
 
       <TouchableOpacity
         style={styles.linkContainer}
-        onPress={() => navigation.navigate('Create') }>
-        <Text style={styles.create_acc_button}> {data.createAccount.id} Account?</Text>
+        onPress={() => navigation.navigate('Create')}>
+        <Text style={styles.create_acc_button}>Create Account</Text>
       </TouchableOpacity>
       {/* </View> */}
     </View>

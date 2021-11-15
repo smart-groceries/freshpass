@@ -12,6 +12,7 @@ import {
   ScrollView,
   StatusBar,
   Image,
+  Alert,
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 
@@ -19,28 +20,67 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Create'>;
 };
 const CreateAccountScreen = ({navigation}: Props) => {
-  const [data, setData] = React.useState({
-    username: '',
-    password: '',
-    confirm_password: '',
-    check_textInputChange: false,
-    secureTextEntry: true,
-    confirm_secureTextEntry: true,
+  // const [data, setData] = React.useState({
+  //   email: '',
+  //   password: '',
+  //   confirm_password: '',
+  //   check_textInputChange: true,
+  //   secureTextEntry: true,
+  //   confirm_secureTextEntry: true,
+  // });
+  const [email, setEmail] = React.useState({
+    email: '',
+    valid: true,
   });
+  const [password, setPassword] = React.useState({
+    password: '',
+    valid: true,
+  });
+  const [passwordConfirm, setPasswordConfirm] = React.useState({
+    passwordConfirm: '',
+    valid: true,
+  });
+  // const [validation, setValidation] = React.useState({
+  //   validation: false,
+  // });
 
-  const textInputChange = (val: any) => {
-    if (val.length !== 0) {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: true,
-      });
+  // const textInputChange = (val: any) => {
+  //   if (val.length !== 0) {
+  //     setData({
+  //       ...data,
+  //       email: val,
+  //       check_textInputChange: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       email: val,
+  //       check_textInputChange: false,
+  //     });
+  //   }
+  // };
+  const validateEmail = (text: string) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(text) === false || text.length === 0) {
+      setEmail({email: text, valid: false});
     } else {
-      setData({
-        ...data,
-        username: val,
-        check_textInputChange: false,
-      });
+      setEmail({email: text, valid: true});
+    }
+  };
+  const validatePassword = (text: string) => {
+    if (text.length < 8) {
+      setPassword({password: text, valid: false});
+    } else {
+      setPassword({password: text, valid: true});
+    }
+  };
+  const confirmPassword = (text: string) => {
+    if (text != password.password) {
+      passwordConfirm.passwordConfirm = text;
+      passwordConfirm.valid = false;
+    } else {
+      passwordConfirm.passwordConfirm = text;
+      passwordConfirm.valid = true;
     }
   };
 
@@ -52,7 +92,7 @@ const CreateAccountScreen = ({navigation}: Props) => {
           <Image source={require('../assets/freshpass_logo.png')} />
         </View>
         {/* <View> */}
-        <View style={styles.action}>
+        {/* <View style={styles.action}>
           <Text style={styles.text_footer}>Username</Text>
           <TextInput
             placeholder="Your Username"
@@ -61,7 +101,7 @@ const CreateAccountScreen = ({navigation}: Props) => {
             autoCapitalize="none"
             onChangeText={val => textInputChange(val)}
           />
-        </View>
+        </View> */}
 
         <View style={styles.action}>
           <Text style={[styles.text_footer]}>Email</Text>
@@ -70,8 +110,13 @@ const CreateAccountScreen = ({navigation}: Props) => {
             placeholderTextColor="#3A3B3E"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={val => textInputChange(val)}
+            onChangeText={val => validateEmail(val)}
           />
+          {email.valid == false ? (
+            <Text style={styles.errorText}>
+              * Please enter a valid E-Mail address to proceed
+            </Text>
+          ) : null}
         </View>
 
         <View style={styles.action}>
@@ -79,11 +124,16 @@ const CreateAccountScreen = ({navigation}: Props) => {
           <TextInput
             placeholder="Your Password"
             placeholderTextColor="#3A3B3E"
-            secureTextEntry={data.secureTextEntry ? true : false}
+            secureTextEntry={true}
             style={styles.textInput}
             autoCapitalize="none"
-            //onChangeText={(val) => handlePasswordChange(val)}
+            onChangeText={val => validatePassword(val)}
           />
+          {password.valid == false ? (
+            <Text style={styles.errorText}>
+              * Password must contain at least 8 characters
+            </Text>
+          ) : null}
           <TouchableOpacity
           //onPress={updateSecureTextEntry}
           ></TouchableOpacity>
@@ -94,10 +144,14 @@ const CreateAccountScreen = ({navigation}: Props) => {
           <TextInput
             placeholder="Confirm Your Password"
             placeholderTextColor="#3A3B3E"
-            secureTextEntry={data.confirm_secureTextEntry ? true : false}
+            secureTextEntry={true}
             style={styles.textInput}
             autoCapitalize="none"
+            onChangeText={val => confirmPassword(val)}
           />
+          {passwordConfirm.valid == false ? (
+            <Text style={styles.errorText}>* Passwords must match</Text>
+          ) : null}
           <TouchableOpacity></TouchableOpacity>
         </View>
         {/* </View> */}
@@ -117,7 +171,18 @@ const CreateAccountScreen = ({navigation}: Props) => {
         </View>
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => {
+              validateEmail(email.email);
+              validatePassword(password.password);
+              if (!email.valid && !password.valid)
+                return Alert.alert(
+                  'Please enter valid credentials',
+                  'Please make sure the E-Mail and Password fields are not blank and that passwords match.',
+                );
+              else {
+                navigation.navigate('Home');
+              }
+            }}
             style={[
               styles.signIn,
               {
@@ -207,11 +272,15 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     // borderBottomColor: '#FFFFFF',
     // paddingBottom: 5,
-    margin: 10,
+    // margin: 10,
+    // height: 100,
+    height: 125,
+    // margin: 10,
     width: 324,
+    // backgroundColor: 'black',
   },
   textInput: {
-    flex: 1,
+    // flex: 1,
     // marginTop: Platform.OS === 'android' ? 0 : -12,
     paddingLeft: 10,
     height: 55,
@@ -244,6 +313,10 @@ const styles = StyleSheet.create({
   },
   color_textPrivate: {
     color: 'green',
+  },
+  errorText: {
+    color: 'red',
+    fontFamily: 'VarelaRound-Regular',
   },
 });
 
