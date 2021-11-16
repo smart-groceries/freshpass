@@ -1,5 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
+import {print, validate} from 'graphql';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -13,95 +14,134 @@ import {
   StatusBar,
   Image,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
+import Spinner from 'react-native-spinkit';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Create'>;
 };
 const CreateAccountScreen = ({navigation}: Props) => {
-  // const [data, setData] = React.useState({
-  //   email: '',
-  //   password: '',
-  //   confirm_password: '',
-  //   check_textInputChange: true,
-  //   secureTextEntry: true,
-  //   confirm_secureTextEntry: true,
-  // });
-  const [email, setEmail] = React.useState({
-    email: '',
-    valid: true,
-  });
-  const [password, setPassword] = React.useState({
-    password: '',
-    valid: true,
-  });
-  const [passwordConfirm, setPasswordConfirm] = React.useState({
-    passwordConfirm: '',
-    valid: true,
-  });
-  // const [validation, setValidation] = React.useState({
-  //   validation: false,
-  // });
+  // const [email, setEmail] = React.useState('');
+  // const [emailValidated, setEmailValidated] = React.useState(true);
+  // const [password, setPassword] = React.useState('');
+  // const [passwordValidated, setPasswordValidated] = React.useState(true);
+  // const [passwordConfirm, setPasswordConfirm] = React.useState('');
+  // const [passwordConfirmed, setPasswordConfirmed] = React.useState(true);
+  // const [firstName, setFirstName] = React.useState('');
+  // const [firstNameValidated, setFirstNameValidated] = React.useState(true);
+  // const [lastName, setLastName] = React.useState('');
+  // const [lastNameValidated, setLastNameValidated] = React.useState(true);
+  const [submitted, setSubmitted] = React.useState(false);
 
-  // const textInputChange = (val: any) => {
-  //   if (val.length !== 0) {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: false,
-  //     });
-  //   }
+  const [user, setUser] = React.useState({
+    email: '',
+    emailValidated: true,
+    password: '',
+    passwordValidated: true,
+    firstName: '',
+    firstNameValidated: true,
+    lastName: '',
+    lastNameValidated: true,
+    confirmPassword: '',
+    passwordConfirmed: true,
+  });
+
+  // const validateAll = () => {
+  //   validateEmail(user.email);
+  //   validatePassword(user.password);
+  //   validateFirstName(user.firstName);
+  //   validateLastName(user.lastName);
+  //   confirmPassword(user.confirmPassword);
   // };
+  // useEffect(() => {
+  //   if (submitted) {
+  //     validateEmail(user.email);
+  //     validatePassword(user.password);
+  //     validateFirstName(user.firstName);
+  //     validateLastName(user.lastName);
+  //     confirmPassword(user.confirmPassword);
+  //   }
+  //   setSubmitted(false);
+  // }, [submitted]);
+
+  useEffect(() => {
+    if (
+      (user.emailValidated == false ||
+        user.passwordValidated == false ||
+        user.firstNameValidated == false ||
+        user.lastNameValidated == false ||
+        user.passwordConfirmed == false) &&
+      submitted == true
+    ) {
+      setSubmitted(false);
+      return Alert.alert(
+        'Please enter valid credentials',
+        'Please make sure fields are not blank and that passwords match.',
+      );
+    }
+    if (
+      user.emailValidated == true &&
+      user.passwordValidated == true &&
+      user.firstNameValidated == true &&
+      user.lastNameValidated == true &&
+      user.passwordConfirmed == true &&
+      submitted == true
+    ) {
+      setSubmitted(false);
+      navigation.navigate('Home');
+    }
+  }, [user]);
+  // useEffect(() => {}, [user.password]);
+  // useEffect(() => {}, [user.firstName]);
+  // useEffect(() => {}, [user.lastName]);
+  // useEffect(() => {}, [user.confirmPassword]);
+
   const validateEmail = (text: string) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(text) === false || text.length === 0) {
-      setEmail({email: text, valid: false});
+    if (text.trim().length === 0 || reg.test(text) === false) {
+      setUser({...user, emailValidated: false});
     } else {
-      setEmail({email: text, valid: true});
+      setUser({...user, email: text, emailValidated: true});
     }
   };
   const validatePassword = (text: string) => {
-    if (text.length < 8) {
-      setPassword({password: text, valid: false});
+    if (text.trim().length < 8) {
+      setUser({...user, passwordValidated: false});
     } else {
-      setPassword({password: text, valid: true});
+      setUser({...user, password: text, passwordValidated: true});
     }
   };
   const confirmPassword = (text: string) => {
-    if (text != password.password) {
-      passwordConfirm.passwordConfirm = text;
-      passwordConfirm.valid = false;
+    if (text.trim().length == 0 || text != user.password) {
+      setUser({...user, passwordConfirmed: false});
     } else {
-      passwordConfirm.passwordConfirm = text;
-      passwordConfirm.valid = true;
+      setUser({...user, confirmPassword: text, passwordConfirmed: true});
+    }
+  };
+  const validateFirstName = (text: string) => {
+    if (text.trim().length == 0) {
+      setUser({...user, firstNameValidated: false});
+    } else {
+      setUser({...user, firstName: text, firstNameValidated: true});
+    }
+  };
+  const validateLastName = (text: string) => {
+    if (text.trim().length == 0) {
+      setUser({...user, lastNameValidated: false});
+    } else {
+      setUser({...user, lastName: text, lastNameValidated: true});
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={submitted ? styles.containerLoading : styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.imageContainer}>
           <Image source={require('../assets/freshpass_logo.png')} />
         </View>
-        {/* <View> */}
-        {/* <View style={styles.action}>
-          <Text style={styles.text_footer}>Username</Text>
-          <TextInput
-            placeholder="Your Username"
-            placeholderTextColor="#3A3B3E"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val => textInputChange(val)}
-          />
-        </View> */}
 
         <View style={styles.action}>
           <Text style={[styles.text_footer]}>Email</Text>
@@ -112,10 +152,38 @@ const CreateAccountScreen = ({navigation}: Props) => {
             autoCapitalize="none"
             onChangeText={val => validateEmail(val)}
           />
-          {email.valid == false ? (
+          {!user.emailValidated ? (
             <Text style={styles.errorText}>
-              * Please enter a valid E-Mail address to proceed
+              * Please enter a valid Email address
             </Text>
+          ) : null}
+        </View>
+
+        <View style={styles.action}>
+          <Text style={[styles.text_footer]}>First Name</Text>
+          <TextInput
+            placeholder="Your First Name"
+            placeholderTextColor="#3A3B3E"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={val => validateFirstName(val)}
+          />
+          {!user.firstNameValidated ? (
+            <Text style={styles.errorText}>* Please enter a first name</Text>
+          ) : null}
+        </View>
+
+        <View style={styles.action}>
+          <Text style={[styles.text_footer]}>Last Name</Text>
+          <TextInput
+            placeholder="Your Last Name"
+            placeholderTextColor="#3A3B3E"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={val => validateLastName(val)}
+          />
+          {!user.lastNameValidated ? (
+            <Text style={styles.errorText}>* Please enter a last name</Text>
           ) : null}
         </View>
 
@@ -129,7 +197,7 @@ const CreateAccountScreen = ({navigation}: Props) => {
             autoCapitalize="none"
             onChangeText={val => validatePassword(val)}
           />
-          {password.valid == false ? (
+          {!user.passwordValidated ? (
             <Text style={styles.errorText}>
               * Password must contain at least 8 characters
             </Text>
@@ -149,7 +217,7 @@ const CreateAccountScreen = ({navigation}: Props) => {
             autoCapitalize="none"
             onChangeText={val => confirmPassword(val)}
           />
-          {passwordConfirm.valid == false ? (
+          {!user.passwordConfirmed ? (
             <Text style={styles.errorText}>* Passwords must match</Text>
           ) : null}
           <TouchableOpacity></TouchableOpacity>
@@ -172,16 +240,12 @@ const CreateAccountScreen = ({navigation}: Props) => {
         <View style={styles.button}>
           <TouchableOpacity
             onPress={() => {
-              validateEmail(email.email);
-              validatePassword(password.password);
-              if (!email.valid && !password.valid)
-                return Alert.alert(
-                  'Please enter valid credentials',
-                  'Please make sure the E-Mail and Password fields are not blank and that passwords match.',
-                );
-              else {
-                navigation.navigate('Home');
-              }
+              validateEmail(user.email);
+              validatePassword(user.password);
+              validateFirstName(user.firstName);
+              validateLastName(user.lastName);
+              confirmPassword(user.confirmPassword);
+              setSubmitted(true);
             }}
             style={[
               styles.signIn,
@@ -213,6 +277,9 @@ const CreateAccountScreen = ({navigation}: Props) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      {submitted ? (
+        <ActivityIndicator size="large" style={styles.loading} color="green" />
+      ) : null}
     </View>
   );
 };
@@ -222,6 +289,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
+  },
+  containerLoading: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    opacity: 0.6,
   },
 
   imageContainer: {
@@ -317,6 +390,16 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontFamily: 'VarelaRound-Regular',
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    transform: [{scale: 2.5}],
   },
 });
 

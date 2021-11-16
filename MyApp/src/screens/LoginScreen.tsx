@@ -27,6 +27,14 @@ export default function App({navigation}: Props) {
   const {error, loading, data} = useQuery(GET_USER_BY_ID, {
     variables: {id: email},
   });
+  const [submitted, setSubmitted] = useState(false);
+  useEffect(() => {
+    if (submitted) {
+      console.log('loading');
+    }
+    setSubmitted(false);
+  }, [submitted]);
+  // useEffect(() => {}, [email]);
   // const{error,loading,data} = useQuery(CREATE_ACCOUNT,{
   //   variables:{
   //     uname: "test",
@@ -62,7 +70,7 @@ export default function App({navigation}: Props) {
   // }
 
   return (
-    <View style={styles.container}>
+    <View style={submitted ? styles.containerLoading : styles.container}>
       <View style={styles.imageContainer}>
         <Image source={require('../assets/freshpass_logo.png')} />
       </View>
@@ -92,23 +100,7 @@ export default function App({navigation}: Props) {
 
       <TouchableOpacity
         onPress={() => {
-          if (loading)
-            return (
-              <View>
-                <ActivityIndicator size="large" color="#71BF61" />
-              </View>
-            );
-          if (error)
-            // return (
-            //   <View>
-            //     <Text>User not found.</Text>
-            //   </View>
-            // );
-            return Alert.alert(
-              'User not found.',
-              "User with that E-Mail was not found. Make sure you are using a valid E-Mail address. Click 'Forgot Password' to reset your password or create an account if you don't have one.",
-            );
-          navigation.navigate('Home');
+          setSubmitted(true);
         }}
         style={[styles.signIn]}>
         <Text
@@ -133,6 +125,9 @@ export default function App({navigation}: Props) {
         <Text style={styles.create_acc_button}>Create Account</Text>
       </TouchableOpacity>
       {/* </View> */}
+      {submitted ? (
+        <ActivityIndicator size="large" color="green" style={styles.loading} />
+      ) : null}
     </View>
   );
 }
@@ -143,6 +138,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     // justifyContent: 'center',
+  },
+
+  containerLoading: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    opacity: 0.6,
   },
 
   image: {
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
     height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: 12,
     borderColor: '#71BF61',
     backgroundColor: '#71BF61',
     borderWidth: 1,
@@ -231,6 +233,17 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#E89023',
     borderRadius: 12,
+  },
+
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    transform: [{scale: 2.5}],
   },
 
   // /* Username */
