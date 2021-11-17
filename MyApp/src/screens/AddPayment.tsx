@@ -14,6 +14,7 @@ import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import {placeholder} from '@babel/types';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export default function AddPayment() {
   const [email, setEmail] = useState('');
@@ -105,73 +106,111 @@ export default function AddPayment() {
     //     </TouchableOpacity>
     //   </View>
     // </View>
-    <KeyboardAvoidingView style={styles.mainContainer} behavior="padding">
-      <TextInput style={styles.inputField} placeholder={'Name on Card'} />
-      <TextInput
-        style={styles.inputField}
-        placeholder={'Card Number'}
-        keyboardType="numeric"
-      />
-
-      <View style={styles.rowContainer}>
-        <TextInput
-          style={styles.inputField2}
-          placeholder={'Month'}
-          keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.inputField2}
-          placeholder={'Year'}
-          keyboardType="numeric"
-        />
-      </View>
-      <View style={styles.rowContainer}>
-        <TextInput
-          style={styles.inputField2}
-          placeholder={'CVC'}
-          keyboardType="numeric"
-        />
-        <Text style={styles.securityText}>
-          3 or 4 digits usually found on the signataure strip
-        </Text>
-      </View>
-      <View style={styles.default}>
-        <Switch
-          trackColor={{false: '#E89023', true: '#71BF61'}}
-          thumbColor="#BBBBBB"
-          ios_backgroundColor="#3e3e3e"></Switch>
-        <Text style={styles.securityText}>SET AS DEFAULT</Text>
-      </View>
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.buttonText}>Add Method</Text>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.mainContainer}>
+        <View style={styles.largeItemContainer}>
+          <Text style={styles.itemText}>Name on Card</Text>
+          <TextInput
+            style={styles.userDataTextInput}
+            placeholder={'Name on Card'}
+          />
+        </View>
+        <View style={styles.largeItemContainer}>
+          <Text style={styles.itemText}>Card Number</Text>
+          <TextInput
+            style={styles.userDataTextInput}
+            placeholder={'Card Number'}
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.itemText}>Month</Text>
+          <TextInput
+            style={styles.userDataTextInput}
+            placeholder={'Month'}
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.itemText}>Year</Text>
+          <TextInput
+            style={styles.userDataTextInput}
+            placeholder={'Year'}
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.itemText}>CVC</Text>
+          <TextInput
+            style={styles.userDataTextInput}
+            placeholder={'CVC'}
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.securityText}>
+            3 or 4 digits usually found on the signataure strip
+          </Text>
+        </View>
+        <View
+          style={[
+            styles.largeItemContainer,
+            {
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+              height: 40,
+            },
+          ]}>
+          <Switch
+            trackColor={{false: '#E89023', true: '#71BF61'}}
+            thumbColor="#BBBBBB"
+            ios_backgroundColor="#3e3e3e"></Switch>
+          <Text style={styles.securityText}>SET AS DEFAULT</Text>
+        </View>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.buttonText}>Add</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   mainContainer: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    padding: 25,
+    justifyContent: 'space-evenly',
+    // padding: 25,
+    margin: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   inputField: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 324,
-    borderWidth: 1,
-    borderColor: '#BBBBBB',
+    backgroundColor: '#F3F3F3',
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    // borderWidth: 1,
+    // borderColor: '#BBBBBB',
     margin: 15,
     fontFamily: 'VarelaRound-Regular',
   },
   inputField2: {
     width: '40%',
-    borderWidth: 1,
-    borderColor: '#BBBBBB',
+    // borderWidth: 1,
+    // borderColor: '#BBBBBB',
+    backgroundColor: '#F3F3F3',
     margin: 15,
     fontFamily: 'VarelaRound-Regular',
+    borderRadius: 12,
+    paddingHorizontal: 10,
   },
   rowContainer: {
     flexDirection: 'row',
@@ -181,7 +220,7 @@ const styles = StyleSheet.create({
   },
   securityText: {
     justifyContent: 'center',
-    flex: 1,
+    // flex: 1,
     flexWrap: 'wrap',
     margin: 10,
     fontFamily: 'VarelaRound-Regular',
@@ -203,12 +242,54 @@ const styles = StyleSheet.create({
     height: 55,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FDF2E6',
-    margin: 30,
+    backgroundColor: '#71BF61',
+    marginTop: '10%',
     borderRadius: 15,
   },
   buttonText: {
     fontFamily: 'VarelaRound-Regular',
     fontSize: 18,
+  },
+  itemText: {
+    color: 'black',
+    alignSelf: 'flex-start',
+    fontFamily: 'VarelaRound-Regular',
+    fontSize: 20,
+  },
+  largeItemContainer: {
+    backgroundColor: 'white',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    width: '95%',
+    height: 85,
+    justifyContent: 'space-between',
+    margin: 10,
+    paddingHorizontal: 15,
+    flexWrap: 'wrap',
+  },
+  userDataTextInput: {
+    alignSelf: 'flex-start',
+    fontFamily: 'VarelaRound-Regular',
+    width: '100%',
+    backgroundColor: '#F3F3F3',
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    color: 'black',
+    marginVertical: 10,
+    // borderColor: '#999999',
+    // borderWidth: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // fontSize: 20,
+  },
+  itemContainer: {
+    backgroundColor: 'white',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    width: '45%',
+    height: 85,
+    justifyContent: 'space-evenly',
+    margin: 10,
+    paddingHorizontal: 15,
   },
 });

@@ -22,172 +22,119 @@ type Props = {
 };
 
 const EditAccountInfoScreen = ({navigation}: Props) => {
-  const [data, setData] = React.useState({
-    email: 'test@email.com',
-    username: 'test',
-    name: 'test',
-    password: 'test',
+  const [user, setUser] = React.useState({
+    email: 'andrewbaltazar@gmail.com',
+    fname: 'andrew',
+    lname: 'baltazar',
+    password: 'andrewbaltazar',
     stateHasBeenChanged: false,
     inInitialState: true,
   });
 
-  const changedEmail = (val: any) => {
-    setData({
-      ...data,
-      email: val,
-      stateHasBeenChanged: true,
-      inInitialState: false,
+  // const changedEmail = (val: any) => {
+  //   setData({
+  //     ...data,
+  //     email: val,
+  //     stateHasBeenChanged: true,
+  //     inInitialState: false,
+  //   });
+  // };
+
+  // const changedUsername = (val: any) => {
+  //   setData({
+  //     ...data,
+  //     username: val,
+  //     stateHasBeenChanged: true,
+  //     inInitialState: false,
+  //   });
+  // };
+
+  // const changedName = (val: any) => {
+  //   setData({
+  //     ...data,
+  //     name: val,
+  //     stateHasBeenChanged: true,
+  //     inInitialState: false,
+  //   });
+  // };
+
+  // const saveState = () => {
+  //   setData({
+  //     ...data,
+  //     stateHasBeenChanged: false,
+  //     inInitialState: false,
+  //   });
+  // };
+
+  // const getSaveStyling = () => {
+  //   if (data.stateHasBeenChanged == false) {
+  //     return styles.greyedOutSave;
+  //   } else {
+  //     return styles.save;
+  //   }
+  // };
+
+  // const getSaveTextStyling = () => {
+  //   if (data.stateHasBeenChanged == false) {
+  //     return styles.greyedOutTextSaveButton;
+  //   } else {
+  //     return styles.textSaveButton;
+  //   }
+  // };
+
+  // const getSavedNotif = () => {
+  //   if (data.stateHasBeenChanged == false && data.inInitialState == false) {
+  //     return styles.savedNotif;
+  //   } else {
+  //     return styles.hiddenSavedNotif;
+  //   }
+  // };
+  const obscurePassword = (password: string) => {
+    const hidden = Array.from(user.password).map(char => {
+      return '*';
     });
-  };
 
-  const changedUsername = (val: any) => {
-    setData({
-      ...data,
-      username: val,
-      stateHasBeenChanged: true,
-      inInitialState: false,
-    });
-  };
-
-  const changedName = (val: any) => {
-    setData({
-      ...data,
-      name: val,
-      stateHasBeenChanged: true,
-      inInitialState: false,
-    });
-  };
-
-  const saveState = () => {
-    setData({
-      ...data,
-      stateHasBeenChanged: false,
-      inInitialState: false,
-    });
-  };
-
-  const getSaveStyling = () => {
-    if (data.stateHasBeenChanged == false) {
-      return styles.greyedOutSave;
-    } else {
-      return styles.save;
-    }
-  };
-
-  const getSaveTextStyling = () => {
-    if (data.stateHasBeenChanged == false) {
-      return styles.greyedOutTextSaveButton;
-    } else {
-      return styles.textSaveButton;
-    }
-  };
-
-  const getSavedNotif = () => {
-    if (data.stateHasBeenChanged == false && data.inInitialState == false) {
-      return styles.savedNotif;
-    } else {
-      return styles.hiddenSavedNotif;
-    }
+    return hidden;
   };
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#009387" barStyle="light-content" />
-      {/* <Text style={[styles.text_header, {marginTop: 60}]}>Account Info</Text> */}
-      <ScrollView>
-        <Text style={[styles.text_footer, {marginTop: 50}, {marginLeft: 17}]}>
-          Email
-        </Text>
-        <View style={[styles.action, {marginTop: 14}]}>
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#C8C8C8"
-            defaultValue={data.email}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val => changedEmail(val)}
-          />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.itemContainer}>
+          <Text style={styles.itemText}>First Name:</Text>
+          <TextInput style={styles.userDataTextInput}>{user.fname}</TextInput>
         </View>
-
-        <Text style={[styles.text_footer, {marginTop: 50}, {marginLeft: 17}]}>
-          Username
-        </Text>
-        <View style={[styles.action, {marginTop: 14}]}>
-          <TextInput
-            placeholder="Username"
-            placeholderTextColor="#C8C8C8"
-            defaultValue={data.username}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val => changedUsername(val)}
-          />
+        <View style={styles.itemContainer}>
+          <Text style={styles.itemText}>Last Name:</Text>
+          <TextInput style={styles.userDataTextInput}>{user.lname}</TextInput>
         </View>
-
-        <Text style={[styles.text_footer, {marginTop: 50}, {marginLeft: 17}]}>
-          Name
-        </Text>
-        <View style={[styles.action, {marginTop: 14}]}>
-          <TextInput
-            placeholder="Name"
-            placeholderTextColor="#C8C8C8"
-            defaultValue={data.name}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val => changedName(val)}
-          />
-        </View>
-
-        <Text style={[styles.text_footer, {marginTop: 50}, {marginLeft: 17}]}>
-          Password
-        </Text>
-        <View style={[styles.action, {marginTop: 14}]}>
-          <View style={styles.textInput}>
-            <Text
-              style={[
-                {color: '#C8C8C8'},
-                {fontSize: 20},
-                {justifyContent: 'center'},
-                {flexDirection: 'row'},
-                {marginTop: 16},
-              ]}>
-              *************
+        <View style={styles.largeItemContainer}>
+          <Text style={styles.itemText}>Email:</Text>
+          {/* <TouchableOpacity style={styles.editButton}>
+            <Text>Edit</Text>
+          </TouchableOpacity> */}
+          <View style={styles.userDataView}>
+            <Text style={[styles.userDataText, {opacity: 0.5}]}>
+              {user.email}
             </Text>
           </View>
         </View>
-
-        <View style={styles.forgotPasswordButton}>
-          <TouchableOpacity>
-            <Text style={styles.forgotPasswordButtonText}>
-              To reset your password, please click here
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={[
-            {marginTop: 60},
-            {justifyContent: 'center'},
-            {alignItems: 'center'},
-          ]}>
-          <Text style={getSavedNotif()}>Account Info Saved!</Text>
-        </View>
-
-        <View style={styles.button}>
-          {/* <LinearGradient
-                      colors={['#08d4c4', '#01ab9d']}
-                      style={styles.signI
-                  >
-                      <Text style={[styles.textSign, {
-                          color:'#fff'
-                      }]}>Sign Up</Text>
-                  </LinearGradient> */}
-
+        <View style={styles.largeItemContainer}>
+          <Text style={styles.itemText}>Password</Text>
           <TouchableOpacity
-            onPress={() => saveState()}
-            style={getSaveStyling()}>
-            <Text style={getSaveTextStyling()}>Save</Text>
+            style={styles.editButton}
+            onPress={() => navigation.navigate('ChangePassword')}>
+            <Text>Edit</Text>
           </TouchableOpacity>
+          <View style={styles.userDataView}>
+            <Text style={[styles.userDataText, {opacity: 0.5}]}>
+              {obscurePassword(user.password)}
+            </Text>
+          </View>
         </View>
+        <TouchableOpacity style={styles.saveButton}>
+          <Text style={styles.saveButtonText}>Save</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -198,96 +145,95 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  text_header: {
-    color: '#424347',
-    fontWeight: 'bold',
-    fontSize: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    fontFamily: 'VarelaRound-Regular',
-  },
-  text_footer: {
-    color: '#424347',
-    fontSize: 16,
-    fontFamily: 'VarelaRound-Regular',
-    left: 24,
-  },
-  action: {
-    flexDirection: 'row',
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',
-    paddingBottom: 5,
-  },
-  textInput: {
+  scrollContainer: {
     flex: 1,
-    marginTop: Platform.OS === 'android' ? 0 : -12,
-    paddingLeft: 10,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    margin: 5,
+    // justifyContent: 'center',
+  },
+  itemContainer: {
+    backgroundColor: 'white',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    width: '45%',
+    height: 85,
+    justifyContent: 'space-evenly',
+    margin: 10,
+    paddingHorizontal: 15,
+  },
+  largeItemContainer: {
+    backgroundColor: 'white',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    width: '95%',
+    height: 85,
+    justifyContent: 'space-between',
+    margin: 10,
+    paddingHorizontal: 15,
+    flexWrap: 'wrap',
+  },
+  userDataView: {
+    alignSelf: 'flex-start',
+    width: '100%',
+    backgroundColor: '#F3F3F3',
+    borderRadius: 12,
+    paddingHorizontal: 10,
     height: 50,
-    backgroundColor: '#F5F5F5',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  itemText: {
+    color: 'black',
+    alignSelf: 'flex-start',
     fontFamily: 'VarelaRound-Regular',
-    borderRadius: 5,
-    position: 'absolute',
-    width: 324,
-    left: 34,
+    fontSize: 20,
   },
-  button: {
+  userDataText: {
+    color: 'black',
+    alignSelf: 'flex-start',
+    fontFamily: 'VarelaRound-Regular',
+  },
+  userDataTextInput: {
+    alignSelf: 'flex-start',
+    fontFamily: 'VarelaRound-Regular',
+    width: '100%',
+    backgroundColor: '#F3F3F3',
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    color: 'black',
+    marginVertical: 10,
+    // borderColor: '#999999',
+    // borderWidth: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // fontSize: 20,
+  },
+  editButton: {
+    alignSelf: 'flex-end',
+    borderRadius: 12,
+    backgroundColor: '#E89023',
+    height: 25,
+    width: 50,
     alignItems: 'center',
-    marginTop: 50,
+    justifyContent: 'center',
   },
-  greyedOutSave: {
-    width: 324,
-    height: 50,
+  saveButtonText: {
+    fontSize: 18,
+  },
+  saveButton: {
+    marginTop: '100%',
+    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
-    borderColor: '#F8F8F8',
-    backgroundColor: '#F8F8F8',
-    borderWidth: 1,
-    marginTop: 100,
-    left: 1,
-  },
-  save: {
+    height: 55,
     width: 324,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-    borderColor: '#71BF61',
     backgroundColor: '#71BF61',
-    borderWidth: 1,
-    marginTop: 100,
-    left: 1,
-  },
-  textSaveButton: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    fontFamily: 'VarelaRound-Regular',
-    color: '#FFFFFF',
-  },
-  greyedOutTextSaveButton: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    fontFamily: 'VarelaRound-Regular',
-    color: '#DCDCDC',
-  },
-  forgotPasswordButton: {
-    marginTop: 40,
-    left: 34,
-  },
-  forgotPasswordButtonText: {
-    color: '#B3B3B3',
-  },
-  savedNotif: {
-    color: '#424347',
-    fontSize: 16,
-    fontFamily: 'VarelaRound-Regular',
-  },
-  hiddenSavedNotif: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontFamily: 'VarelaRound-Regular',
+    borderRadius: 25,
   },
 });
 

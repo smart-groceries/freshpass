@@ -81,7 +81,7 @@ const AccountScreen = ({navigation}: Props) => {
                 {fontSize: 11},
                 {marginTop: 2},
               ]}>
-              Edit Username, Email, and Password
+              Edit Email, Name, and Password
             </Text>
           </View>
           <Image

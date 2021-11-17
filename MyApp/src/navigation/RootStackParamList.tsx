@@ -12,4 +12,5 @@ export type RootStackParamList = {
   OrderRejected: undefined;
   CartView: undefined;
   Lists: undefined;
+  ChangePassword: undefined;
 };

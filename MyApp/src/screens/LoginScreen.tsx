@@ -22,7 +22,7 @@ type Props = {
 };
 
 export default function App({navigation}: Props) {
-  const [email, setEmail] = useState('0');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {error, loading, data} = useQuery(GET_USER_BY_ID, {
     variables: {id: email},
@@ -30,7 +30,19 @@ export default function App({navigation}: Props) {
   const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
     if (submitted) {
-      console.log('loading');
+      // if (loading) {
+      //   console.log('loading');
+      // }
+      // if (error) {
+      //   console.log(error.message);
+      //   setSubmitted(false);
+      //   return Alert.alert(
+      //     'Error',
+      //     'User not found. Make sure you are using the correct Email and password.',
+      //   );
+      // }
+
+      navigation.navigate('Home');
     }
     setSubmitted(false);
   }, [submitted]);
@@ -125,7 +137,7 @@ export default function App({navigation}: Props) {
         <Text style={styles.create_acc_button}>Create Account</Text>
       </TouchableOpacity>
       {/* </View> */}
-      {submitted ? (
+      {loading && submitted ? (
         <ActivityIndicator size="large" color="green" style={styles.loading} />
       ) : null}
     </View>

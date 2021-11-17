@@ -16,7 +16,8 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import Spinner from 'react-native-spinkit';
+import {CREATE_ACCOUNT} from '../graphql/queries';
+import {useQuery} from '@apollo/client';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 
 type Props = {

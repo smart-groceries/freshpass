@@ -37,7 +37,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from './src/navigation/RootStackParamList';
 import EditAccountInfoScreen from './src/screens/EditAccountInfo';
 import StoreLocator from './src/screens/StoreLocator';
-
+import ChangePasswordScreen from './src/screens/Change Password';
 // import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
 import AppSyncConfig from './src/graphql/AppSyncConfig.js';
 import {ApolloLink} from 'apollo-link';
@@ -141,6 +141,11 @@ export default function App() {
               name="AddPayment"
               component={AddPayment}
               options={{headerShown: true, title: 'Add Payment'}}
+            />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
+              options={{headerShown: true, title: 'Change Password'}}
             />
           </Stack.Navigator>
         </NavigationContainer>
