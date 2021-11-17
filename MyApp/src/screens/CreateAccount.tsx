@@ -100,38 +100,48 @@ const CreateAccountScreen = ({navigation}: Props) => {
 
   const validateEmail = (text: string) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (text.trim().length === 0 || reg.test(text) === false) {
-      setUser({...user, emailValidated: false});
+    if (text.trim().length == 0 || reg.test(text) === false) {
+      // setUser({...user, emailValidated: false});
+      return false;
     } else {
-      setUser({...user, email: text, emailValidated: true});
+      // setUser({...user, email: text, emailValidated: true});
+      return true;
     }
   };
   const validatePassword = (text: string) => {
     if (text.trim().length < 8) {
-      setUser({...user, passwordValidated: false});
+      // setUser({...user, passwordValidated: false});
+      return false;
     } else {
-      setUser({...user, password: text, passwordValidated: true});
+      // setUser({...user, password: text, passwordValidated: true});
+      return true;
     }
   };
   const confirmPassword = (text: string) => {
     if (text.trim().length == 0 || text != user.password) {
-      setUser({...user, passwordConfirmed: false});
+      // setUser({...user, passwordConfirmed: false});
+      return false;
     } else {
-      setUser({...user, confirmPassword: text, passwordConfirmed: true});
+      // setUser({...user, confirmPassword: text, passwordConfirmed: true});
+      return true;
     }
   };
   const validateFirstName = (text: string) => {
     if (text.trim().length == 0) {
-      setUser({...user, firstNameValidated: false});
+      // setUser({...user, firstNameValidated: false});
+      return false;
     } else {
-      setUser({...user, firstName: text, firstNameValidated: true});
+      // setUser({...user, firstName: text, firstNameValidated: true});
+      return true;
     }
   };
   const validateLastName = (text: string) => {
     if (text.trim().length == 0) {
-      setUser({...user, lastNameValidated: false});
+      // setUser({...user, lastNameValidated: false});
+      return false;
     } else {
-      setUser({...user, lastName: text, lastNameValidated: true});
+      // setUser({...user, lastName: text, lastNameValidated: true});
+      return true;
     }
   };
 
@@ -150,7 +160,9 @@ const CreateAccountScreen = ({navigation}: Props) => {
             placeholderTextColor="#3A3B3E"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={val => validateEmail(val)}
+            onChangeText={val =>
+              setUser({...user, email: val, emailValidated: validateEmail(val)})
+            }
           />
           {!user.emailValidated ? (
             <Text style={styles.errorText}>
@@ -166,7 +178,13 @@ const CreateAccountScreen = ({navigation}: Props) => {
             placeholderTextColor="#3A3B3E"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={val => validateFirstName(val)}
+            onChangeText={val =>
+              setUser({
+                ...user,
+                firstName: val,
+                firstNameValidated: validateFirstName(val),
+              })
+            }
           />
           {!user.firstNameValidated ? (
             <Text style={styles.errorText}>* Please enter a first name</Text>
@@ -180,7 +198,13 @@ const CreateAccountScreen = ({navigation}: Props) => {
             placeholderTextColor="#3A3B3E"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={val => validateLastName(val)}
+            onChangeText={val =>
+              setUser({
+                ...user,
+                lastName: val,
+                lastNameValidated: validateLastName(val),
+              })
+            }
           />
           {!user.lastNameValidated ? (
             <Text style={styles.errorText}>* Please enter a last name</Text>
@@ -195,7 +219,13 @@ const CreateAccountScreen = ({navigation}: Props) => {
             secureTextEntry={true}
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={val => validatePassword(val)}
+            onChangeText={val =>
+              setUser({
+                ...user,
+                password: val,
+                passwordValidated: validatePassword(val),
+              })
+            }
           />
           {!user.passwordValidated ? (
             <Text style={styles.errorText}>
@@ -215,7 +245,13 @@ const CreateAccountScreen = ({navigation}: Props) => {
             secureTextEntry={true}
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={val => confirmPassword(val)}
+            onChangeText={val =>
+              setUser({
+                ...user,
+                confirmPassword: val,
+                passwordConfirmed: confirmPassword(val),
+              })
+            }
           />
           {!user.passwordConfirmed ? (
             <Text style={styles.errorText}>* Passwords must match</Text>
@@ -240,11 +276,19 @@ const CreateAccountScreen = ({navigation}: Props) => {
         <View style={styles.button}>
           <TouchableOpacity
             onPress={() => {
-              validateEmail(user.email);
-              validatePassword(user.password);
-              validateFirstName(user.firstName);
-              validateLastName(user.lastName);
-              confirmPassword(user.confirmPassword);
+              // validateEmail(user.email);
+              // validatePassword(user.password);
+              // validateFirstName(user.firstName);
+              // validateLastName(user.lastName);
+              // confirmPassword(user.confirmPassword);
+              setUser({
+                ...user,
+                emailValidated: validateEmail(user.email),
+                passwordValidated: validatePassword(user.password),
+                firstNameValidated: validateFirstName(user.firstName),
+                lastNameValidated: validateLastName(user.lastName),
+                passwordConfirmed: confirmPassword(user.confirmPassword),
+              });
               setSubmitted(true);
             }}
             style={[

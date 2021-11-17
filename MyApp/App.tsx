@@ -8,10 +8,7 @@
  * @format
  */
 import React from 'react';
-import {
-  StyleSheet,
-  Image,
-} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -20,7 +17,6 @@ import ForgotPasswordScreen from './src/screens/ForgotPassword';
 import CreateAccountScreen from './src/screens/CreateAccount';
 import LoginScreen from './src/screens/LoginScreen';
 import ShoppingLists from './src/screens/ShoppingLists';
-import NavBar from './src/components/NavBar';
 import {createStackNavigator} from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
@@ -31,7 +27,6 @@ import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LandingPage from './src/screens/LandingPage';
 import HomePage from './src/screens/HomePage';
-import RNBounceable from '@freakycoder/react-native-bounceable';
 import AccountScreen from './src/screens/Account';
 import PaymentConfirmation from './src/screens/PaymentConfirmation';
 import OrderRejected from './src/screens/OrderRejected';
@@ -45,12 +40,11 @@ import StoreLocator from './src/screens/StoreLocator';
 
 // import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
 import AppSyncConfig from './src/graphql/AppSyncConfig.js';
-import { ApolloLink } from 'apollo-link';
-import { createAuthLink } from 'aws-appsync-auth-link';
-import { createHttpLink } from 'apollo-link-http';
+import {ApolloLink} from 'apollo-link';
+import {createAuthLink} from 'aws-appsync-auth-link';
+import {createHttpLink} from 'apollo-link-http';
 // import { InMemoryCache } from "apollo-cache-inmemory";
 import BackendConnector from './src/components/BackendConnector';
-
 
 // home screens with nav bar
 function HomeTabs() {
@@ -99,58 +93,58 @@ const client = BackendConnector();
 
 export default function App() {
   return (
-    <ApolloProvider client={ client }>
-    <MenuProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerTitleStyle: {fontFamily: 'VarelaRound-Regular'},
-          }}>
-          <Stack.Screen
-            name="Landing"
-            component={LandingPage}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Create"
-            component={CreateAccountScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Home"
-            component={HomeTabs}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Forgot"
-            component={ForgotPasswordScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="PaymentMethods"
-            component={Payments}
-            options={{headerShown: true, title: 'Payment Methods'}}
-          />
-          <Stack.Screen
-            name="EditAccount"
-            component={EditAccountInfoScreen}
-            options={{headerShown: true, title: 'Account Information'}}
-          />
-          <Stack.Screen
-            name="AddPayment"
-            component={AddPayment}
-            options={{headerShown: true, title: 'Add Payment'}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </MenuProvider>
+    <ApolloProvider client={client}>
+      <MenuProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerTitleStyle: {fontFamily: 'VarelaRound-Regular'},
+            }}>
+            <Stack.Screen
+              name="Landing"
+              component={LandingPage}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Create"
+              component={CreateAccountScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Home"
+              component={HomeTabs}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Forgot"
+              component={ForgotPasswordScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="PaymentMethods"
+              component={Payments}
+              options={{headerShown: true, title: 'Payment Methods'}}
+            />
+            <Stack.Screen
+              name="EditAccount"
+              component={EditAccountInfoScreen}
+              options={{headerShown: true, title: 'Account Information'}}
+            />
+            <Stack.Screen
+              name="AddPayment"
+              component={AddPayment}
+              options={{headerShown: true, title: 'Add Payment'}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </MenuProvider>
     </ApolloProvider>
   );
 }
