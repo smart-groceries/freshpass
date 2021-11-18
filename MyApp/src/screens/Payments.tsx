@@ -103,11 +103,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 5,
     shadowOffset: {width: 20, height: 20},
     shadowRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   AddPaymentText: {
-    top: '70%',
-    left: '20%',
-    position: 'absolute',
+    // top: '70%',
+    // left: '20%',
+    // position: 'absolute',
     fontFamily: 'VarelaRound-Regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
@@ -117,11 +119,11 @@ const styles = StyleSheet.create({
     color: '#F2994A',
   },
   searchIconImageStyle: {
-    position: 'relative',
+    // position: 'relative',
     width: 70,
     height: 70,
-    left: 120,
-    top: 25,
+    // left: 120,
+    // top: 25,
   },
 });
 

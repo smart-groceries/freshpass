@@ -24,6 +24,8 @@ export default function AddPayment() {
   const [name, setName] = useState('');
   const [selectedMonth, setSelectedMonth] = useState();
   const [password, setPassword] = useState('');
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(!isEnabled);
 
   return (
     // <View style={styles.mainContainer}>
@@ -149,7 +151,7 @@ export default function AddPayment() {
         </View>
         <View style={styles.itemContainer}>
           <Text style={styles.securityText}>
-            3 or 4 digits usually found on the signataure strip
+            3 or 4 digits usually found on the signature strip
           </Text>
         </View>
         <View
@@ -164,7 +166,9 @@ export default function AddPayment() {
           <Switch
             trackColor={{false: '#E89023', true: '#71BF61'}}
             thumbColor="#BBBBBB"
-            ios_backgroundColor="#3e3e3e"></Switch>
+            ios_backgroundColor="#3e3e3e"
+            value={isEnabled}
+            onValueChange={toggleSwitch}></Switch>
           <Text style={styles.securityText}>SET AS DEFAULT</Text>
         </View>
         <TouchableOpacity style={styles.addButton}>

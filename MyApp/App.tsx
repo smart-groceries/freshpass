@@ -38,6 +38,7 @@ import {RootStackParamList} from './src/navigation/RootStackParamList';
 import EditAccountInfoScreen from './src/screens/EditAccountInfo';
 import StoreLocator from './src/screens/StoreLocator';
 import ChangePasswordScreen from './src/screens/Change Password';
+import StoreAccountScreen from './src/screens/StoreAccount';
 // import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
 import AppSyncConfig from './src/graphql/AppSyncConfig.js';
 import {ApolloLink} from 'apollo-link';
@@ -76,7 +77,7 @@ function HomeTabs() {
       })}>
       <Tab.Screen name="Account" component={AccountScreen} />
 
-      <Tab.Screen name="Stores" component={HomePage} />
+      <Tab.Screen name="Stores" component={StoreAccountScreen} />
 
       <Tab.Screen name="Store Locator" component={StoreLocator} />
     </Tab.Navigator>

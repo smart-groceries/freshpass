@@ -1,31 +1,22 @@
-import {tsNamedTupleMember} from '@babel/types';
 import React from 'react';
 import {
   View,
   Text,
-  Button,
   TouchableOpacity,
-  Dimensions,
   TextInput,
-  Platform,
   StyleSheet,
   ScrollView,
-  StatusBar,
   Image,
 } from 'react-native';
+
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, 'Account'>;
-};
-
-const AccountScreen = ({navigation}: Props) => {
+const StoreAccountScreen = () => {
   const [data, setData] = React.useState({
-    email: 'johndoe@gmail.com',
-    name: 'John Doe',
+    email: 'store@gmail.com',
+    name: 'Store McStoreFace',
   });
-
   return (
     <View style={styles.container}>
       {/* <Text style={[styles.text_header, {marginTop: 65}]}>
@@ -51,11 +42,7 @@ const AccountScreen = ({navigation}: Props) => {
         </View>
       </View>
       <View style={styles.optionContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('PaymentMethods');
-          }}
-          style={styles.accountEditOption}>
+        <TouchableOpacity onPress={() => {}} style={styles.accountEditOption}>
           {/* <View style={[styles.accountEditOption, {marginTop: 48}]}> */}
           <View style={styles.optionInfoContainer}>
             <View style={styles.iconContainer}>
@@ -68,7 +55,7 @@ const AccountScreen = ({navigation}: Props) => {
 
             <View style={styles.optionTextContainer}>
               <Text style={[styles.userInfoText, {fontSize: 15}]}>
-                Payment Methods
+                Payment Settings
               </Text>
               <Text
                 style={[
@@ -76,7 +63,7 @@ const AccountScreen = ({navigation}: Props) => {
                   {color: '#999999'},
                   {fontSize: 11},
                 ]}>
-                See currently saved card info
+                See currently saved Bank info
               </Text>
             </View>
           </View>
@@ -85,11 +72,7 @@ const AccountScreen = ({navigation}: Props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.optionContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('EditAccount');
-          }}
-          style={styles.accountEditOption}>
+        <TouchableOpacity onPress={() => {}} style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>
             <View style={styles.iconContainer}>
               <Image
@@ -109,7 +92,7 @@ const AccountScreen = ({navigation}: Props) => {
                   {color: '#999999'},
                   {fontSize: 11},
                 ]}>
-                Email, Name, Password
+                Profile, Password
               </Text>
             </View>
           </View>
@@ -118,11 +101,7 @@ const AccountScreen = ({navigation}: Props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.optionContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Login');
-          }}
-          style={styles.accountEditOption}>
+        <TouchableOpacity onPress={() => {}} style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>
             <View style={styles.optionTextContainer}>
               <Text style={[styles.userInfoText, {fontSize: 15}]}>Log Out</Text>
@@ -294,4 +273,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountScreen;
+export default StoreAccountScreen;
