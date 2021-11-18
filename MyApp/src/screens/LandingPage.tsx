@@ -15,9 +15,8 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 // import LottieSuccessAnimation from '../components/lottie-components/success';
 import {RootStackParamList} from '../navigation/RootStackParamList';
-import { useQuery } from '@apollo/client';
-import { GET_USER_BY_ID } from '../graphql/queries';
-
+import {useQuery} from '@apollo/client';
+import {GET_USER_BY_ID} from '../graphql/queries';
 
 type Props = {navigation: StackNavigationProp<RootStackParamList, 'Landing'>};
 
@@ -64,9 +63,9 @@ const LandingPage = ({navigation}: Props) => {
             style={[
               styles.signUp,
               {
-                borderColor: '#E89023',
+                // borderColor: '#E89023',
                 backgroundColor: '#E89023',
-                borderWidth: 1,
+                // borderWidth: 1,
                 marginTop: 125,
               },
             ]}>
@@ -85,9 +84,9 @@ const LandingPage = ({navigation}: Props) => {
             style={[
               styles.signUp,
               {
-                borderColor: '#71BF61',
+                // borderColor: '#71BF61',
                 backgroundColor: '#71BF61',
-                borderWidth: 1,
+                // borderWidth: 1,
                 marginTop: 20,
               },
             ]}>
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
     height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: 12,
     left: 1,
   },
   textButton: {
@@ -188,9 +187,11 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    resizeMode: 'contain',
-    marginTop: 175,
+    // flex: 1,
+    // resizeMode: 'contain',
+    marginTop: 50,
+    marginBottom: -50,
+    // backgroundColor: 'black',
   },
   storeLottie: {
     width: 100,

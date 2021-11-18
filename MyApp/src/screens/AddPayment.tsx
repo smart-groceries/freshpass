@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#71BF61',
-    marginTop: '10%',
+    marginVertical: '10%',
     borderRadius: 15,
   },
   buttonText: {
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     width: '45%',
     height: 85,
     justifyContent: 'space-evenly',
-    margin: 10,
+    marginVertical: 10,
     paddingHorizontal: 15,
   },
 });

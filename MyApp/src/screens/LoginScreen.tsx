@@ -16,6 +16,7 @@ import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {GET_USER_BY_ID, CREATE_ACCOUNT} from '../graphql/queries';
 import {useQuery} from '@apollo/client';
+import {ScrollView} from 'react-native-gesture-handler';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Login'>;
@@ -84,7 +85,10 @@ export default function App({navigation}: Props) {
   return (
     <View style={submitted ? styles.containerLoading : styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/freshpass_logo.png')} />
+        <Image
+          source={require('../assets/freshpass_logo.png')}
+          resizeMode="contain"
+        />
       </View>
       <View style={styles.inputView}>
         <TextInput
@@ -107,37 +111,38 @@ export default function App({navigation}: Props) {
 
       {/* <View style={styles.button}> */}
       {/* <TouchableOpacity
-        style={styles.signIn}
-        onPress={() => {}}></TouchableOpacity> */}
+      style={styles.signIn}
+      onPress={() => {}}></TouchableOpacity> */}
+      <View style={{position: 'absolute', bottom: 10, alignItems: 'center'}}>
+        <TouchableOpacity
+          onPress={() => {
+            setSubmitted(true);
+          }}
+          style={[styles.signIn]}>
+          <Text
+            style={[
+              styles.textSign,
+              {
+                color: '#FFFFFF',
+              },
+            ]}>
+            Sign In
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.linkContainer}
+          onPress={() => navigation.navigate('Forgot')}>
+          <Text style={styles.forgot_button}>Forgot Password?</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => {
-          setSubmitted(true);
-        }}
-        style={[styles.signIn]}>
-        <Text
-          style={[
-            styles.textSign,
-            {
-              color: '#FFFFFF',
-            },
-          ]}>
-          Sign In
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.linkContainer}
-        onPress={() => navigation.navigate('Forgot')}>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.linkContainer}
+          onPress={() => navigation.navigate('Create')}>
+          <Text style={styles.create_acc_button}>Create Account</Text>
+        </TouchableOpacity>
+      </View>
 
-      <TouchableOpacity
-        style={styles.linkContainer}
-        onPress={() => navigation.navigate('Create')}>
-        <Text style={styles.create_acc_button}>Create Account</Text>
-      </TouchableOpacity>
-      {/* </View> */}
-      {loading && submitted ? (
+      {submitted ? (
         <ActivityIndicator size="large" color="green" style={styles.loading} />
       ) : null}
     </View>
@@ -149,7 +154,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    // justifyContent: 'center',
+  },
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   containerLoading: {
@@ -159,17 +168,15 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
 
-  image: {
-    marginBottom: 40,
-  },
-
   imageContainer: {
     // width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 150,
-    resizeMode: 'contain',
-    flex: 1,
+    // backgroundColor: 'black',
+    marginTop: 50,
+    marginBottom: -25,
+    // resizeMode: 'contain',
+    // flex: 1,
   },
 
   linkContainer: {
@@ -189,9 +196,9 @@ const styles = StyleSheet.create({
 
   TextInput: {
     fontFamily: 'VarelaRound-Regular',
-    width: 300,
+    width: '90%',
     flex: 1,
-    textAlign: 'center',
+    // textAlign: 'center',
   },
 
   forgot_button: {
@@ -249,8 +256,8 @@ const styles = StyleSheet.create({
 
   loading: {
     position: 'absolute',
-    left: 0,
-    right: 0,
+    // left: 0,
+    // right: 0,
     top: 0,
     bottom: 0,
     alignItems: 'center',

@@ -344,17 +344,19 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     alignItems: 'center',
-    resizeMode: 'contain',
-    flex: 1,
+    // resizeMode: 'contain',
+    // flex: 1,
     // position: 'absolute',
     justifyContent: 'center',
+    marginTop: 50,
+    marginBottom: -50,
     // marginTop: 100,
     // backgroundColor: 'black',
   },
 
   scrollContainer: {
     alignItems: 'center',
-    paddingTop: 50,
+    // paddingTop: 50,
     backgroundColor: '#FFFFFF',
   },
 
@@ -382,7 +384,7 @@ const styles = StyleSheet.create({
     color: '#E89023',
     fontSize: 18,
     fontFamily: 'VarelaRound-Regular',
-    margin: 5,
+    marginVertical: 5,
   },
   action: {
     // flexDirection: 'row',

@@ -50,23 +50,20 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
       <View style={styles.imageContainer}>
         <Image source={require('../assets/freshpass_logo.png')} />
       </View>
-      <ScrollView>
-        <Text style={[styles.color_textPrivate, {marginTop: 25}]}>
-          Enter your email to receive a password reset link:
-        </Text>
-        <Text style={[styles.text_footer, {marginTop: 25}, {marginLeft: 17}]}>
-          Email
-        </Text>
-        <View style={styles.action}>
-          <TextInput
-            placeholder="Your Email"
-            placeholderTextColor="#3A3B3E"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val => textInputChange(val)}
-          />
-        </View>
+      <Text style={[styles.color_textPrivate, {marginVertical: 25}]}>
+        Enter your email to receive a password reset link:
+      </Text>
 
+      <View style={styles.inputView}>
+        <TextInput
+          placeholder="Your Email"
+          placeholderTextColor="#3A3B3E"
+          style={styles.textInput}
+          autoCapitalize="none"
+          onChangeText={val => textInputChange(val)}
+        />
+      </View>
+      <View style={{position: 'absolute', bottom: 10, alignItems: 'center'}}>
         <View style={styles.button}>
           {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
@@ -104,7 +101,7 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
             <Text style={styles.link}>Cancel</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -147,7 +144,6 @@ const styles = StyleSheet.create({
     color: '#E89023',
     fontSize: 18,
     fontFamily: 'VarelaRound-Regular',
-    left: -10,
   },
   action: {
     flexDirection: 'row',
@@ -159,13 +155,13 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     // marginTop: Platform.OS === 'android' ? 0 : -12,
-    paddingLeft: 10,
+    // paddingLeft: 10,
     height: 55,
     backgroundColor: '#FDF2E6',
     fontFamily: 'VarelaRound-Regular',
     borderRadius: 12,
     // position: 'absolute',
-    width: 324,
+    width: '90%',
     // left: 34,
   },
   button: {
@@ -174,10 +170,10 @@ const styles = StyleSheet.create({
   },
   reset: {
     width: 324,
-    height: 50,
+    height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: 12,
     left: 1,
   },
   textResetButton: {
@@ -200,9 +196,18 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    resizeMode: 'contain',
-    marginTop: 175,
+    marginTop: 50,
+    marginBottom: -50,
+  },
+  inputView: {
+    width: 324,
+    height: 55,
+    marginBottom: 20,
+
+    alignItems: 'center',
+    backgroundColor: '#FDF2E6',
+    borderRadius: 12,
+    justifyContent: 'center',
   },
 });
 

@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     width: '45%',
     height: 85,
     justifyContent: 'space-evenly',
-    margin: 10,
+    marginVertical: 10,
     paddingHorizontal: 15,
   },
   largeItemContainer: {
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   editButton: {
     alignSelf: 'flex-end',
-    borderRadius: 12,
+    borderRadius: 5,
     backgroundColor: '#E89023',
     height: 25,
     width: 50,
@@ -226,14 +226,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   saveButton: {
-    marginTop: '100%',
+    marginVertical: '50%',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     height: 55,
     width: 324,
     backgroundColor: '#71BF61',
-    borderRadius: 25,
+    borderRadius: 12,
   },
 });
 
