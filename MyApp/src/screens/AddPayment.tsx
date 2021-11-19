@@ -54,8 +54,18 @@ export default function AddPayment({navigation}: Props) {
   useEffect(() => {
     if (submitted) {
       mutateFunction({variables: {account_id: paymentInfo.account_id ,card_number:paymentInfo.number,nameoncard: paymentInfo.name,month:paymentInfo.month,year: paymentInfo.year,cvc: paymentInfo.cvc}})
-      navigation.navigate('PaymentMethods', {paymentInfo});
-      console.log(data.message);
+      // navigation.navigate('PaymentMethods', {paymentInfo});
+      while(loading){ 
+        //wait
+      }
+      console.log(data.addCardInfo.message);
+      if(error){
+        return Alert.alert(
+          'Error',
+          "Could Not Add Card Information",
+        );
+      }
+
       return Alert.alert(
         'Created',
         data.addCardInfo.message,
