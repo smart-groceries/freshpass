@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Switch,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
@@ -17,6 +18,9 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import { useMutation } from '@apollo/client';
+import { ADD_CARD_INFO } from '../graphql/queries';
+
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'AddPayment'>;
@@ -24,6 +28,7 @@ type Props = {
 
 export default function AddPayment({navigation}: Props) {
   const [paymentInfo, setPaymentInfo] = useState({
+    account_id: 38,
     name: '',
     nameValidated: true,
     number: '',
@@ -43,10 +48,19 @@ export default function AddPayment({navigation}: Props) {
       setPaymentInfo({...paymentInfo, default: isEnabled});
   };
   const [submitted, setSubmitted] = useState(false);
+  const [mutateFunction, { data, loading, error }] = useMutation(ADD_CARD_INFO);
+
 
   useEffect(() => {
     if (submitted) {
+      mutateFunction({variables: {account_id: paymentInfo.account_id ,card_number:paymentInfo.number,nameoncard: paymentInfo.name,month:paymentInfo.month,year: paymentInfo.year,cvc: paymentInfo.cvc}})
       navigation.navigate('PaymentMethods', {paymentInfo});
+      console.log(data.message);
+      return Alert.alert(
+        'Created',
+        data.addCardInfo.message,
+      );
+
     }
   }, [paymentInfo]);
 
