@@ -1,5 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   ScrollView,
   StatusBar,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -21,26 +22,49 @@ type Props = {
 };
 
 const ForgotPasswordScreen = ({navigation}: Props) => {
-  const [data, setData] = React.useState({
-    email: '',
-    check_textInputChange: false,
-    secureTextEntry: true,
-    confirm_secureTextEntry: true,
-  });
+  // const [data, setData] = React.useState({
+  //   email: '',
+  //   check_textInputChange: false,
+  //   secureTextEntry: true,
+  //   confirm_secureTextEntry: true,
+  // });
 
-  const textInputChange = (val: any) => {
-    if (val.length !== 0) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
-      });
+  // const textInputChange = (val: any) => {
+  //   if (val.length !== 0) {
+  //     setData({
+  //       ...data,
+  //       email: val,
+  //       check_textInputChange: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       email: val,
+  //       check_textInputChange: false,
+  //     });
+  //   }
+  // };
+  const [email, setEmail] = React.useState({
+    email: '',
+    emailValidated: true,
+  });
+  const [submitted, setSubmitted] = React.useState(false);
+
+  useEffect(() => {
+    if (email.emailValidated == true && submitted == true) {
+      setSubmitted(false);
+    }
+    setSubmitted(false);
+  }, [email]);
+
+  const validateEmail = (text: string) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (text.trim().length == 0 || reg.test(text) === false) {
+      // setUser({...user, emailValidated: false});
+      return false;
     } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-      });
+      // setUser({...user, email: text, emailValidated: true});
+      return true;
     }
   };
 
@@ -57,13 +81,21 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
       <View style={styles.inputView}>
         <TextInput
           placeholder="Your Email"
-          placeholderTextColor="#3A3B3E"
+          placeholderTextColor="#003f5c"
           style={styles.textInput}
           autoCapitalize="none"
-          onChangeText={val => textInputChange(val)}
+          onChangeText={val =>
+            setEmail({...email, email: val, emailValidated: validateEmail(val)})
+          }
         />
       </View>
-      <View style={{position: 'absolute', bottom: 10, alignItems: 'center'}}>
+      {!email.emailValidated ? (
+        <Text style={styles.errorText}>
+          * Please enter a valid email address
+        </Text>
+      ) : null}
+
+      <View style={{position: 'relative', top: 100, alignItems: 'center'}}>
         <View style={styles.button}>
           {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
@@ -79,12 +111,13 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
             style={[
               styles.reset,
               {
-                borderColor: '#71BF61',
                 backgroundColor: '#71BF61',
-                borderWidth: 1,
-                marginTop: 150,
               },
-            ]}>
+            ]}
+            onPress={() => {
+              setEmail({...email, emailValidated: validateEmail(email.email)}),
+                setSubmitted(true);
+            }}>
             <Text
               style={[
                 styles.textResetButton,
@@ -97,11 +130,16 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.linkContainer}
-            onPress={() => navigation.navigate('Login')}>
+            onPress={() => {
+              navigation.navigate('Login');
+            }}>
             <Text style={styles.link}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>
+      {submitted ? (
+        <ActivityIndicator size="large" color="green" style={styles.loading} />
+      ) : null}
     </View>
   );
 };
@@ -156,17 +194,18 @@ const styles = StyleSheet.create({
     flex: 1,
     // marginTop: Platform.OS === 'android' ? 0 : -12,
     // paddingLeft: 10,
-    height: 55,
-    backgroundColor: '#FDF2E6',
+    // height: 55,
+    // backgroundColor: '#FDF2E6',
     fontFamily: 'VarelaRound-Regular',
-    borderRadius: 12,
+    // borderRadius: 12,
+    color: '#003f5c',
     // position: 'absolute',
     width: '90%',
     // left: 34,
   },
   button: {
+    marginTop: '30%',
     alignItems: 'center',
-    marginTop: 50,
   },
   reset: {
     width: 324,
@@ -208,6 +247,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDF2E6',
     borderRadius: 12,
     justifyContent: 'center',
+  },
+  errorText: {
+    color: 'red',
+    fontFamily: 'VarelaRound-Regular',
+    // marginTop: 5,
+  },
+  loading: {
+    position: 'absolute',
+    // left: 0,
+    // right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    transform: [{scale: 2.5}],
   },
 });
 

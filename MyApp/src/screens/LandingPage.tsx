@@ -27,30 +27,29 @@ const LandingPage = ({navigation}: Props) => {
       <View style={styles.imageContainer}>
         <Image source={require('../assets/freshpass_logo.png')} />
       </View>
-      <ScrollView>
-        <Text
-          style={[
-            styles.previewText,
-            {marginTop: 25},
-            {fontWeight: 'bold'},
-            {fontSize: 20},
-          ]}>
-          Grocery Shopping Reimagined
-        </Text>
-        <Text style={[styles.previewText, {marginTop: 25}, {fontSize: 14}]}>
-          Traditionally, a trip to the grocery store is
-        </Text>
-        <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
-          filled with long lines and wasted time
-        </Text>
-        <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
-          searching. With FreshPass, that is a thing
-        </Text>
-        <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
-          of the past.
-        </Text>
-        <View style={styles.button}>
-          {/* <LinearGradient
+      <Text
+        style={[
+          styles.previewText,
+          {marginTop: 25},
+          {fontWeight: 'bold'},
+          {fontSize: 20},
+        ]}>
+        Grocery Shopping Reimagined
+      </Text>
+      <Text style={[styles.previewText, {marginTop: 25}, {fontSize: 14}]}>
+        Traditionally, a trip to the grocery store is
+      </Text>
+      <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
+        filled with long lines and wasted time
+      </Text>
+      <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
+        searching. With FreshPass, that is a thing
+      </Text>
+      <Text style={[styles.previewText, {marginTop: 5}, {fontSize: 14}]}>
+        of the past.
+      </Text>
+      <View style={styles.button}>
+        {/* <LinearGradient
                       colors={['#08d4c4', '#01ab9d']}
                       style={styles.signIn}
                   >
@@ -58,50 +57,50 @@ const LandingPage = ({navigation}: Props) => {
                           color:'#fff'
                       }]}>Sign Up</Text>
                   </LinearGradient> */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Login')}
+          style={[
+            styles.signUp,
+            {
+              // borderColor: '#E89023',
+              backgroundColor: '#71BF61',
+              // borderWidth: 1,
+              // marginTop: 125,
+              margin: 10,
+            },
+          ]}>
+          <Text
             style={[
-              styles.signUp,
+              styles.textButton,
               {
-                // borderColor: '#E89023',
-                backgroundColor: '#E89023',
-                // borderWidth: 1,
-                marginTop: 125,
+                color: '#FFFFFF',
               },
             ]}>
-            <Text
-              style={[
-                styles.textButton,
-                {
-                  color: '#FFFFFF',
-                },
-              ]}>
-              Sign In
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Create')}
+            Sign In
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Create')}
+          style={[
+            styles.signUp,
+            {
+              // borderColor: '#71BF61',
+              backgroundColor: '#E89023',
+              // borderWidth: 1,
+              margin: 10,
+            },
+          ]}>
+          <Text
             style={[
-              styles.signUp,
+              styles.textButton,
               {
-                // borderColor: '#71BF61',
-                backgroundColor: '#71BF61',
-                // borderWidth: 1,
-                marginTop: 20,
+                color: '#FFFFFF',
               },
             ]}>
-            <Text
-              style={[
-                styles.textButton,
-                {
-                  color: '#FFFFFF',
-                },
-              ]}>
-              Sign Up
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            Sign Up
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -158,6 +157,8 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
+    position: 'relative',
+    top: 120,
   },
   signUp: {
     width: 324,

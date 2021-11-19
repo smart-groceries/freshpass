@@ -50,7 +50,11 @@ const AccountScreen = ({navigation}: Props) => {
           </Text>
         </View>
       </View>
-      <View style={styles.optionContainer}>
+      <View
+        style={[
+          styles.optionContainer,
+          {borderTopWidth: 1, borderBottomWidth: 0.5},
+        ]}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('PaymentMethods');
@@ -84,7 +88,11 @@ const AccountScreen = ({navigation}: Props) => {
           {/* </View> */}
         </TouchableOpacity>
       </View>
-      <View style={styles.optionContainer}>
+      <View
+        style={[
+          styles.optionContainer,
+          {borderTopWidth: 0.5, borderBottomWidth: 0.5},
+        ]}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('EditAccount');
@@ -117,7 +125,11 @@ const AccountScreen = ({navigation}: Props) => {
           {/* </View> */}
         </TouchableOpacity>
       </View>
-      <View style={styles.optionContainer}>
+      <View
+        style={[
+          styles.optionContainer,
+          {borderTopWidth: 0.5, borderBottomWidth: 1},
+        ]}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Login');
@@ -248,7 +260,7 @@ const styles = StyleSheet.create({
     // flexDirection: 'column',
     // justifyContent: 'center',
     // borderTopWidth: 1,
-    // borderColor: '#BBBBBB',
+    borderColor: '#BBBBBB',
     width: '100%',
     // backgroundColor: 'black',
     paddingVertical: 20,

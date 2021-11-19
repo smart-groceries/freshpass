@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -18,39 +18,72 @@ import {
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {set} from 'mongoose';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'PaymentMethods'>;
+  route: RouteProp<RootStackParamList, 'PaymentMethods'>;
 };
 
-const Payments = ({navigation}: Props) => {
+const Payments = ({route, navigation}: Props) => {
+  const obscureCardNumber = (text: string) => {
+    const hiddenPart = text.slice(0, -4);
+    const visible = text.slice(-4);
+    const hidden = Array.from(hiddenPart).map(char => {
+      return '*';
+    });
+    hidden.push(visible);
+    return hidden;
+  };
+
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.TextContainer}>
-        <Text style={styles.NoPaymentText}>No Payment Info Found</Text>
-        <Text style={styles.NoPaymentSubtext}>
-          You can add and edit payments during checkout
-        </Text>
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate('AddPayment')}>
-        <View style={styles.PaymentMethodContainer}>
-          <Image
-            style={styles.searchIconImageStyle}
-            source={require('./../assets/iconplus.png')}
-          />
-          <Text style={styles.AddPaymentText}>Add Payment Method</Text>
+      {route.params?.paymentInfo == undefined ? (
+        <View style={{alignItems: 'center'}}>
+          <View style={styles.TextContainer}>
+            <Text style={styles.NoPaymentText}>No Payment Info Found</Text>
+            <Text style={styles.NoPaymentSubtext}>
+              You can add and edit payments during checkout
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('AddPayment')}>
+            <View style={styles.PaymentMethodContainer}>
+              <Image
+                style={styles.searchIconImageStyle}
+                source={require('./../assets/iconplus.png')}
+              />
+              <Text style={styles.AddPaymentText}>Add Payment Method</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      ) : (
+        <View>
+          <Text>Saved Payment Methods</Text>
+          <View style={styles.paymentMethod}>
+            <View style={styles.searchIconImageStyle}>
+              <Image
+                source={require('../assets/credit_card.png')}
+                resizeMode="contain"></Image>
+            </View>
+            <View>
+              <Text>{route.params.paymentInfo.name}</Text>
+              <Text>{obscureCardNumber(route.params.paymentInfo.number)}</Text>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   mainContainer: {
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'space-evenly',
     flexDirection: 'column',
     flex: 1,
+    backgroundColor: 'white',
   },
 
   TextContainer: {
@@ -124,6 +157,12 @@ const styles = StyleSheet.create({
     height: 70,
     // left: 120,
     // top: 25,
+  },
+  paymentMethod: {
+    backgroundColor: '#F3F3F3',
+    height: 55,
+    width: '100%',
+    flexDirection: 'row',
   },
 });
 

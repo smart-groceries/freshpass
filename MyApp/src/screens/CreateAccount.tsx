@@ -24,16 +24,6 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Create'>;
 };
 const CreateAccountScreen = ({navigation}: Props) => {
-  // const [email, setEmail] = React.useState('');
-  // const [emailValidated, setEmailValidated] = React.useState(true);
-  // const [password, setPassword] = React.useState('');
-  // const [passwordValidated, setPasswordValidated] = React.useState(true);
-  // const [passwordConfirm, setPasswordConfirm] = React.useState('');
-  // const [passwordConfirmed, setPasswordConfirmed] = React.useState(true);
-  // const [firstName, setFirstName] = React.useState('');
-  // const [firstNameValidated, setFirstNameValidated] = React.useState(true);
-  // const [lastName, setLastName] = React.useState('');
-  // const [lastNameValidated, setLastNameValidated] = React.useState(true);
   const [submitted, setSubmitted] = React.useState(false);
 
   const [user, setUser] = React.useState({
@@ -48,24 +38,6 @@ const CreateAccountScreen = ({navigation}: Props) => {
     confirmPassword: '',
     passwordConfirmed: true,
   });
-
-  // const validateAll = () => {
-  //   validateEmail(user.email);
-  //   validatePassword(user.password);
-  //   validateFirstName(user.firstName);
-  //   validateLastName(user.lastName);
-  //   confirmPassword(user.confirmPassword);
-  // };
-  // useEffect(() => {
-  //   if (submitted) {
-  //     validateEmail(user.email);
-  //     validatePassword(user.password);
-  //     validateFirstName(user.firstName);
-  //     validateLastName(user.lastName);
-  //     confirmPassword(user.confirmPassword);
-  //   }
-  //   setSubmitted(false);
-  // }, [submitted]);
 
   useEffect(() => {
     if (
@@ -94,10 +66,6 @@ const CreateAccountScreen = ({navigation}: Props) => {
       navigation.navigate('Home');
     }
   }, [user]);
-  // useEffect(() => {}, [user.password]);
-  // useEffect(() => {}, [user.firstName]);
-  // useEffect(() => {}, [user.lastName]);
-  // useEffect(() => {}, [user.confirmPassword]);
 
   const validateEmail = (text: string) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -156,15 +124,21 @@ const CreateAccountScreen = ({navigation}: Props) => {
 
         <View style={styles.action}>
           <Text style={[styles.text_footer]}>Email</Text>
-          <TextInput
-            placeholder="Your Email"
-            placeholderTextColor="#3A3B3E"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val =>
-              setUser({...user, email: val, emailValidated: validateEmail(val)})
-            }
-          />
+          <View style={styles.inputView}>
+            <TextInput
+              placeholder="Your Email"
+              placeholderTextColor="#003f5c"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={val =>
+                setUser({
+                  ...user,
+                  email: val,
+                  emailValidated: validateEmail(val),
+                })
+              }
+            />
+          </View>
           {!user.emailValidated ? (
             <Text style={styles.errorText}>
               * Please enter a valid Email address
@@ -174,19 +148,21 @@ const CreateAccountScreen = ({navigation}: Props) => {
 
         <View style={styles.action}>
           <Text style={[styles.text_footer]}>First Name</Text>
-          <TextInput
-            placeholder="Your First Name"
-            placeholderTextColor="#3A3B3E"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val =>
-              setUser({
-                ...user,
-                firstName: val,
-                firstNameValidated: validateFirstName(val),
-              })
-            }
-          />
+          <View style={styles.inputView}>
+            <TextInput
+              placeholder="Your First Name"
+              placeholderTextColor="#003f5c"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={val =>
+                setUser({
+                  ...user,
+                  firstName: val,
+                  firstNameValidated: validateFirstName(val),
+                })
+              }
+            />
+          </View>
           {!user.firstNameValidated ? (
             <Text style={styles.errorText}>* Please enter a first name</Text>
           ) : null}
@@ -194,19 +170,21 @@ const CreateAccountScreen = ({navigation}: Props) => {
 
         <View style={styles.action}>
           <Text style={[styles.text_footer]}>Last Name</Text>
-          <TextInput
-            placeholder="Your Last Name"
-            placeholderTextColor="#3A3B3E"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val =>
-              setUser({
-                ...user,
-                lastName: val,
-                lastNameValidated: validateLastName(val),
-              })
-            }
-          />
+          <View style={styles.inputView}>
+            <TextInput
+              placeholder="Your Last Name"
+              placeholderTextColor="#003f5c"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={val =>
+                setUser({
+                  ...user,
+                  lastName: val,
+                  lastNameValidated: validateLastName(val),
+                })
+              }
+            />
+          </View>
           {!user.lastNameValidated ? (
             <Text style={styles.errorText}>* Please enter a last name</Text>
           ) : null}
@@ -214,20 +192,22 @@ const CreateAccountScreen = ({navigation}: Props) => {
 
         <View style={styles.action}>
           <Text style={[styles.text_footer]}>Password</Text>
-          <TextInput
-            placeholder="Your Password"
-            placeholderTextColor="#3A3B3E"
-            secureTextEntry={true}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val =>
-              setUser({
-                ...user,
-                password: val,
-                passwordValidated: validatePassword(val),
-              })
-            }
-          />
+          <View style={styles.inputView}>
+            <TextInput
+              placeholder="Your Password"
+              placeholderTextColor="#003f5c"
+              secureTextEntry={true}
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={val =>
+                setUser({
+                  ...user,
+                  password: val,
+                  passwordValidated: validatePassword(val),
+                })
+              }
+            />
+          </View>
           {!user.passwordValidated ? (
             <Text style={styles.errorText}>
               * Password must contain at least 8 characters
@@ -240,20 +220,22 @@ const CreateAccountScreen = ({navigation}: Props) => {
 
         <View style={styles.action}>
           <Text style={[styles.text_footer]}>Confirm Password</Text>
-          <TextInput
-            placeholder="Confirm Your Password"
-            placeholderTextColor="#3A3B3E"
-            secureTextEntry={true}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={val =>
-              setUser({
-                ...user,
-                confirmPassword: val,
-                passwordConfirmed: confirmPassword(val),
-              })
-            }
-          />
+          <View style={styles.inputView}>
+            <TextInput
+              placeholder="Confirm Your Password"
+              placeholderTextColor="#003f5c"
+              secureTextEntry={true}
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={val =>
+                setUser({
+                  ...user,
+                  confirmPassword: val,
+                  passwordConfirmed: confirmPassword(val),
+                })
+              }
+            />
+          </View>
           {!user.passwordConfirmed ? (
             <Text style={styles.errorText}>* Passwords must match</Text>
           ) : null}
@@ -353,6 +335,16 @@ const styles = StyleSheet.create({
     // marginTop: 100,
     // backgroundColor: 'black',
   },
+  inputView: {
+    width: 324,
+    height: 55,
+    // marginBottom: 20,
+
+    backgroundColor: '#FDF2E6',
+    alignItems: 'center',
+    borderRadius: 12,
+    justifyContent: 'center',
+  },
 
   scrollContainer: {
     alignItems: 'center',
@@ -387,26 +379,19 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   action: {
-    // flexDirection: 'row',
-    // marginTop: 10,
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#FFFFFF',
-    // paddingBottom: 5,
-    // margin: 10,
-    // height: 100,
-    height: 125,
-    // margin: 10,
-    width: 324,
+    height: 130,
+    // justifyContent: 'space-evenly',
     // backgroundColor: 'black',
   },
   textInput: {
     // flex: 1,
     // marginTop: Platform.OS === 'android' ? 0 : -12,
-    paddingLeft: 10,
-    height: 55,
+    // paddingLeft: 10,
+    // height: 55,
+    color: '#003f5c',
+    width: '90%',
     fontFamily: 'VarelaRound-Regular',
-    backgroundColor: '#FDF2E6',
-    borderRadius: 12,
+    flex: 1,
   },
   button: {
     alignItems: 'center',
@@ -437,6 +422,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontFamily: 'VarelaRound-Regular',
+    marginTop: 5,
   },
   loading: {
     position: 'absolute',

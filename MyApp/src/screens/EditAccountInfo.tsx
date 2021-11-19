@@ -90,7 +90,7 @@ const EditAccountInfoScreen = ({navigation}: Props) => {
   //   }
   // };
   const obscurePassword = (password: string) => {
-    const hidden = Array.from(user.password).map(char => {
+    const hidden = Array.from(password).map(char => {
       return '*';
     });
 

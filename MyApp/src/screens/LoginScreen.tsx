@@ -23,11 +23,15 @@ type Props = {
 };
 
 export default function App({navigation}: Props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const {error, loading, data} = useQuery(GET_USER_BY_ID, {
-    variables: {id: email},
+  const [user, setUser] = useState({
+    id: 0,
+    email: 'null',
+    fname: 'null',
+    lname: 'null',
   });
+  // const {error, loading, data} = useQuery(GET_USER_BY_ID, {
+  //   variables: {id: email},
+  // });
   const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
     if (submitted) {
@@ -42,45 +46,11 @@ export default function App({navigation}: Props) {
       //     'User not found. Make sure you are using the correct Email and password.',
       //   );
       // }
-
-      navigation.navigate('Home');
+      navigation.reset({index: 0, routes: [{name: 'Home'}]});
+      // navigation.navigate('Home');
     }
     setSubmitted(false);
   }, [submitted]);
-  // useEffect(() => {}, [email]);
-  // const{error,loading,data} = useQuery(CREATE_ACCOUNT,{
-  //   variables:{
-  //     uname: "test",
-  //     pass: "thisprobablyshouldbeahash",
-  //     fname: "omar",
-  //     lname: "dominguez",
-  //     email: "odomardominguezod@gmail.com"
-  //   }
-  // });
-  // const handleLogin = () => {
-  //   setLoading(true);
-  // };
-  // useEffect(() => {
-  //   let timer = setTimeout(() => {}, 0);
-  //   if (loading) {
-  //     timer = setTimeout(() => {
-  //       dispatch({type: 'LOGIN', data: {email, password}});
-  //       setLoading(false);
-  //     }, 1000);
-  //   }
-  //   return () => clearTimeout(timer);
-  // }, [loading]);
-  // if(loading) return <Text>Creating Account</Text>
-  // if(error) return <Text> ${error.message}</Text>
-  // const getUser = (email: string) => String;
-  // {
-  //   const {error, loading, data} = useQuery(GET_USER_BY_ID, {
-  //     variables: {id: email},
-  //   });
-  //   if (loading) return Alert.alert('Loading');
-  //   if (error) return Alert.alert('User not found');
-  //   return data;
-  // }
 
   return (
     <View style={submitted ? styles.containerLoading : styles.container}>
@@ -90,30 +60,40 @@ export default function App({navigation}: Props) {
           resizeMode="contain"
         />
       </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={email => setEmail(email)}
-        />
+      <View>
+        <Text style={styles.text_footer}>Email</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            onChangeText={val => setUser({...user, email: val})}
+          />
+        </View>
       </View>
-
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={password => setPassword(password)}
-        />
+      <View>
+        <Text style={styles.text_footer}>Password</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={password => setPassword(password)}
+          />
+        </View>
       </View>
 
       {/* <View style={styles.button}> */}
       {/* <TouchableOpacity
       style={styles.signIn}
       onPress={() => {}}></TouchableOpacity> */}
-      <View style={{position: 'absolute', bottom: 10, alignItems: 'center'}}>
+      <View
+        style={{
+          marginTop: '20%',
+          alignItems: 'center',
+          // backgroundColor: 'black',
+        }}>
         <TouchableOpacity
           onPress={() => {
             setSubmitted(true);
@@ -198,6 +178,7 @@ const styles = StyleSheet.create({
     fontFamily: 'VarelaRound-Regular',
     width: '90%',
     flex: 1,
+    color: '#003f5c',
     // textAlign: 'center',
   },
 
@@ -224,10 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
-    borderColor: '#71BF61',
     backgroundColor: '#71BF61',
-    borderWidth: 1,
-    marginTop: 110,
     // left: 1,
   },
 
@@ -264,41 +242,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     transform: [{scale: 2.5}],
   },
-
-  // /* Username */
-  // username_default:{
-
-  // position: "absolute",
-  // // width: 56,
-  // // height: 14,
-  // // left: 48,
-  // // top: 238,
-
-  // fontFamily: "VarelaRound-Regular",
-  // // fontStyle: "normal",
-  // // fontWeight: "normal",
-  // fontSize: 16,
-  // lineHeight: 14,
-  // letterSpacing: -0.3,
-
-  // color: "#E89023",
-  // }
-
-  // /* Name */
-  // username_default:{
-  //   position: "absolute",
-  //   width: "71px",
-  //   height: "19px",
-  //   left: "48px",
-  //   top: "258px",
-
-  //   font-family: "Varela Round",
-  //   font-style: "normal",
-  //   font-weight: "normal",
-  //   font-size: "16px",
-  //   line-height: "19px",
-  //   letter-spacing: "-0.3px",
-
-  //   color: #424347
-  // }
+  text_footer: {
+    color: '#E89023',
+    fontSize: 18,
+    fontFamily: 'VarelaRound-Regular',
+    marginVertical: 5,
+    alignSelf: 'flex-start',
+  },
 });

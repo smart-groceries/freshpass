@@ -10,104 +10,54 @@ import {
   Switch,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import {placeholder} from '@babel/types';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-export default function AddPayment() {
-  const [email, setEmail] = useState('');
-  const [cardNumber, setCard] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
-  const [name, setName] = useState('');
-  const [selectedMonth, setSelectedMonth] = useState();
-  const [password, setPassword] = useState('');
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'AddPayment'>;
+};
+
+export default function AddPayment({navigation}: Props) {
+  const [paymentInfo, setPaymentInfo] = useState({
+    name: '',
+    nameValidated: true,
+    number: '',
+    numberValidated: true,
+    month: '',
+    monthValidated: true,
+    year: '',
+    yearValidated: true,
+    cvc: '',
+    cvcValidated: true,
+    default: false,
+    validated: false,
+  });
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(!isEnabled);
+  const toggleSwitch = () => {
+    setIsEnabled(!isEnabled),
+      setPaymentInfo({...paymentInfo, default: isEnabled});
+  };
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (submitted) {
+      navigation.navigate('PaymentMethods', {paymentInfo});
+    }
+  }, [paymentInfo]);
+
+  const validateName = (text: string) => {
+    if (text.trim().length == 0) {
+      return false;
+    }
+    return true;
+  };
 
   return (
-    // <View style={styles.mainContainer}>
-    //   {/* <View style={styles.container_}> */}
-    //   <View style={styles.inputView}>
-    //     <TextInput
-    //       style={styles.inputName}
-    //       placeholder="Name on Card"
-    //       placeholderTextColor="#E4E4E4"
-    //       onChangeText={name => setName(name)}
-    //     />
-    //   </View>
-
-    //   <View style={styles.inputView}>
-    //     <TextInput
-    //       style={styles.inputCard}
-    //       placeholder="Card Number"
-    //       placeholderTextColor="#E4E4E4"
-    //       onChangeText={carnumber => setEmail(carnumber)}
-    //       keyboardType="numeric"
-    //     />
-    //   </View>
-    //   {/* </View> */}
-
-    //   <View style={styles.inputView2}>
-    //     {/* <View style={styles.pickerContainer}> */}
-    //     {/* <Picker
-    //       style={styles.inputMonth}
-    //       selectedValue={selectedMonth}
-    //       onValueChange={(itemValue, itemIndex) => setSelectedMonth(itemValue)}>
-    //       <Picker.Item label="Month" value="Month" />
-    //       <Picker.Item label="January" value="January" />
-    //       <Picker.Item label="February" value="February" />
-    //       <Picker.Item label="March" value="March" />
-    //       <Picker.Item label="April" value="April" />
-    //       <Picker.Item label="May" value="May" />
-    //       <Picker.Item label="June" value="June" />
-    //       <Picker.Item label="July" value="July" />
-    //       <Picker.Item label="August" value="August" />
-    //       <Picker.Item label="September" value="September" />
-    //       <Picker.Item label="October" value="October" />
-    //       <Picker.Item label="November" value="November" />
-    //       <Picker.Item label="December" value="December" />
-    //     </Picker> */}
-    //     {/* </View> */}
-    //     <TextInput
-    //       style={styles.inputMonth}
-    //       placeholder="Month"
-    //       placeholderTextColor="#E4E4E4"
-    //       onChangeText={month => setYear(month)}
-    //       keyboardType="numeric"
-    //     />
-    //     <TextInput
-    //       style={styles.inputYear}
-    //       placeholder="Year"
-    //       placeholderTextColor="#E4E4E4"
-    //       onChangeText={year => setYear(year)}
-    //       keyboardType="numeric"
-    //     />
-    //   </View>
-
-    //   <View style={styles.inputView2}>
-    //     <TextInput
-    //       style={styles.inputCVC}
-    //       placeholder="CVC"
-    //       placeholderTextColor="#E4E4E4"
-    //       onChangeText={Month => setMonth(Month)}
-    //       keyboardType="numeric"
-    //     />
-    //     <Text style={styles.cvcText}>
-    //       3 or 4 digits usually {'\n'}found near the strip
-    //     </Text>
-    //   </View>
-
-    //   <View style={styles.AddPayContainer}>
-    //     <TouchableOpacity
-    //       //onPress={() => navigation.goBack()}
-    //       style={styles.signIn}>
-    //       <Text style={styles.textSign}>Add Now</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </View>
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.mainContainer}>
         <View style={styles.largeItemContainer}>
@@ -115,6 +65,10 @@ export default function AddPayment() {
           <TextInput
             style={styles.userDataTextInput}
             placeholder={'Name on Card'}
+            placeholderTextColor="black"
+            onChangeText={val => {
+              setPaymentInfo({...paymentInfo, name: val});
+            }}
           />
         </View>
         <View style={styles.largeItemContainer}>
@@ -123,6 +77,10 @@ export default function AddPayment() {
             style={styles.userDataTextInput}
             placeholder={'Card Number'}
             keyboardType="numeric"
+            placeholderTextColor="black"
+            onChangeText={val => {
+              setPaymentInfo({...paymentInfo, number: val});
+            }}
           />
         </View>
         <View style={styles.itemContainer}>
@@ -131,6 +89,10 @@ export default function AddPayment() {
             style={styles.userDataTextInput}
             placeholder={'Month'}
             keyboardType="numeric"
+            placeholderTextColor="black"
+            onChangeText={val => {
+              setPaymentInfo({...paymentInfo, month: val});
+            }}
           />
         </View>
         <View style={styles.itemContainer}>
@@ -139,6 +101,10 @@ export default function AddPayment() {
             style={styles.userDataTextInput}
             placeholder={'Year'}
             keyboardType="numeric"
+            placeholderTextColor="black"
+            onChangeText={val => {
+              setPaymentInfo({...paymentInfo, year: val});
+            }}
           />
         </View>
         <View style={styles.itemContainer}>
@@ -147,6 +113,10 @@ export default function AddPayment() {
             style={styles.userDataTextInput}
             placeholder={'CVC'}
             keyboardType="numeric"
+            placeholderTextColor="black"
+            onChangeText={val => {
+              setPaymentInfo({...paymentInfo, cvc: val});
+            }}
           />
         </View>
         <View style={styles.itemContainer}>
@@ -171,7 +141,12 @@ export default function AddPayment() {
             onValueChange={toggleSwitch}></Switch>
           <Text style={styles.securityText}>SET AS DEFAULT</Text>
         </View>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => {
+            setPaymentInfo({...paymentInfo, validated: true});
+            setSubmitted(true);
+          }}>
           <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
       </ScrollView>
