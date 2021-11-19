@@ -39,7 +39,7 @@ const Payments = ({route, navigation}: Props) => {
 
   return (
     <View style={styles.mainContainer}>
-      {route.params?.paymentInfo == undefined ? (
+      {/* {route.params?.paymentInfo == undefined ? (
         <View style={{alignItems: 'center'}}>
           <View style={styles.TextContainer}>
             <Text style={styles.NoPaymentText}>No Payment Info Found</Text>
@@ -72,7 +72,7 @@ const Payments = ({route, navigation}: Props) => {
             </View>
           </View>
         </View>
-      )}
+      )} */}
     </View>
   );
 };

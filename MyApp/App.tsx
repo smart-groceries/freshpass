@@ -39,6 +39,8 @@ import EditAccountInfoScreen from './src/screens/EditAccountInfo';
 import StoreLocator from './src/screens/StoreLocator';
 import ChangePasswordScreen from './src/screens/Change Password';
 import StoreAccountScreen from './src/screens/StoreAccount';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/core';
 // import { useQuery, ApolloProvider, ApolloClient, gql } from '@apollo/client';
 import AppSyncConfig from './src/graphql/AppSyncConfig.js';
 import {ApolloLink} from 'apollo-link';

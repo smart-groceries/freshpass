@@ -15,16 +15,22 @@ import {
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Account'>;
+  route: RouteProp<RootStackParamList, 'Account'>;
 };
 
-const AccountScreen = ({navigation}: Props) => {
-  const [data, setData] = React.useState({
-    email: 'johndoe@gmail.com',
-    name: 'John Doe',
+const AccountScreen = ({route, navigation}: Props) => {
+  const [user, setUser] = React.useState({
+    email: route.params.user.email,
+    fname: route.params.user.fname,
+    lname: route.params.user.lname,
+    id: route.params.user.id,
   });
+
+  // console.log(route.params.user);
 
   return (
     <View style={styles.container}>
@@ -43,10 +49,10 @@ const AccountScreen = ({navigation}: Props) => {
             justifyContent: 'center',
           }}>
           <Text style={[styles.userInfoText, {fontSize: 20, margin: 1}]}>
-            {data.name}
+            {user.fname} {user.lname}
           </Text>
           <Text style={[styles.userInfoText, {fontSize: 14, margin: 1}]}>
-            {data.email}
+            {user.email}
           </Text>
         </View>
       </View>
@@ -57,7 +63,7 @@ const AccountScreen = ({navigation}: Props) => {
         ]}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('PaymentMethods');
+            navigation.navigate('PaymentMethods', {user});
           }}
           style={styles.accountEditOption}>
           {/* <View style={[styles.accountEditOption, {marginTop: 48}]}> */}
@@ -95,7 +101,7 @@ const AccountScreen = ({navigation}: Props) => {
         ]}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('EditAccount');
+            navigation.navigate('EditAccount', {user});
           }}
           style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>

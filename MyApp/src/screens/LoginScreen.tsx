@@ -56,16 +56,38 @@ export default function App({navigation}: Props) {
           'Make sure you are using the correct email and password.',
         );
       }
-      setUser({
-        id: data.authn.account_id,
-        email: data.authn.email,
-        fname: data.authn.first_name,
-        lname: data.authn.last_name,
-      });
+      // setUser({
+      //   id: data.authn.account_id,
+      //   email: data.authn.email,
+      //   fname: data.authn.first_name,
+      //   lname: data.authn.last_name,
+      // });
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{name: 'Home'}, {name: 'Home', params: user}],
+          routes: [
+            {
+              name: 'Home',
+              state: {
+                index: 0,
+                routes: [
+                  {name: 'Stores'},
+                  {
+                    name: 'Account',
+                    params: {
+                      user: {
+                        id: data.authn.account_id,
+                        email: data.authn.email,
+                        fname: data.authn.first_name,
+                        lname: data.authn.last_name,
+                      },
+                    },
+                  },
+                  {name: 'Lists'},
+                ],
+              },
+            },
+          ],
         }),
       );
       // navigation.navigate('Home');

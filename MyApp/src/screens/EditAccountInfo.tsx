@@ -16,79 +16,21 @@ import {
 
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'EditAccount'>;
+  route: RouteProp<RootStackParamList, 'EditAccount'>;
 };
 
-const EditAccountInfoScreen = ({navigation}: Props) => {
+const EditAccountInfoScreen = ({route, navigation}: Props) => {
   const [user, setUser] = React.useState({
-    email: 'andrewbaltazar@gmail.com',
-    fname: 'andrew',
-    lname: 'baltazar',
-    password: 'andrewbaltazar',
-    stateHasBeenChanged: false,
-    inInitialState: true,
+    email: route.params.user.email,
+    fname: route.params.user.fname,
+    lname: route.params.user.lname,
+    // password: 'andrewbaltazar',
   });
 
-  // const changedEmail = (val: any) => {
-  //   setData({
-  //     ...data,
-  //     email: val,
-  //     stateHasBeenChanged: true,
-  //     inInitialState: false,
-  //   });
-  // };
-
-  // const changedUsername = (val: any) => {
-  //   setData({
-  //     ...data,
-  //     username: val,
-  //     stateHasBeenChanged: true,
-  //     inInitialState: false,
-  //   });
-  // };
-
-  // const changedName = (val: any) => {
-  //   setData({
-  //     ...data,
-  //     name: val,
-  //     stateHasBeenChanged: true,
-  //     inInitialState: false,
-  //   });
-  // };
-
-  // const saveState = () => {
-  //   setData({
-  //     ...data,
-  //     stateHasBeenChanged: false,
-  //     inInitialState: false,
-  //   });
-  // };
-
-  // const getSaveStyling = () => {
-  //   if (data.stateHasBeenChanged == false) {
-  //     return styles.greyedOutSave;
-  //   } else {
-  //     return styles.save;
-  //   }
-  // };
-
-  // const getSaveTextStyling = () => {
-  //   if (data.stateHasBeenChanged == false) {
-  //     return styles.greyedOutTextSaveButton;
-  //   } else {
-  //     return styles.textSaveButton;
-  //   }
-  // };
-
-  // const getSavedNotif = () => {
-  //   if (data.stateHasBeenChanged == false && data.inInitialState == false) {
-  //     return styles.savedNotif;
-  //   } else {
-  //     return styles.hiddenSavedNotif;
-  //   }
-  // };
   const obscurePassword = (password: string) => {
     const hidden = Array.from(password).map(char => {
       return '*';
@@ -128,7 +70,7 @@ const EditAccountInfoScreen = ({navigation}: Props) => {
           </TouchableOpacity>
           <View style={styles.userDataView}>
             <Text style={[styles.userDataText, {opacity: 0.5}]}>
-              {obscurePassword(user.password)}
+              {obscurePassword('test')}
             </Text>
           </View>
         </View>

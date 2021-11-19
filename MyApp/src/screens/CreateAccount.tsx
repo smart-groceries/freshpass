@@ -67,7 +67,7 @@ const CreateAccountScreen = ({navigation}: Props) => {
       submitted == true
     ) {
       setSubmitted(false);
-      let res = mutateFunction({
+      mutateFunction({
         variables: {
           email: user.email,
           pass: user.password,
@@ -76,14 +76,15 @@ const CreateAccountScreen = ({navigation}: Props) => {
         },
       });
       // this needs to implement user returned from mutation
-      navigation.navigate('Home', {
-        user: {
-          email: user.email,
-          id: 1,
-          fname: user.firstName,
-          lname: user.lastName,
-        },
-      });
+      // navigation.navigate('Home', {
+      //   user: {
+      //     email: user.email,
+      //     id: 1,
+      //     fname: user.firstName,
+      //     lname: user.lastName,
+      //   },
+      // });
+      navigation.navigate('Login');
     }
   }, [user]);
 

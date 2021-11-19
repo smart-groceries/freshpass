@@ -1,5 +1,19 @@
 export type RootStackParamList = {
-  Home: {
+  Home: undefined;
+  // {
+  //   user: {
+  //     id: number;
+  //     email: string;
+  //     fname: string;
+  //     lname: string;
+  //   };
+  // };
+  Landing: undefined;
+  Login: undefined;
+  Create: undefined;
+  Forgot: undefined;
+  PaymentConfirm: undefined;
+  Account: {
     user: {
       id: number;
       email: string;
@@ -7,32 +21,30 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  Landing: undefined;
-  Login: undefined;
-  Create: undefined;
-  Forgot: undefined;
-  PaymentConfirm: undefined;
-  Account: undefined;
-  EditAccount: undefined;
-  PaymentMethods:
-    | {
-        paymentInfo: {
-          name: string;
-          nameValidated: boolean;
-          number: string;
-          numberValidated: boolean;
-          month: string;
-          monthValidated: boolean;
-          year: string;
-          yearValidated: boolean;
-          cvc: string;
-          cvcValidated: boolean;
-          default: boolean;
-          validated: boolean;
-        };
-      }
-    | undefined;
-  AddPayment: undefined;
+  EditAccount: {
+    user: {
+      id: number;
+      email: string;
+      fname: string;
+      lname: string;
+    };
+  };
+  PaymentMethods: {
+    user: {
+      id: number;
+      email: string;
+      fname: string;
+      lname: string;
+    };
+  };
+  AddPayment: {
+    user: {
+      id: number;
+      email: string;
+      fname: string;
+      lname: string;
+    };
+  };
   OrderRejected: undefined;
   CartView: undefined;
   Lists: undefined;
