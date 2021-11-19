@@ -1,5 +1,6 @@
 import {typeAlias} from '@babel/types';
 import React, {useEffect, useState} from 'react';
+import {CommonActions} from '@react-navigation/routers';
 import {useNavigation} from '@react-navigation/core';
 import {
   StyleSheet,
@@ -14,7 +15,7 @@ import {
 import {Dispatch} from 'react';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {GET_USER_BY_ID, CREATE_ACCOUNT} from '../graphql/queries';
+import {AUTHENTICATE} from '../graphql/queries';
 import {useQuery} from '@apollo/client';
 import {ScrollView} from 'react-native-gesture-handler';
 
@@ -29,24 +30,44 @@ export default function App({navigation}: Props) {
     fname: 'null',
     lname: 'null',
   });
-  // const {error, loading, data} = useQuery(GET_USER_BY_ID, {
-  //   variables: {id: email},
-  // });
+  const [password, setPassword] = useState('');
+  const {error, loading, data} = useQuery(AUTHENTICATE, {
+    variables: {email: user.email, pass: password},
+  });
   const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
     if (submitted) {
-      // if (loading) {
-      //   console.log('loading');
-      // }
-      // if (error) {
-      //   console.log(error.message);
-      //   setSubmitted(false);
-      //   return Alert.alert(
-      //     'Error',
-      //     'User not found. Make sure you are using the correct Email and password.',
-      //   );
-      // }
-      navigation.reset({index: 0, routes: [{name: 'Home'}]});
+      if (loading) {
+        console.log('loading');
+      }
+      if (error) {
+        console.log(error.message);
+        setSubmitted(false);
+        return Alert.alert(
+          'Error',
+          'Make sure you are using the correct email and password.',
+        );
+      }
+      if (data.authn.account_id == 0) {
+        setSubmitted(false);
+        return Alert.alert(
+          'User not found',
+          'Make sure you are using the correct email and password.',
+        );
+      }
+      setUser({
+        id: data.authn.account_id,
+        email: data.authn.email,
+        fname: data.authn.first_name,
+        lname: data.authn.last_name,
+      });
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Home'}, {name: 'Home', params: user}],
+        }),
+      );
       // navigation.navigate('Home');
     }
     setSubmitted(false);

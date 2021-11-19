@@ -16,15 +16,19 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import {CREATE_ACCOUNT} from '../graphql/queries';
-import {useQuery} from '@apollo/client';
+// import {CREATE_ACCOUNT} from '../graphql/queries';
+import {useMutation, useQuery} from '@apollo/client';
 import {RootStackParamList} from '../navigation/RootStackParamList';
+import {CREATE_ACCOUNT} from '../graphql/mutations';
+import {AUTHENTICATE} from '../graphql/queries';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Create'>;
 };
 const CreateAccountScreen = ({navigation}: Props) => {
   const [submitted, setSubmitted] = React.useState(false);
+
+  const [mutateFunction, {data, loading, error}] = useMutation(CREATE_ACCOUNT);
 
   const [user, setUser] = React.useState({
     email: '',
@@ -63,7 +67,23 @@ const CreateAccountScreen = ({navigation}: Props) => {
       submitted == true
     ) {
       setSubmitted(false);
-      navigation.navigate('Home');
+      let res = mutateFunction({
+        variables: {
+          email: user.email,
+          pass: user.password,
+          fname: user.firstName,
+          lname: user.lastName,
+        },
+      });
+      // this needs to implement user returned from mutation
+      navigation.navigate('Home', {
+        user: {
+          email: user.email,
+          id: 1,
+          fname: user.firstName,
+          lname: user.lastName,
+        },
+      });
     }
   }, [user]);
 
@@ -290,7 +310,7 @@ const CreateAccountScreen = ({navigation}: Props) => {
                   color: '#FFFFFF',
                 },
               ]}>
-              Sign In
+              Create Account
             </Text>
           </TouchableOpacity>
         </View>
