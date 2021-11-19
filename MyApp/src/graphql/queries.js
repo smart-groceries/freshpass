@@ -12,6 +12,21 @@ export const GET_USER_BY_ID = gql`
   }
 `;
 
+export const ADD_CARD_INFO = gql `
+  mutation addCardMutation(		
+    $name: String!,
+		$account_id: Int!,
+		$card_number: String!,
+		$nameoncard: String!,
+		$month: Int!,
+		$year: Int!,
+		$cvc: Int!){
+      addCardInfo(name:"addCardInfo",account_id:$account_id,card_number:$card_number,nameoncard:$nameoncard,month:$month,year:$year,cvc:$cvc){
+        message
+      }
+    }
+
+`
 // export const CREATE_ACCOUNT = gql`
 //   query MyQuery2(
 //     $uname: String!
