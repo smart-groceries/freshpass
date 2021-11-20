@@ -42,13 +42,9 @@ const AccountScreen = ({route, navigation}: Props) => {
     }
     setLogOut(false);
   }, [logOut]);
-  // console.log(route.params.user);
 
   return (
     <View style={styles.container}>
-      {/* <Text style={[styles.text_header, {marginTop: 65}]}>
-        Account Settings
-      </Text> */}
       <View style={[styles.userInfo]}>
         <Image
           source={require('../assets/profile_photo.png')}
@@ -68,23 +64,17 @@ const AccountScreen = ({route, navigation}: Props) => {
           </Text>
         </View>
       </View>
-      <View
-        style={[
-          styles.optionContainer,
-          {borderTopWidth: 1, borderBottomWidth: 0.5},
-        ]}>
+      <View style={[styles.optionContainer]}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('PaymentMethods', {user});
           }}
           style={styles.accountEditOption}>
-          {/* <View style={[styles.accountEditOption, {marginTop: 48}]}> */}
           <View style={styles.optionInfoContainer}>
             <View style={styles.iconContainer}>
               <Image
                 source={require('../assets/credit_card.png')}
                 resizeMode="stretch"
-                // style={styles.icon}
               />
             </View>
 
@@ -103,14 +93,9 @@ const AccountScreen = ({route, navigation}: Props) => {
             </View>
           </View>
           <Image source={require('../assets/chevron_pointing_right.png')} />
-          {/* </View> */}
         </TouchableOpacity>
       </View>
-      <View
-        style={[
-          styles.optionContainer,
-          {borderTopWidth: 0.5, borderBottomWidth: 0.5},
-        ]}>
+      <View style={[styles.optionContainer]}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('EditAccount', {user});
@@ -121,7 +106,6 @@ const AccountScreen = ({route, navigation}: Props) => {
               <Image
                 source={require('../assets/account_icon_dark.png')}
                 resizeMode="stretch"
-                // style={styles.icon}
               />
             </View>
 
@@ -143,11 +127,7 @@ const AccountScreen = ({route, navigation}: Props) => {
           {/* </View> */}
         </TouchableOpacity>
       </View>
-      <View
-        style={[
-          styles.optionContainer,
-          {borderTopWidth: 0.5, borderBottomWidth: 1},
-        ]}>
+      <View style={[styles.optionContainer]}>
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Log out', 'Are you sure you want to log out?', [
@@ -166,7 +146,6 @@ const AccountScreen = ({route, navigation}: Props) => {
             </View>
           </View>
           <Image source={require('../assets/chevron_pointing_right.png')} />
-          {/* </View> */}
         </TouchableOpacity>
       </View>
     </View>
@@ -177,7 +156,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
@@ -285,18 +264,22 @@ const styles = StyleSheet.create({
     // flexDirection: 'column',
     // justifyContent: 'center',
     // borderTopWidth: 1,
-    borderColor: '#BBBBBB',
+
+    backgroundColor: '#F3F3F3',
+    // borderColor: '#BBBBBB',
     width: '100%',
     // backgroundColor: 'black',
     paddingVertical: 20,
-    height: 75,
+    height: 55,
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    marginVertical: 5,
   },
   accountEditOption: {
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    // backgroundColor: 'grey',
     height: '100%',
   },
   optionInfoContainer: {
@@ -313,7 +296,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     // backgroundColor: 'red',
-    height: '100%',
+    height: 55,
     width: '80%',
   },
   iconContainer: {

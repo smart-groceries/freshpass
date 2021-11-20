@@ -34,6 +34,8 @@ const Payments = ({route, navigation}: Props) => {
     id: route.params.user.id,
   });
 
+  const [empty, setEmpty] = useState(false);
+
   // query to get payment info for user
   // const {error, loading, data} = useQuery();
 
@@ -50,7 +52,7 @@ const Payments = ({route, navigation}: Props) => {
   // will finish this when get payment info query is done
   return (
     <View style={styles.mainContainer}>
-      {/* {route.params?.paymentInfo == undefined ? (
+      {empty ? (
         <View style={{alignItems: 'center'}}>
           <View style={styles.TextContainer}>
             <Text style={styles.NoPaymentText}>No Payment Info Found</Text>
@@ -58,7 +60,8 @@ const Payments = ({route, navigation}: Props) => {
               You can add and edit payments during checkout
             </Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('AddPayment')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AddPayment', {user})}>
             <View style={styles.PaymentMethodContainer}>
               <Image
                 style={styles.searchIconImageStyle}
@@ -69,21 +72,34 @@ const Payments = ({route, navigation}: Props) => {
           </TouchableOpacity>
         </View>
       ) : (
-        <View>
-          <Text>Saved Payment Methods</Text>
-          <View style={styles.paymentMethod}>
-            <View style={styles.searchIconImageStyle}>
-              <Image
-                source={require('../assets/credit_card.png')}
-                resizeMode="contain"></Image>
-            </View>
+        <View style={styles.mainContainer}>
+          <ScrollView contentContainerStyle={styles.scroll}>
+            <Text style={styles.headerText}>Saved Payment Methods</Text>
             <View>
-              <Text>{route.params.paymentInfo.name}</Text>
-              <Text>{obscureCardNumber(route.params.paymentInfo.number)}</Text>
+              <TouchableOpacity style={styles.paymentMethod}>
+                <View style={styles.paymentTextContainer}>
+                  <Text style={styles.userInfoText}>Name: Andrew Baltazar</Text>
+                  <Text style={styles.userInfoText}>
+                    Card ending in {obscureCardNumber('12345678')}
+                  </Text>
+                </View>
+                <Image
+                  source={require('../assets/chevron_pointing_right.png')}></Image>
+              </TouchableOpacity>
+              <View>
+                <Text style={styles.headerText}>Add Payment Methods</Text>
+                <TouchableOpacity style={styles.paymentMethod}>
+                  <View style={styles.paymentTextContainer}>
+                    <Text style={styles.userInfoText}>Add payment method</Text>
+                  </View>
+                  <Image
+                    source={require('../assets/chevron_pointing_right.png')}></Image>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </ScrollView>
         </View>
-      )} */}
+      )}
     </View>
   );
 };
@@ -95,6 +111,25 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     backgroundColor: 'white',
+  },
+
+  scroll: {
+    padding: 15,
+  },
+
+  headerText: {
+    fontFamily: 'VarelaRound-Regular',
+    fontSize: 20,
+  },
+
+  userInfoText: {
+    fontFamily: 'VarelaRound-Regular',
+    // fontSize: 12,
+  },
+
+  paymentTextContainer: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
 
   TextContainer: {
@@ -170,10 +205,17 @@ const styles = StyleSheet.create({
     // top: 25,
   },
   paymentMethod: {
-    backgroundColor: '#F3F3F3',
     height: 55,
     width: '100%',
     flexDirection: 'row',
+    // borderWidth: 0.5,
+    // borderColor: '#BBBBBB',
+    backgroundColor: '#F3F3F3',
+    borderRadius: 12,
+    marginVertical: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
 });
 

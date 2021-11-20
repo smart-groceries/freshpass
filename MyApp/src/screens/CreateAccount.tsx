@@ -17,7 +17,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 // import {CREATE_ACCOUNT} from '../graphql/queries';
-import {useMutation, useQuery} from '@apollo/client';
+import {ApolloError, useMutation, useQuery} from '@apollo/client';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {CREATE_ACCOUNT} from '../graphql/mutations';
 import {AUTHENTICATE} from '../graphql/queries';
@@ -28,7 +28,11 @@ type Props = {
 const CreateAccountScreen = ({navigation}: Props) => {
   const [submitted, setSubmitted] = React.useState(false);
 
-  const [mutateFunction, {data, loading, error}] = useMutation(CREATE_ACCOUNT);
+  const [mutateFunction, {data, loading, error}] = useMutation(CREATE_ACCOUNT, {
+    onError: err => {
+      console.log(err);
+    },
+  });
 
   const [user, setUser] = React.useState({
     email: '',
@@ -75,15 +79,6 @@ const CreateAccountScreen = ({navigation}: Props) => {
           lname: user.lastName,
         },
       });
-      // this needs to implement user returned from mutation
-      // navigation.navigate('Home', {
-      //   user: {
-      //     email: user.email,
-      //     id: 1,
-      //     fname: user.firstName,
-      //     lname: user.lastName,
-      //   },
-      // });
       navigation.navigate('Login');
     }
   }, [user]);
@@ -280,11 +275,6 @@ const CreateAccountScreen = ({navigation}: Props) => {
         <View style={styles.button}>
           <TouchableOpacity
             onPress={() => {
-              // validateEmail(user.email);
-              // validatePassword(user.password);
-              // validateFirstName(user.firstName);
-              // validateLastName(user.lastName);
-              // confirmPassword(user.confirmPassword);
               setUser({
                 ...user,
                 emailValidated: validateEmail(user.email),

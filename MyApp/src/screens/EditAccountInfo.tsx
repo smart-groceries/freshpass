@@ -31,12 +31,22 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
     // password: 'andrewbaltazar',
   });
 
+  const [changed, setChanged] = React.useState(false);
+
   const obscurePassword = (password: string) => {
     const hidden = Array.from(password).map(char => {
       return '*';
     });
 
     return hidden;
+  };
+
+  const validateText = (text: string) => {
+    if (text.trim().length == 0) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   return (
@@ -48,7 +58,13 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
         </View>
         <View style={styles.itemContainer}>
           <Text style={styles.itemText}>Last Name:</Text>
-          <TextInput style={styles.userDataTextInput}>{user.lname}</TextInput>
+          <TextInput
+            style={styles.userDataTextInput}
+            onChangeText={val => {
+              setUser({...user, lname: val});
+            }}>
+            {user.lname}
+          </TextInput>
         </View>
         <View style={styles.largeItemContainer}>
           <Text style={styles.itemText}>Email:</Text>
