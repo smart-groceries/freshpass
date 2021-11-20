@@ -27,6 +27,16 @@ type Props = {
 };
 
 const Payments = ({route, navigation}: Props) => {
+  const [user, setUser] = useState({
+    email: route.params.user.email,
+    fname: route.params.user.fname,
+    lname: route.params.user.lname,
+    id: route.params.user.id,
+  });
+
+  // query to get payment info for user
+  // const {error, loading, data} = useQuery();
+
   const obscureCardNumber = (text: string) => {
     const hiddenPart = text.slice(0, -4);
     const visible = text.slice(-4);
@@ -37,6 +47,7 @@ const Payments = ({route, navigation}: Props) => {
     return hidden;
   };
 
+  // will finish this when get payment info query is done
   return (
     <View style={styles.mainContainer}>
       {/* {route.params?.paymentInfo == undefined ? (

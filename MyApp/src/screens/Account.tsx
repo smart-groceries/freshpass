@@ -1,5 +1,6 @@
 import {tsNamedTupleMember} from '@babel/types';
-import React from 'react';
+import {CommonActions} from '@react-navigation/routers';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,6 +13,7 @@ import {
   ScrollView,
   StatusBar,
   Image,
+  Alert,
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -30,6 +32,16 @@ const AccountScreen = ({route, navigation}: Props) => {
     id: route.params.user.id,
   });
 
+  const [logOut, setLogOut] = React.useState(false);
+
+  useEffect(() => {
+    if (logOut) {
+      navigation.dispatch(
+        CommonActions.reset({index: 0, routes: [{name: 'Landing'}]}),
+      );
+    }
+    setLogOut(false);
+  }, [logOut]);
   // console.log(route.params.user);
 
   return (
@@ -138,7 +150,14 @@ const AccountScreen = ({route, navigation}: Props) => {
         ]}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Login');
+            Alert.alert('Log Out', 'Are you sure you want to log out?', [
+              {text: 'Cancel', style: 'cancel'},
+              {
+                text: 'Log out',
+                style: 'default',
+                onPress: () => setLogOut(true),
+              },
+            ]);
           }}
           style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>
@@ -309,6 +328,13 @@ const styles = StyleSheet.create({
   icon: {
     // width: '90%',
     // height: '60%',
+  },
+  logOutPrompContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    height: 100,
+    width: 100,
+    backgroundColor: 'grey',
   },
 });
 
