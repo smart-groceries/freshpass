@@ -61,7 +61,7 @@ function HomeTabs() {
             iconName = require('./src/assets/account_icon.png');
           } else if (route.name === 'Stores') {
             iconName = require('./src/assets/stores_icon.png');
-          } else if (route.name === 'Shopping Lists') {
+          } else if (route.name === 'Lists') {
             iconName = require('./src/assets/lists_icon.png');
           }
           return (
@@ -81,7 +81,11 @@ function HomeTabs() {
 
       <Tab.Screen name="Stores" component={StoreLocator} />
 
-      <Tab.Screen name="Shopping Lists" component={ShoppingLists} />
+      <Tab.Screen
+        name="Lists"
+        component={ShoppingLists}
+        options={{headerTitle: 'Shopping Lists'}}
+      />
     </Tab.Navigator>
   );
 }

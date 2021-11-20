@@ -12,20 +12,28 @@ export const GET_USER_BY_ID = gql`
   }
 `;
 
-export const ADD_CARD_INFO = gql `
-  mutation addCardMutation(		
-		$account_id: Int!,
-		$card_number: String!,
-		$nameoncard: String!,
-		$month: Int!,
-		$year: Int!,
-		$cvc: Int!){
-      addCardInfo(name:"addCardInfo", account_id: $account_id , card_number:$card_number,nameoncard:$nameoncard,month:$month,year:$year,cvc:$cvc){
-        message
-      }
+export const ADD_CARD_INFO = gql`
+  mutation addCardMutation(
+    $account_id: Int!
+    $card_number: String!
+    $nameoncard: String!
+    $month: Int!
+    $year: Int!
+    $cvc: Int!
+  ) {
+    addCardInfo(
+      name: "addCardInfo"
+      account_id: $account_id
+      card_number: $card_number
+      nameoncard: $nameoncard
+      month: $month
+      year: $year
+      cvc: $cvc
+    ) {
+      message
     }
-
-`
+  }
+`;
 // export const CREATE_ACCOUNT = gql`
 //   query MyQuery2(
 //     $uname: String!
@@ -54,6 +62,29 @@ export const AUTHENTICATE = gql`
       email
       first_name
       last_name
+    }
+  }
+`;
+
+export const GET_SHOPPINGLISTS_BY_USER_ID = gql`
+  query MyQuery($id: Int!) {
+    getShoppingListsByUserId(name: "getShoppingListsByUserId", id: $id) {
+      items {
+        barcode_id
+        item_aisle
+        item_brand
+        item_name
+        item_price
+        item_wieght
+        quantity
+      }
+      shopping_list_id
+      user {
+        account_id
+        email
+        first_name
+        last_name
+      }
     }
   }
 `;

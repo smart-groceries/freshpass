@@ -47,7 +47,14 @@ export type RootStackParamList = {
   };
   OrderRejected: undefined;
   CartView: undefined;
-  Lists: undefined;
+  Lists: {
+    user: {
+      id: number;
+      email: string;
+      fname: string;
+      lname: string;
+    };
+  };
   ChangePassword: undefined;
   StoreLocator: undefined;
 };

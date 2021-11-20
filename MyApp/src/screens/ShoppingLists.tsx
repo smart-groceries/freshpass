@@ -19,21 +19,25 @@ import SearchBar from '../components/SearchBar';
 import ShoppingList from '../components/ShoppingList';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {useQuery} from '@apollo/client';
+import {GET_SHOPPINGLISTS_BY_USER_ID} from '../graphql/queries';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Lists'>;
+  route: RouteProp<RootStackParamList, 'Lists'>;
 };
 
-const ShoppingLists = () => {
-  const [lists, setLists] = useState<number[]>([]);
-  const [listCount, setListCount] = useState(0);
-  // let lists = [1, 2, 3, 4];
-  // let buttonLists = lists.map(info => <ShoppingList key={info} />);
-  const addList = () => {
-    setListCount(listCount + 1);
-    setLists(lists => [...lists, listCount]);
-    // buttonLists = lists.map(info => <ShoppingList key={info} />);
-  };
+const ShoppingLists = ({route, navigation}: Props) => {
+  const [user, setUser] = useState({
+    email: route.params.user.email,
+    fname: route.params.user.fname,
+    lname: route.params.user.lname,
+    id: route.params.user.id,
+  });
+  const {error, loading, data} = useQuery(GET_SHOPPINGLISTS_BY_USER_ID, {
+    variables: {id: user.id},
+  });
 
   return (
     <View style={styles.screen}>
@@ -42,18 +46,14 @@ const ShoppingLists = () => {
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
           onChangeText={text => console.log(text)}></SearchBar>
-        <TouchableOpacity style={styles.addContainer} onPress={addList}>
+        <TouchableOpacity style={styles.addContainer} onPress={() => {}}>
           <Image
             style={styles.addIcon}
             resizeMode="contain"
             source={require('../assets/add_icon.png')}></Image>
         </TouchableOpacity>
       </View>
-      <ScrollView>
-        {lists.map(info => (
-          <ShoppingList key={info} />
-        ))}
-      </ScrollView>
+      <ScrollView></ScrollView>
     </View>
   );
 };
@@ -94,11 +94,14 @@ const styles = StyleSheet.create({
     top: '20%',
   },
   sectionContainer: {
-    marginTop: '5%',
+    // marginTop: 5,
+    paddingVertical: 5,
     paddingHorizontal: 20,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
     justifyContent: 'space-between',
+    borderBottomWidth: 0.5,
+    borderColor: '#BBBBBB',
     //alignItems: 'flex-start',
   },
 });

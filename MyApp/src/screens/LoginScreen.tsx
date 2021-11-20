@@ -46,7 +46,7 @@ export default function App({navigation}: Props) {
         setSubmitted(false);
         return Alert.alert(
           'Error',
-          'Make sure you are using the correct email and password.',
+          'Make sure you are entering valid credentials.',
         );
       }
       if (data.authn.account_id == 0) {
@@ -56,12 +56,6 @@ export default function App({navigation}: Props) {
           'Make sure you are using the correct email and password.',
         );
       }
-      // setUser({
-      //   id: data.authn.account_id,
-      //   email: data.authn.email,
-      //   fname: data.authn.first_name,
-      //   lname: data.authn.last_name,
-      // });
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -83,14 +77,23 @@ export default function App({navigation}: Props) {
                       },
                     },
                   },
-                  {name: 'Lists'},
+                  {
+                    name: 'Lists',
+                    params: {
+                      user: {
+                        id: data.authn.account_id,
+                        email: data.authn.email,
+                        fname: data.authn.first_name,
+                        lname: data.authn.last_name,
+                      },
+                    },
+                  },
                 ],
               },
             },
           ],
         }),
       );
-      // navigation.navigate('Home');
     }
     setSubmitted(false);
   }, [submitted]);

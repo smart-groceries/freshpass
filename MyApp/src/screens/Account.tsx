@@ -150,7 +150,7 @@ const AccountScreen = ({route, navigation}: Props) => {
         ]}>
         <TouchableOpacity
           onPress={() => {
-            Alert.alert('Log Out', 'Are you sure you want to log out?', [
+            Alert.alert('Log out', 'Are you sure you want to log out?', [
               {text: 'Cancel', style: 'cancel'},
               {
                 text: 'Log out',
