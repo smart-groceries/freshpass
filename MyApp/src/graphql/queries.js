@@ -67,24 +67,24 @@ export const AUTHENTICATE = gql`
 `;
 
 export const GET_SHOPPINGLISTS_BY_USER_ID = gql`
-  query MyQuery($id: Int!) {
+  query MyQuery($id: ID!) {
     getShoppingListsByUserId(name: "getShoppingListsByUserId", id: $id) {
       items {
         barcode_id
-        item_aisle
-        item_brand
-        item_name
-        item_price
-        item_wieght
-        quantity
+        # item_aisle
+        # item_brand
+        # item_name
+        # item_price
+        # item_wieght
+        # quantity
       }
       shopping_list_id
-      user {
-        account_id
-        email
-        first_name
-        last_name
-      }
+      # user {
+      #   account_id
+      #   email
+      #   first_name
+      #   last_name
+      # }
     }
   }
 `;

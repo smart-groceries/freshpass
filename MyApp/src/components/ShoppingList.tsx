@@ -1,5 +1,7 @@
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as React from 'react';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {RouteProp} from '@react-navigation/native';
 
 import {
   View,
@@ -19,7 +21,11 @@ export interface ShoppingListProps {
   ListNumber?: Number;
 }
 
-const ShoppingList = () => {
+type Props = {
+  route:RouteProp<RootStackParamList, 'ListInfo'>;
+}
+
+const ShoppingList = (props:any) => {
   const [ListNumber, setListNumber] = useState(0);
   const [ListName, setListName] = useState('List');
   const onPress = (name: string) => {
@@ -29,8 +35,8 @@ const ShoppingList = () => {
   return (
     <View style={[styles.List, {flexDirection: 'row'}]}>
       <View style={[styles.listInfoContainer, {flexDirection: 'column'}]}>
-        <Text style={styles.ListNameText}>List Name {ListNumber}</Text>
-        <Text style={styles.ItemsSavedText}>{ListNumber}200 Items Saved</Text>
+        <Text style={styles.ListNameText}> {props.name} :List Name {ListNumber}</Text>
+        <Text style={styles.ItemsSavedText}>{ListNumber} : 200 Items Saved</Text>
       </View>
       <View>
         <TouchableOpacity style={styles.button}>
