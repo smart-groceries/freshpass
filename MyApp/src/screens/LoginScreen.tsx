@@ -169,7 +169,11 @@ export default function App({navigation}: Props) {
       </View>
 
       {submitted ? (
-        <ActivityIndicator size="large" color="green" style={styles.loading} />
+        <ActivityIndicator
+          size="large"
+          color="#71BF61"
+          style={styles.loading}
+        />
       ) : null}
     </View>
   );

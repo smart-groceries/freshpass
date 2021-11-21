@@ -19,7 +19,6 @@ import {
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
-import {set} from 'mongoose';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'PaymentMethods'>;
@@ -35,6 +34,7 @@ const Payments = ({route, navigation}: Props) => {
   });
 
   const [empty, setEmpty] = useState(false);
+  const [paymentMethods, setPaymentMethods] = useState([]);
 
   // query to get payment info for user
   // const {error, loading, data} = useQuery();

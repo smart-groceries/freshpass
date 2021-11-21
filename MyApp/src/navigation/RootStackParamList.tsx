@@ -55,11 +55,19 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  ListInfo:{
-    info:{
-      name:string;
-    }
-  }
-  ChangePassword: undefined;
+  ListInfo: {
+    info: {
+      name: string;
+    };
+  };
+  ChangePassword: {
+    user: {
+      id: number;
+      email: string;
+      fname: string;
+      lname: string;
+      password: string;
+    };
+  };
   StoreLocator: undefined;
 };

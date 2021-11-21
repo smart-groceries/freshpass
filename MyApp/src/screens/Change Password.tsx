@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,18 +10,40 @@ import {
 
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useMutation, useQuery} from '@apollo/client';
+import {AUTHENTICATE, GET_USER_PASSWORD_BY_USER_ID} from '../graphql/queries';
+import {RouteProp} from '@react-navigation/native';
+import {UPDATE_PASSWORD} from '../graphql/mutations';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangePassword'>;
+  route: RouteProp<RootStackParamList, 'ChangePassword'>;
 };
 
-const ChangePasswordScreen = ({navigation}: Props) => {
+const ChangePasswordScreen = ({route, navigation}: Props) => {
   const [user, setUser] = React.useState({
-    email: '',
-    fname: '',
-    lname: '',
-    password: 'andrewbaltazar',
+    email: route.params.user.email,
+    fname: route.params.user.fname,
+    lname: route.params.user.lname,
+    id: route.params.user.id,
+    password: route.params.user.password,
+    newPassword: '',
   });
+
+  const [updatePassword, {data, loading, error}] = useMutation(
+    UPDATE_PASSWORD,
+    {
+      onError: err => {
+        console.log(err);
+      },
+    },
+  );
+
+  const [submitted, setSubmitted] = React.useState(false);
+
+  useEffect(() => {
+    updatePassword({variables: {id: user.id, pass: user.password}});
+  }, [submitted]);
 
   return (
     <View style={styles.container}>
@@ -38,7 +60,10 @@ const ChangePasswordScreen = ({navigation}: Props) => {
           <TextInput
             style={styles.userDataTextInput}
             placeholder="New Password"
-            secureTextEntry={true}></TextInput>
+            secureTextEntry={true}
+            onChangeText={val => {
+              setUser({...user, newPassword: val});
+            }}></TextInput>
         </View>
         <View style={styles.largeItemContainer}>
           <Text style={styles.itemText}>Confirm New Password:</Text>
@@ -52,7 +77,11 @@ const ChangePasswordScreen = ({navigation}: Props) => {
             {'\u2B24'} Password needs to be at least 8 characters in length
           </Text>
         </View>
-        <TouchableOpacity style={styles.resetButton}>
+        <TouchableOpacity
+          style={styles.resetButton}
+          onPress={() => {
+            setSubmitted(true);
+          }}>
           <Text style={styles.resetButtonText}>Reset</Text>
         </TouchableOpacity>
       </ScrollView>

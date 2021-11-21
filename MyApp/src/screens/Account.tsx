@@ -127,7 +127,7 @@ const AccountScreen = ({route, navigation}: Props) => {
           {/* </View> */}
         </TouchableOpacity>
       </View>
-      <View style={[styles.optionContainer]}>
+      <View style={[styles.optionContainerLogOut]}>
         <TouchableOpacity
           onPress={() => {
             Alert.alert('Log out', 'Are you sure you want to log out?', [
@@ -275,6 +275,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 5,
   },
+  optionContainerLogOut: {
+    backgroundColor: '#E89023',
+    width: '100%',
+    paddingVertical: 20,
+    height: 55,
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+  },
   accountEditOption: {
     flexDirection: 'row',
     width: '100%',
@@ -311,13 +320,6 @@ const styles = StyleSheet.create({
   icon: {
     // width: '90%',
     // height: '60%',
-  },
-  logOutPrompContainer: {
-    position: 'absolute',
-    alignSelf: 'center',
-    height: 100,
-    width: 100,
-    backgroundColor: 'grey',
   },
 });
 

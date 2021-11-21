@@ -21,3 +21,16 @@ export const CREATE_ACCOUNT = gql`
     }
   }
 `;
+
+export const UPDATE_PASSWORD = gql`
+  mutation MyMutation($id: Int!, $pass: String!) {
+    updatePassword(
+      account_id: $id
+      name: "updatePassword"
+      new_password: $pass
+    ) {
+      state
+      message
+    }
+  }
+`;

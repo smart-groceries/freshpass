@@ -1,11 +1,5 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
+ * Freshpass
  */
 import React from 'react';
 import {StyleSheet, Image} from 'react-native';
@@ -95,8 +89,6 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const client = BackendConnector();
-
-// export type Props = NativeStackScreenProps<stackParamList, 'Landing'>;
 
 export default function App() {
   return (
