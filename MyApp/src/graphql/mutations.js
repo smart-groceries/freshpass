@@ -136,6 +136,19 @@ export const CREATE_NEW_ITEM = gql`
   }
 `;
 
+export const CREATE_SHOPPING_LIST = gql`
+  mutation MyMutation(
+    $account_id: ID!
+  ) {
+    createShoppingList(
+      account_id: $account_id,
+      name: "createShoppingList"
+    ) {
+        message
+    }
+  }
+`;
+
 export const CREATE_SHOPPING_SESSION = gql`
   mutation MyMutation(
     $account_id: ID!, 
@@ -231,6 +244,40 @@ export const REMOVE_ITEM_IN_STORE_CATALOG = gql`
       barcode_id: $barcode_id,
       name: "removeIteminStoreCatalog",
       store_id: $store_id
+    ) {
+        message
+    }
+  }
+`;
+
+export const UPDATE_CUSTOMER = gql`
+  mutation MyMutation(
+    $customer_id: ID!,
+    $field_name: String!,
+    $new_value: String!
+  ) {
+    updateCustomer(
+      customer_id: $customer_id,
+      field_name: $field_name,
+      name: "updateCustomer",
+      new_value: $new_value
+    ) {
+        message
+    }
+  }
+`;
+
+export const UPDATE_GROCER = gql`
+  mutation MyMutation(
+    $field_name: String!,
+    $grocer_id: ID!,
+    $new_value: String!
+  ) {
+    updateGrocer(
+      field_name: $field_name,
+      grocer_id: $grocer_id,
+      name: "updateGrocer",
+      new_value: $new_value
     ) {
         message
     }

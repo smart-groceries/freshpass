@@ -44,6 +44,28 @@ export const GET_CARD_INFO_BY_USER_ID = gql`
     }
 `;
 
+export const GET_CUSTOMER_BY_ID = gql`
+    query MyQuery($id: ID!) {
+        getUserById(name: "getUserById", id: $id) {
+            email
+            first_name
+            id
+            last_name
+            username
+        }
+    }
+`;
+
+export const GET_GROCER_BY_ID = gql`
+    query MyQuery {
+            getUserById(id: "5", name: "getUserById") {
+            account_id
+            email
+            balance
+        }
+    }
+`;
+
 export const GET_ITEM_BY_ID = gql`
     query MyQuery($id: ID!) {
         getItemById(id: $id, name: "getItemById") {
@@ -97,18 +119,6 @@ export const GET_SHOPPING_STATE_BY_ID = gql`
         getShoppingStateById(name: "getShoppingStateById", state_id: $state_id) {
             state_id
             state_name
-        }
-    }
-`;
-
-export const GET_USER_BY_ID = gql`
-    query MyQuery($id: ID!) {
-        getUserById(name: "getUserById", id: $id) {
-            email
-            first_name
-            id
-            last_name
-            username
         }
     }
 `;
