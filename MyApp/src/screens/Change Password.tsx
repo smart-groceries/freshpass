@@ -42,8 +42,12 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
   const [submitted, setSubmitted] = React.useState(false);
 
   useEffect(() => {
-    updatePassword({variables: {id: user.id, pass: user.password}});
-  }, [submitted]);
+    if (user.password != user.newPassword && submitted) {
+      setSubmitted(false);
+      updatePassword({variables: {id: user.id, pass: user.newPassword}});
+    }
+    setSubmitted(false);
+  }, [user, submitted]);
 
   return (
     <View style={styles.container}>

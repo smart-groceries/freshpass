@@ -23,7 +23,6 @@ import {RouteProp} from '@react-navigation/native';
 import {useQuery} from '@apollo/client';
 import {GET_SHOPPINGLISTS_BY_USER_ID} from '../graphql/queries';
 
-
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Lists'>;
   route: RouteProp<RootStackParamList, 'Lists'>;
@@ -35,13 +34,17 @@ const ShoppingLists = ({route, navigation}: Props) => {
     lname: route.params.user.lname,
     id: route.params.user.id,
   });
-    
+
   const {error, loading, data} = useQuery(GET_SHOPPINGLISTS_BY_USER_ID, {
     variables: {id: user.id},
   });
-  if(loading) {return <Text>WAITING FOR DATA</Text>}
-  if(error) {return <Text> {error.message} </Text>}
-  
+  if (loading) {
+    return <Text>WAITING FOR DATA</Text>;
+  }
+  if (error) {
+    return <Text> {error.message} </Text>;
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.sectionContainer}>
@@ -57,7 +60,10 @@ const ShoppingLists = ({route, navigation}: Props) => {
         </TouchableOpacity>
       </View>
       <ScrollView>
-        <ShoppingList name = {data.getShoppingListsByUserId[0].shopping_list_id} ></ShoppingList>
+        <ShoppingList
+          name={
+            data.getShoppingListsByUserId[0].shopping_list_id
+          }></ShoppingList>
       </ScrollView>
     </View>
   );
