@@ -19,7 +19,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import { useMutation } from '@apollo/client';
-import { ADD_CARD_INFO } from '../graphql/queries';
+import { ADD_CARD_INFO } from '../graphql/mutations';
 
 
 type Props = {
