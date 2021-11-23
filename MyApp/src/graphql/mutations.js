@@ -40,7 +40,7 @@ export const ADD_CARD_INFO = gql`
   }
 `;
 
-export const ADD_ITEM_TO_GROCERY = gql`
+export const ADD_ITEM_TO_STORE_CATALOG = gql`
   mutation MyMutation(
     $barcode_id: ID!,
     $item_aisle: Float,
@@ -48,9 +48,9 @@ export const ADD_ITEM_TO_GROCERY = gql`
     $quantity: Int,
     $store_id: ID!
   ) {
-    addItemToGrocery(
+    addItemToStoreCatalog(
       barcode_id: $barcode_id,
-      name: "addItemToGrocery",
+      name: "addItemToStoreCatalog",
       store_id: $store_id,
       item_aisle: $item_aisle,
       item_price: $item_price,
