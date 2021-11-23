@@ -21,7 +21,7 @@ import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {useQuery} from '@apollo/client';
-import {GET_SHOPPINGLISTS_BY_USER_ID} from '../graphql/queries';
+import {GET_SHOPPING_LISTS_BY_USER_ID} from '../graphql/queries';
 
 
 type Props = {
@@ -36,7 +36,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
     id: route.params.user.id,
   });
     
-  const {error, loading, data} = useQuery(GET_SHOPPINGLISTS_BY_USER_ID, {
+  const {error, loading, data} = useQuery(GET_SHOPPING_LISTS_BY_USER_ID, {
     variables: {id: user.id},
   });
   if(loading) {return <Text>WAITING FOR DATA</Text>}
