@@ -62,6 +62,7 @@ export const GET_GROCER_BY_ID = gql`
             account_id
             email
             balance
+            address
         }
     }
 `;
