@@ -57,8 +57,8 @@ export const GET_CUSTOMER_BY_ID = gql`
 `;
 
 export const GET_GROCER_BY_ID = gql`
-    query MyQuery {
-            getUserById(id: "5", name: "getUserById") {
+    query MyQuery($id: ID!) {
+            getUserById(id: $id, name: "getUserById") {
             account_id
             email
             balance
