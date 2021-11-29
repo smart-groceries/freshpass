@@ -93,7 +93,7 @@ export const GET_ITEMS_FOR_STORE_BY_GROCER_ID = gql`
 `;
 
 export const GET_SHOPPING_LISTS_BY_USER_ID = gql`
-    query MyQuery($id: Int!) {
+    query MyQuery($id: ID!) {
         getShoppingListsByUserId(name: "getShoppingListsByUserId", id: $id) {
         items {
             barcode_id
