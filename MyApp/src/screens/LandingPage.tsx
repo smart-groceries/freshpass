@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -17,16 +17,33 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {useQuery} from '@apollo/client';
 import {GET_USER_BY_ID} from '../graphql/queries';
+import  getImageUrl from '../utils/images';
 
 type Props = {navigation: StackNavigationProp<RootStackParamList, 'Landing'>};
 
 const LandingPage = ({navigation}: Props) => {
+  const [imageUrl, setImageUrl] = useState("");
+  
+  useEffect(() => {
+    getImageUrl("account", "2")
+    .then(data => {
+      const result = data;
+      setImageUrl(result);
+    }
+    )
+  }, []);
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
       <View style={styles.imageContainer}>
         <Image source={require('../assets/freshpass_logo.png')} />
       </View>
+        <Image
+        style={{width: 50, height: 50}}
+        source= {{uri: imageUrl}}
+        resizeMode={'cover'}
+      />
       <Text
         style={[
           styles.previewText,
