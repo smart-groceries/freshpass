@@ -42,24 +42,6 @@ function doesPhotoExist(type: String, id: String) {
     })
 }
 
-/*function getImageUrl(type: String, id: String): String {
-    var uri = "";
-    console.log("in get image url" + "type: " + type + "id: " + id);
-    doesPhotoExist(type, id).then(response => {
-            console.log("after does photo exist" + "type: " + type + "id: " + id);
-            console.log(response + "type: " + type + "id: " + id);
-            if (response == true) {
-                console.log("about to assign URI" + "type: " + type + "id: " + id);
-                uri = type + "-" + id+ ".jpeg";
-            } else {
-                uri = "default-" + type + ".jpeg";
-            }
-            console.log(uri + "type: " + type + "id: " + id)
-            return "https://smart-grocery-project.s3.us-west-1.amazonaws.com/" + uri;
-        }
-    )
-}*/
-
 function getImageUrl(type: String, id: String): Promise<String>{
     return new Promise((resolve, reject) => {
         var uri = "";
@@ -79,24 +61,5 @@ function getImageUrl(type: String, id: String): Promise<String>{
         )
     })
 }
-
-
-/*async function getImageUrl(type: String, id: String) {
-    var uri = "";
-    console.log("in get image url" + "type: " + type + "id: " + id);
-    const response = await doesPhotoExist(type, id);
-    console.log("after does photo exist" + "type: " + type + "id: " + id);
-    console.log(response + "type: " + type + "id: " + id);
-    if (response == true) {
-        console.log("about to assign URI" + "type: " + type + "id: " + id);
-        uri = type + "-" + id+ ".jpeg";
-    } else {
-        uri = "default-" + type + ".jpeg";
-    }
-    console.log(uri + "type: " + type + "id: " + id)
-    return "https://smart-grocery-project.s3.us-west-1.amazonaws.com/" + uri;
-}*/
-
-
 
 export default getImageUrl;
