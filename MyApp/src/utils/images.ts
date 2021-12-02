@@ -28,7 +28,6 @@ function doesPhotoExist(type: String, id: String) {
         };
 
         var client = getClient();
-        var returnVal = false;
         client.getObject(params, function(err: any, data: any) {
             if (err) {
                 console.log("photo does not exist" + "type: " + type + "id: " + id);
