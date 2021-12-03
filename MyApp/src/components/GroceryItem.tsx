@@ -28,7 +28,7 @@ const Item :FC<Props> = () => {
     const [brand, setBrand] = React.useState("Kraft");
     const [price, setPrice] = React.useState(".99");
     const [aisle, setAisle] = React.useState("1");
-    const [imageUrl, setimageUrl] = React.useState("https://smart-grocery-project.s3.us-west-1.amazonaws.com/item-1.jpeg");
+    const [imageUrl, setimageUrl] = React.useState("https://smart-grocery-project.s3.us-west-1.amazonaws.com/default-item.jpeg");
     const [quantityValue, setQuantityValue] = React.useState<number>(0);
 
     
@@ -45,8 +45,12 @@ const Item :FC<Props> = () => {
                         <Text style={styles.itemAisle}>Aisle 1</Text>
                     </View>
                     <View style ={styles.QuantityButtonContainer}>
-                        <NumericInput value={quantityValue} onChange={value => setQuantityValue(value)} totalHeight= {30} totalWidth= {70}
-                        rounded 
+                        <NumericInput value={quantityValue} onChange={value => setQuantityValue(value)} totalHeight= {35} totalWidth= {90}
+                        rounded
+                        rightButtonBackgroundColor='#EEEEEE' 
+                        leftButtonBackgroundColor='#EEEEEE'
+                        textColor='#424347'
+                        minValue={0}
                          />
                         {/* <NumericInput 
                                 value={quantityValue} s
