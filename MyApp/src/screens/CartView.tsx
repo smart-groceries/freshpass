@@ -15,6 +15,7 @@ import {
   Alert,
 } from 'react-native';
 import FilterIcon from '../components/Filter';
+import AddIcon from '../components/Add';
 import SearchBar from '../components/SearchBar';
 import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
@@ -31,6 +32,7 @@ const CartView = () => {
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
           onChangeText={text => console.log(text)}></SearchBar>
+        <AddIcon></AddIcon>
         <FilterIcon></FilterIcon>
       </View>
       <ScrollView contentContainerStyle={styles._container}>

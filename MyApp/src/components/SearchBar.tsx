@@ -110,7 +110,7 @@ interface Style {
 const _container = (): ViewStyle => ({
   // flex: 3,
   height: 43,
-  width: '85%',
+  width: '70%',
   // left: 16,
   // top: 135,
   marginRight: 5,
