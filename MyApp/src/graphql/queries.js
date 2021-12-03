@@ -78,6 +78,20 @@ export const GET_ITEM_BY_ID = gql`
     }
 `;
 
+export const GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID = gql`
+    query MyQuery($shopping_session_id: Int!) {
+        getItemsForShoppingSessionById(name: "getItemsForShoppingSessionById", shopping_session_id: $shopping_session_id) {
+            barcode_id
+            item_aisle
+            item_brand
+            item_name
+            item_price
+            item_weight
+            quantity
+        }
+    }
+`;
+
 export const GET_ITEMS_FOR_STORE_BY_GROCER_ID = gql`
     query MyQuery($grocer_id: Int!) {
         getItemsForStoreByGrocerId(grocer_id: $grocer_id, name: "getItemsForStoreByGrocerId") {
