@@ -18,17 +18,18 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import { useMutation } from '@apollo/client';
-import { ADD_CARD_INFO } from '../graphql/mutations';
-
+import {useMutation} from '@apollo/client';
+import {ADD_CARD_INFO} from '../graphql/mutations';
+import {RouteProp} from '@react-navigation/native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'AddPayment'>;
+  route: RouteProp<RootStackParamList, 'AddPayment'>;
 };
 
-export default function AddPayment({navigation}: Props) {
+export default function AddPayment({route, navigation}: Props) {
   const [paymentInfo, setPaymentInfo] = useState({
-    account_id: 38,
+    account_id: route.params.user.id,
     name: '',
     nameValidated: true,
     number: '',
@@ -48,29 +49,41 @@ export default function AddPayment({navigation}: Props) {
       setPaymentInfo({...paymentInfo, default: isEnabled});
   };
   const [submitted, setSubmitted] = useState(false);
-  const [mutateFunction, { data, loading, error }] = useMutation(ADD_CARD_INFO);
-
+  const [mutateFunction, {data, loading, error}] = useMutation(ADD_CARD_INFO);
 
   useEffect(() => {
     if (submitted) {
-      mutateFunction({variables: {account_id: paymentInfo.account_id ,card_number:paymentInfo.number,nameoncard: paymentInfo.name,month:paymentInfo.month,year: paymentInfo.year,cvc: paymentInfo.cvc}})
+      mutateFunction({
+        variables: {
+          account_id: paymentInfo.account_id,
+          card_number: paymentInfo.number,
+          nameoncard: paymentInfo.name,
+          month: paymentInfo.month,
+          year: paymentInfo.year,
+          cvc: paymentInfo.cvc,
+        },
+      });
       // navigation.navigate('PaymentMethods', {paymentInfo});
-      while(loading){ 
+      while (loading) {
         //wait
       }
-      console.log(data.addCardInfo.message);
-      if(error){
-        return Alert.alert(
-          'Error',
-          "Could Not Add Card Information",
-        );
+      // console.log(data.addCardInfo.message);
+      if (error) {
+        return Alert.alert('Error', 'Could Not Add Card Information');
       }
-
-      return Alert.alert(
-        'Created',
-        data.addCardInfo.message,
-      );
-
+      console.log(route.params.user.id);
+      navigation.navigate('PaymentMethods', {
+        user: {
+          id: route.params.user.id,
+          email: route.params.user.email,
+          fname: route.params.user.fname,
+          lname: route.params.user.lname,
+        },
+      });
+      // return Alert.alert(
+      //   'Created',
+      //   data.addCardInfo.message,
+      // );
     }
   }, [paymentInfo]);
 

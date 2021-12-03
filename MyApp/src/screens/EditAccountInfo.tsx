@@ -35,15 +35,26 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
     password: '',
   });
 
-  const {error, loading, data} = useQuery(GET_USER_PASSWORD_BY_USER_ID, {
-    variables: {id: user.id},
-  });
+  const {error, loading, data, refetch} = useQuery(
+    GET_USER_PASSWORD_BY_USER_ID,
+    {
+      variables: {id: user.id},
+    },
+  );
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       setUser({...user, password: data.getUserPasswordById.password});
     }
   }, [data]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refetch();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   // const [changed, setChanged] = React.useState(false);
 

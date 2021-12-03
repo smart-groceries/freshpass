@@ -19,6 +19,8 @@ import {
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
+import {useQuery} from '@apollo/client';
+import {GET_CARD_INFO_BY_USER_ID} from '../graphql/queries';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'PaymentMethods'>;
@@ -32,9 +34,30 @@ const Payments = ({route, navigation}: Props) => {
     lname: route.params.user.lname,
     id: route.params.user.id,
   });
+  const [paymentMethod, setPaymentMethod] = useState([
+    {name_on_card: '', card_number: '', cvc: '', month: '', year: ''},
+  ]);
+  const [empty, setEmpty] = useState(true);
+  const {error, loading, data, refetch} = useQuery(GET_CARD_INFO_BY_USER_ID, {
+    variables: {account_id: user.id},
+  });
+  console.log(user.id);
+  useEffect(() => {
+    if (data) {
+      setEmpty(false);
+      setPaymentMethod(data.getCardInfoByUserId);
+    }
+    setEmpty(true);
+  }, [data]);
 
-  const [empty, setEmpty] = useState(false);
-  const [paymentMethods, setPaymentMethods] = useState([]);
+  useEffect(() => {}, [paymentMethod]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refetch();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   // query to get payment info for user
   // const {error, loading, data} = useQuery();
@@ -49,6 +72,22 @@ const Payments = ({route, navigation}: Props) => {
     return hidden;
   };
 
+  const paymentMethods = () => {
+    return paymentMethod.map(function (method, i) {
+      return (
+        <TouchableOpacity style={styles.paymentMethod} key={i}>
+          <View style={styles.paymentTextContainer}>
+            <Text style={styles.userInfoText}>{method.name_on_card}</Text>
+            <Text style={styles.userInfoText}>
+              Card ending in {obscureCardNumber(method.card_number)}
+            </Text>
+          </View>
+          <Image
+            source={require('../assets/chevron_pointing_right.png')}></Image>
+        </TouchableOpacity>
+      );
+    });
+  };
   // will finish this when get payment info query is done
   return (
     <View style={styles.mainContainer}>
@@ -75,20 +114,13 @@ const Payments = ({route, navigation}: Props) => {
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scroll}>
             <Text style={styles.headerText}>Saved Payment Methods</Text>
+            {paymentMethods()}
             <View>
-              <TouchableOpacity style={styles.paymentMethod}>
-                <View style={styles.paymentTextContainer}>
-                  <Text style={styles.userInfoText}>Name: Andrew Baltazar</Text>
-                  <Text style={styles.userInfoText}>
-                    Card ending in {obscureCardNumber('12345678')}
-                  </Text>
-                </View>
-                <Image
-                  source={require('../assets/chevron_pointing_right.png')}></Image>
-              </TouchableOpacity>
               <View>
                 <Text style={styles.headerText}>Add Payment Methods</Text>
-                <TouchableOpacity style={styles.paymentMethod}>
+                <TouchableOpacity
+                  style={styles.paymentMethod}
+                  onPress={() => navigation.navigate('AddPayment', {user})}>
                   <View style={styles.paymentTextContainer}>
                     <Text style={styles.userInfoText}>Add payment method</Text>
                   </View>
