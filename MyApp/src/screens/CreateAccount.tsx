@@ -71,14 +71,17 @@ const CreateAccountScreen = ({navigation}: Props) => {
       submitted == true
     ) {
       setSubmitted(false);
-      mutateFunction({
-        variables: {
-          email: user.email,
-          pass: user.password,
-          fname: user.firstName,
-          lname: user.lastName,
-        },
-      });
+      try {
+        mutateFunction({
+          variables: {
+            email: user.email,
+            pass: user.password,
+            fname: user.firstName,
+            lname: user.lastName,
+          },
+        });
+      } catch {}
+
       navigation.navigate('Login');
     }
   }, [user]);

@@ -15,6 +15,7 @@ import {
   Alert,
   ImageComponent,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -41,15 +42,28 @@ const Payments = ({route, navigation}: Props) => {
   const {error, loading, data, refetch} = useQuery(GET_CARD_INFO_BY_USER_ID, {
     variables: {account_id: user.id},
   });
-  console.log(user.id);
+
+  // useEffect(() => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else if (data.getCardInfoByUserId == []) {
+  //     setEmpty(true);
+  //   } else {
+  //     setEmpty(false);
+  //     setPaymentMethod(data.getCardInfoByUserId);
+  //   }
+  // }, [data]);
+
   useEffect(() => {
-    if (data) {
+    if (data?.getCardInfoByUserId[0] == undefined) {
+      setEmpty(true);
+    } else {
       setEmpty(false);
       setPaymentMethod(data.getCardInfoByUserId);
     }
-    setEmpty(true);
   }, [data]);
 
+  // useEffect(() => {}, [empty]);
   useEffect(() => {}, [paymentMethod]);
 
   useEffect(() => {
@@ -90,25 +104,23 @@ const Payments = ({route, navigation}: Props) => {
   };
   // will finish this when get payment info query is done
   return (
-    <View style={styles.mainContainer}>
+    <View style={loading ? styles.mainContainerLoading : styles.mainContainer}>
       {empty ? (
-        <View style={{alignItems: 'center'}}>
-          <View style={styles.TextContainer}>
-            <Text style={styles.NoPaymentText}>No Payment Info Found</Text>
-            <Text style={styles.NoPaymentSubtext}>
-              You can add and edit payments during checkout
-            </Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('AddPayment', {user})}>
-            <View style={styles.PaymentMethodContainer}>
-              <Image
-                style={styles.searchIconImageStyle}
-                source={require('./../assets/iconplus.png')}
-              />
-              <Text style={styles.AddPaymentText}>Add Payment Method</Text>
+        <View style={styles.mainContainer}>
+          <ScrollView contentContainerStyle={styles.scroll}>
+            <View>
+              <Text style={styles.headerText}>Add Payment Methods</Text>
+              <TouchableOpacity
+                style={styles.paymentMethod}
+                onPress={() => navigation.navigate('AddPayment', {user})}>
+                <View style={styles.paymentTextContainer}>
+                  <Text style={styles.userInfoText}>Add payment method</Text>
+                </View>
+                <Image
+                  source={require('../assets/chevron_pointing_right.png')}></Image>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </ScrollView>
         </View>
       ) : (
         <View style={styles.mainContainer}>
@@ -132,6 +144,13 @@ const Payments = ({route, navigation}: Props) => {
           </ScrollView>
         </View>
       )}
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#71BF61"
+          style={styles.loading}
+        />
+      ) : null}
     </View>
   );
 };
@@ -143,6 +162,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     backgroundColor: 'white',
+  },
+
+  mainContainerLoading: {
+    // alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'column',
+    flex: 1,
+    backgroundColor: 'white',
+    opacity: 0.6,
   },
 
   scroll: {
@@ -248,6 +276,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
+  },
+  loading: {
+    position: 'absolute',
+    // left: 0,
+    // right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    transform: [{scale: 2.5}],
   },
 });
 

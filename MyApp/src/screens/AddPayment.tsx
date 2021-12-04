@@ -49,20 +49,27 @@ export default function AddPayment({route, navigation}: Props) {
       setPaymentInfo({...paymentInfo, default: isEnabled});
   };
   const [submitted, setSubmitted] = useState(false);
-  const [mutateFunction, {data, loading, error}] = useMutation(ADD_CARD_INFO);
+  const [mutateFunction, {data, loading, error}] = useMutation(ADD_CARD_INFO, {
+    onError: err => {
+      console.log(err);
+    },
+  });
 
   useEffect(() => {
     if (submitted) {
-      mutateFunction({
-        variables: {
-          account_id: paymentInfo.account_id,
-          card_number: paymentInfo.number,
-          nameoncard: paymentInfo.name,
-          month: paymentInfo.month,
-          year: paymentInfo.year,
-          cvc: paymentInfo.cvc,
-        },
-      });
+      try {
+        mutateFunction({
+          variables: {
+            account_id: paymentInfo.account_id,
+            card_number: paymentInfo.number,
+            nameoncard: paymentInfo.name,
+            month: paymentInfo.month,
+            year: paymentInfo.year,
+            cvc: paymentInfo.cvc,
+          },
+        });
+      } catch {}
+
       // navigation.navigate('PaymentMethods', {paymentInfo});
       while (loading) {
         //wait
@@ -93,6 +100,10 @@ export default function AddPayment({route, navigation}: Props) {
     }
     return true;
   };
+
+  // const validateCardNumber = (text: string) => {
+
+  // };
 
   return (
     <View style={styles.container}>

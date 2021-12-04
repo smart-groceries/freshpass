@@ -70,4 +70,5 @@ export type RootStackParamList = {
     };
   };
   StoreLocator: undefined;
+  PasswordResetLinkSent: undefined;
 };

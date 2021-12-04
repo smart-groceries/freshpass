@@ -18,8 +18,9 @@ import {
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
-import {useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {GET_USER_PASSWORD_BY_USER_ID} from '../graphql/queries';
+import {UPDATE_CUSTOMER} from '../graphql/mutations';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'EditAccount'>;
@@ -35,12 +36,27 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
     password: '',
   });
 
+  const [submitted, setSubmitted] = React.useState(false);
+
   const {error, loading, data, refetch} = useQuery(
     GET_USER_PASSWORD_BY_USER_ID,
     {
       variables: {id: user.id},
     },
   );
+
+  const [
+    updateCustomer,
+    {
+      data: updateCustomerData,
+      loading: updateCustomerLoading,
+      error: updateCustomerError,
+    },
+  ] = useMutation(UPDATE_CUSTOMER, {
+    onError: err => {
+      console.log(err);
+    },
+  });
 
   useEffect(() => {
     if (data) {
@@ -55,6 +71,33 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    console.log(user.fname);
+    if (submitted) {
+      try {
+        updateCustomer({
+          variables: {
+            customer_id: user.id,
+            field_name: 'customer_fname',
+            new_value: user.fname,
+          },
+        });
+        updateCustomer({
+          variables: {
+            customer_id: user.id,
+            field_name: 'customer_lname',
+            new_value: user.lname,
+          },
+        });
+      } catch {}
+
+      navigation.navigate('Account', {user});
+      setSubmitted(false);
+    }
+  }, [user]);
+
+  useEffect(() => {}, [submitted]);
 
   // const [changed, setChanged] = React.useState(false);
 
@@ -79,7 +122,13 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.itemContainer}>
           <Text style={styles.itemText}>First Name:</Text>
-          <TextInput style={styles.userDataTextInput}>{user.fname}</TextInput>
+          <TextInput
+            style={styles.userDataTextInput}
+            onChangeText={val => {
+              setUser({...user, fname: val});
+            }}>
+            {user.fname}
+          </TextInput>
         </View>
         <View style={styles.itemContainer}>
           <Text style={styles.itemText}>Last Name:</Text>
@@ -115,7 +164,11 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.saveButton}>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => {
+            setSubmitted(true);
+          }}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </ScrollView>
