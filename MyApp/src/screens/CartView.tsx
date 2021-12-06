@@ -48,24 +48,7 @@ const CartView = () => {
   }, [data]);
 
   const getListOfItems = () => {
-    console.log(listOfItems)
-    console.log("printing first item")
-    console.log(listOfItems[0])
-    console.log("printing second item")
-    console.log(listOfItems[1])
-    console.log("printing third item")
-    console.log(listOfItems[2])
     return listOfItems.map(function (method, i) {
-      console.log("method");
-      console.log(method);
-      console.log("key");
-      console.log(i);
-      console.log(method.barcode_id);
-      console.log(method.item_name);
-      console.log(method.item_weight);
-      console.log(method.item_brand);
-      console.log(method.item_price);
-      console.log(method.quantity);
       return (
         <GroceryItem 
             idProp={method.barcode_id}
