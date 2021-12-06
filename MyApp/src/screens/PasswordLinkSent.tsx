@@ -16,11 +16,11 @@ import {
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-// type Props = {
-//   navigation: StackNavigationProp<RootStackParamList, 'PasswordReset'>;
-// };
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'PasswordResetLinkSent'>;
+};
 
-const PasswordLinkSent = () => {
+const PasswordLinkSent = ({navigation}: Props) => {
   const [data, setData] = React.useState({
     email: '',
     check_textInputChange: false,
@@ -52,11 +52,9 @@ const PasswordLinkSent = () => {
       </View>
       <ScrollView>
         <Text style={[styles.color_textPrivate, {marginTop: 25}]}>
-          A link has been sent to your email.{"\n"}Please reset your password.
+          A link has been sent to your email.{'\n'}Please reset your password.
         </Text>
-        <View style={[styles.action, {marginTop: 14}]}>
-          
-        </View>
+        <View style={[styles.action, {marginTop: 14}]}></View>
 
         <View style={styles.button}>
           {/* <LinearGradient
@@ -78,7 +76,8 @@ const PasswordLinkSent = () => {
                 borderWidth: 1,
                 marginTop: 15,
               },
-            ]}>
+            ]}
+            onPress={() => navigation.navigate('Login')}>
             <Text
               style={[
                 styles.textResetButton,
@@ -91,7 +90,7 @@ const PasswordLinkSent = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.linkContainer}
-            >
+            onPress={() => navigation.navigate('Create')}>
             <Text style={styles.link}>Sign Up</Text>
           </TouchableOpacity>
         </View>

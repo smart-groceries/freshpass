@@ -53,6 +53,7 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
   useEffect(() => {
     if (email.emailValidated == true && submitted == true) {
       setSubmitted(false);
+      navigation.navigate('PasswordResetLinkSent');
     }
     setSubmitted(false);
   }, [email]);

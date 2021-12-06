@@ -47,11 +47,10 @@ export const GET_CARD_INFO_BY_USER_ID = gql`
 export const GET_CUSTOMER_BY_ID = gql`
     query MyQuery($id: ID!) {
         getUserById(name: "getUserById", id: $id) {
+            account_id
             email
             first_name
-            id
             last_name
-            username
         }
     }
 `;
@@ -63,6 +62,7 @@ export const GET_GROCER_BY_ID = gql`
             email
             balance
             address
+            grocer_name
         }
     }
 `;

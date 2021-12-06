@@ -42,6 +42,7 @@ import {createAuthLink} from 'aws-appsync-auth-link';
 import {createHttpLink} from 'apollo-link-http';
 // import { InMemoryCache } from "apollo-cache-inmemory";
 import BackendConnector from './src/components/BackendConnector';
+import PasswordLinkSent from './src/screens/PasswordLinkSent';
 
 // home screens with nav bar
 function HomeTabs() {
@@ -145,6 +146,11 @@ export default function App() {
               name="ChangePassword"
               component={ChangePasswordScreen}
               options={{headerShown: true, title: 'Change Password'}}
+            />
+            <Stack.Screen
+              name="PasswordResetLinkSent"
+              component={PasswordLinkSent}
+              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>

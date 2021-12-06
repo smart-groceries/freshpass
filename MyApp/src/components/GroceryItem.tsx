@@ -1,8 +1,7 @@
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as React from 'react';
-import { FC } from 'react';
+import {FC} from 'react';
 import NumericInput from 'react-native-numeric-input';
-
 
 import {
   View,
@@ -12,10 +11,10 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
 interface GroceryItemDetails {
-    name: string
+  name: string;
 }
 
 interface Props{    
@@ -59,7 +58,7 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
                         minValue={0}
                          />
                         {/* <NumericInput 
-                                value={quantityValue} s
+                                value={quantityValue}
                                 onChange={value => setQuantityValue(value)} 
                                 onLimitReached={(isMax,msg) => console.log(isMax,msg)}
                                 totalWidth={240} 
@@ -72,10 +71,9 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
                                 iconStyle={{ color: 'white' }} 
                                 rightButtonBackgroundColor='#EA3788' 
                                 leftButtonBackgroundColor='#E56B70'/> */}
-
-                    </View>
-                    <View style={styles.ItemControllerContainer}>
-                        {/* <TouchableHighlight>
+        </View>
+        <View style={styles.ItemControllerContainer}>
+          {/* <TouchableHighlight>
                             <Image resizeMode='contain' source={require('./assets/filter_icon.png')}/>
                         </TouchableHighlight> */}
                     </View>  
@@ -87,12 +85,20 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
                     source={{uri: imageUrl}}>
                     </Image>
                 </View>
+
         </View>
-    )
-}
+      </View>
+      <View style={styles.ItemPicContainer}>
+        <Image
+          style={styles.image}
+          resizeMode="contain"
+          source={require('./../assets/macncheese.png')}></Image>
+      </View>
+    </View>
+  );
+};
 
 export default Item;
-
 
 const styles = StyleSheet.create({
     GroceryItemContainer:{

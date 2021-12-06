@@ -15,10 +15,13 @@ import {
   Alert,
   ImageComponent,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
+import {useQuery} from '@apollo/client';
+import {GET_CARD_INFO_BY_USER_ID} from '../graphql/queries';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'PaymentMethods'>;
@@ -32,9 +35,43 @@ const Payments = ({route, navigation}: Props) => {
     lname: route.params.user.lname,
     id: route.params.user.id,
   });
+  const [paymentMethod, setPaymentMethod] = useState([
+    {name_on_card: '', card_number: '', cvc: '', month: '', year: ''},
+  ]);
+  const [empty, setEmpty] = useState(true);
+  const {error, loading, data, refetch} = useQuery(GET_CARD_INFO_BY_USER_ID, {
+    variables: {account_id: user.id},
+  });
 
-  const [empty, setEmpty] = useState(false);
-  const [paymentMethods, setPaymentMethods] = useState([]);
+  // useEffect(() => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else if (data.getCardInfoByUserId == []) {
+  //     setEmpty(true);
+  //   } else {
+  //     setEmpty(false);
+  //     setPaymentMethod(data.getCardInfoByUserId);
+  //   }
+  // }, [data]);
+
+  useEffect(() => {
+    if (data?.getCardInfoByUserId[0] == undefined) {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setPaymentMethod(data.getCardInfoByUserId);
+    }
+  }, [data]);
+
+  // useEffect(() => {}, [empty]);
+  useEffect(() => {}, [paymentMethod]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refetch();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   // query to get payment info for user
   // const {error, loading, data} = useQuery();
@@ -49,46 +86,53 @@ const Payments = ({route, navigation}: Props) => {
     return hidden;
   };
 
-  // will finish this when get payment info query is done
-  return (
-    <View style={styles.mainContainer}>
-      {empty ? (
-        <View style={{alignItems: 'center'}}>
-          <View style={styles.TextContainer}>
-            <Text style={styles.NoPaymentText}>No Payment Info Found</Text>
-            <Text style={styles.NoPaymentSubtext}>
-              You can add and edit payments during checkout
+  const paymentMethods = () => {
+    return paymentMethod.map(function (method, i) {
+      return (
+        <TouchableOpacity style={styles.paymentMethod} key={i}>
+          <View style={styles.paymentTextContainer}>
+            <Text style={styles.userInfoText}>{method.name_on_card}</Text>
+            <Text style={styles.userInfoText}>
+              Card ending in {obscureCardNumber(method.card_number)}
             </Text>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('AddPayment', {user})}>
-            <View style={styles.PaymentMethodContainer}>
-              <Image
-                style={styles.searchIconImageStyle}
-                source={require('./../assets/iconplus.png')}
-              />
-              <Text style={styles.AddPaymentText}>Add Payment Method</Text>
+          <Image
+            source={require('../assets/chevron_pointing_right.png')}></Image>
+        </TouchableOpacity>
+      );
+    });
+  };
+  // will finish this when get payment info query is done
+  return (
+    <View style={loading ? styles.mainContainerLoading : styles.mainContainer}>
+      {empty ? (
+        <View style={styles.mainContainer}>
+          <ScrollView contentContainerStyle={styles.scroll}>
+            <View>
+              <Text style={styles.headerText}>Add Payment Methods</Text>
+              <TouchableOpacity
+                style={styles.paymentMethod}
+                onPress={() => navigation.navigate('AddPayment', {user})}>
+                <View style={styles.paymentTextContainer}>
+                  <Text style={styles.userInfoText}>Add payment method</Text>
+                </View>
+                <Image
+                  source={require('../assets/chevron_pointing_right.png')}></Image>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </ScrollView>
         </View>
       ) : (
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scroll}>
             <Text style={styles.headerText}>Saved Payment Methods</Text>
+            {paymentMethods()}
             <View>
-              <TouchableOpacity style={styles.paymentMethod}>
-                <View style={styles.paymentTextContainer}>
-                  <Text style={styles.userInfoText}>Name: Andrew Baltazar</Text>
-                  <Text style={styles.userInfoText}>
-                    Card ending in {obscureCardNumber('12345678')}
-                  </Text>
-                </View>
-                <Image
-                  source={require('../assets/chevron_pointing_right.png')}></Image>
-              </TouchableOpacity>
               <View>
                 <Text style={styles.headerText}>Add Payment Methods</Text>
-                <TouchableOpacity style={styles.paymentMethod}>
+                <TouchableOpacity
+                  style={styles.paymentMethod}
+                  onPress={() => navigation.navigate('AddPayment', {user})}>
                   <View style={styles.paymentTextContainer}>
                     <Text style={styles.userInfoText}>Add payment method</Text>
                   </View>
@@ -100,6 +144,13 @@ const Payments = ({route, navigation}: Props) => {
           </ScrollView>
         </View>
       )}
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#71BF61"
+          style={styles.loading}
+        />
+      ) : null}
     </View>
   );
 };
@@ -111,6 +162,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     backgroundColor: 'white',
+  },
+
+  mainContainerLoading: {
+    // alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'column',
+    flex: 1,
+    backgroundColor: 'white',
+    opacity: 0.6,
   },
 
   scroll: {
@@ -216,6 +276,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
+  },
+  loading: {
+    position: 'absolute',
+    // left: 0,
+    // right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    transform: [{scale: 2.5}],
   },
 });
 

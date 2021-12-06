@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  Alert,
   ScrollView,
 } from 'react-native';
 
@@ -14,6 +15,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {AUTHENTICATE, GET_USER_PASSWORD_BY_USER_ID} from '../graphql/queries';
 import {RouteProp} from '@react-navigation/native';
 import {UPDATE_PASSWORD} from '../graphql/mutations';
+import {tsObjectKeyword} from '@babel/types';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ChangePassword'>;
@@ -26,8 +28,15 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
     fname: route.params.user.fname,
     lname: route.params.user.lname,
     id: route.params.user.id,
+  });
+  const [userCredentials, setUserCredentials] = React.useState({
     password: route.params.user.password,
     newPassword: '',
+    confirmPassword: '',
+    verifyPassword: '',
+    passwordConfirmed: true,
+    passwordValidated: true,
+    passwordVerified: true,
   });
 
   const [updatePassword, {data, loading, error}] = useMutation(
@@ -42,12 +51,60 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
   const [submitted, setSubmitted] = React.useState(false);
 
   useEffect(() => {
-    if (user.password != user.newPassword && submitted) {
+    if (
+      userCredentials.passwordConfirmed &&
+      userCredentials.passwordValidated &&
+      userCredentials.passwordVerified &&
+      submitted
+    ) {
       setSubmitted(false);
-      updatePassword({variables: {id: user.id, pass: user.newPassword}});
+      updatePassword({
+        variables: {id: user.id, pass: userCredentials.newPassword},
+      });
+      if (loading) {
+        console.log('loading?');
+      }
+      Alert.alert(
+        'Password Changed',
+        'Password has been changed successfully.',
+        [
+          {
+            text: 'Ok',
+            style: 'default',
+            onPress: () => navigation.navigate('EditAccount', {user}),
+          },
+        ],
+      );
     }
     setSubmitted(false);
   }, [user, submitted]);
+
+  const validatePassword = () => {
+    if (userCredentials.newPassword.trim().length < 8) {
+      return false;
+    }
+    return true;
+  };
+
+  const confirmPassword = () => {
+    if (
+      userCredentials.newPassword != userCredentials.confirmPassword ||
+      userCredentials.confirmPassword.trim().length < 8
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  const verifyPassword = () => {
+    if (
+      userCredentials.verifyPassword != userCredentials.password ||
+      userCredentials.verifyPassword.trim().length < 8
+    ) {
+      return false;
+    }
+    return true;
+  };
 
   return (
     <View style={styles.container}>
@@ -57,7 +114,19 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
           <TextInput
             style={styles.userDataTextInput}
             placeholder="Old Password"
-            secureTextEntry={true}></TextInput>
+            secureTextEntry={true}
+            onChangeText={val =>
+              setUserCredentials({
+                ...userCredentials,
+                passwordVerified: verifyPassword(),
+                verifyPassword: val,
+              })
+            }></TextInput>
+          {!userCredentials.passwordVerified ? (
+            <Text style={styles.errorText}>
+              * Make sure you are entering the current password
+            </Text>
+          ) : null}
         </View>
         <View style={styles.largeItemContainer}>
           <Text style={styles.itemText}>New Password:</Text>
@@ -66,15 +135,34 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
             placeholder="New Password"
             secureTextEntry={true}
             onChangeText={val => {
-              setUser({...user, newPassword: val});
+              setUserCredentials({
+                ...userCredentials,
+                newPassword: val,
+                passwordValidated: validatePassword(),
+              });
             }}></TextInput>
+          {!userCredentials.passwordValidated ? (
+            <Text style={styles.errorText}>
+              * Password must contain at least 8 characters
+            </Text>
+          ) : null}
         </View>
         <View style={styles.largeItemContainer}>
           <Text style={styles.itemText}>Confirm New Password:</Text>
           <TextInput
             style={styles.userDataTextInput}
             placeholder="Confirm New Password"
-            secureTextEntry={true}></TextInput>
+            secureTextEntry={true}
+            onChangeText={val => {
+              setUserCredentials({
+                ...userCredentials,
+                confirmPassword: val,
+                passwordConfirmed: confirmPassword(),
+              });
+            }}></TextInput>
+          {!userCredentials.passwordConfirmed ? (
+            <Text style={styles.errorText}>* Passwords must match</Text>
+          ) : null}
         </View>
         <View style={styles.instructionContainer}>
           <Text style={styles.instructionText}>
@@ -84,6 +172,12 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
         <TouchableOpacity
           style={styles.resetButton}
           onPress={() => {
+            setUserCredentials({
+              ...userCredentials,
+              passwordConfirmed: confirmPassword(),
+              passwordValidated: validatePassword(),
+              passwordVerified: verifyPassword(),
+            });
             setSubmitted(true);
           }}>
           <Text style={styles.resetButtonText}>Reset</Text>
@@ -113,7 +207,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexDirection: 'row',
     width: '95%',
-    height: 85,
+    height: 100,
     justifyContent: 'space-between',
     margin: 10,
     paddingHorizontal: 15,
@@ -161,7 +255,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   resetButton: {
-    marginTop: '70%',
+    marginTop: '50%',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -169,6 +263,11 @@ const styles = StyleSheet.create({
     width: 324,
     backgroundColor: '#71BF61',
     borderRadius: 12,
+  },
+  errorText: {
+    color: 'red',
+    fontFamily: 'VarelaRound-Regular',
+    // marginTop: 5,
   },
 });
 
