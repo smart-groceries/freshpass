@@ -77,7 +77,6 @@ const CartView = () => {
           onPress={() => Alert.alert('onPress')}
           onChangeText={text => console.log(text)}></SearchBar>
         <AddIcon></AddIcon>
-        <FilterIcon></FilterIcon>
       </View>
       
       <ScrollView contentContainerStyle={styles._container}>
