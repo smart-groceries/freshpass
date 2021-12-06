@@ -2,6 +2,7 @@ import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as React from 'react';
 import {FC} from 'react';
 import NumericInput from 'react-native-numeric-input';
+import getImageUrl from '../utils/images';
 
 import {
   View,
@@ -33,10 +34,19 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
     const [weight, setWeight] = React.useState(weightProp);
     const [brand, setBrand] = React.useState(brandProp);
     const [price, setPrice] = React.useState(priceProp);
-    const [aisle, setAisle] = React.useState(aisleProp);
-    const [imageUrl, setimageUrl] = React.useState("https://smart-grocery-project.s3.us-west-1.amazonaws.com/default-item.jpeg");
+    const [aisle, setAisle] = React.useState(aisleProp);;
     const [quantityValue, setQuantityValue] = React.useState(quantityProp);
+    const [imageUrl, setImageUrl] = React.useState("");
 
+    React.useEffect(() => {
+      getImageUrl("item", id)
+      .then(data => {
+        const result = data;
+        setImageUrl(result);
+        console.log(imageUrl);
+      }
+      )
+    }, []);
     return(
         <View style={styles.GroceryItemContainer}>
                 <View style={styles.LeftContainer} >
