@@ -29,6 +29,7 @@ export interface CartProp {
 const CartView = () => {
   const [shoppingSessionId, setshoppingSessionId] = useState("1");
   const [empty, setEmpty] = useState(true);
+  const [orderComplete, setOrderComplete] = useState(false);
   const [listOfItems, setlistOfItems] = useState([
     {barcode_id: '', item_aisle: '', item_brand: '', item_name: '', item_price: '', item_weight: '', quantity: 0},
   ]);
@@ -80,7 +81,21 @@ const CartView = () => {
         {getListOfItems()}
       </ScrollView>
       <TouchableOpacity
-          onPress={() => console.log("Hello")}
+          onPress={() => {Alert.alert(
+            "Confirm Order",
+            "Please confirm that all items in your cart are correct and that you would like to check out",
+            [
+              {
+                text: "Go back",
+              },
+              {
+                text: "Confirm",
+                onPress: () => {
+                  setOrderComplete(true);
+                },
+              },
+            ]
+          );}}
           style={[
             styles.checkOut,
             {
