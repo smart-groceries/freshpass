@@ -19,17 +19,24 @@ interface GroceryItemDetails {
 }
 
 interface Props{    
-    //cartDetails: GroceryItemDetails
+    idProp: string
+    nameProp: string
+    weightProp: string
+    brandProp: string
+    priceProp: string
+    aisleProp: string
+    quantityProp: number
 }
 
-const Item :FC<Props> = () => {
-    const [name, setName] = React.useState("Mac and Cheese");
-    const [weight, setWeight] = React.useState("0.5");
-    const [brand, setBrand] = React.useState("Kraft");
-    const [price, setPrice] = React.useState(".99");
-    const [aisle, setAisle] = React.useState("1");
+const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, aisleProp, quantityProp}) => {
+    const [id, setId] = React.useState(idProp);
+    const [name, setName] = React.useState(nameProp);
+    const [weight, setWeight] = React.useState(weightProp);
+    const [brand, setBrand] = React.useState(brandProp);
+    const [price, setPrice] = React.useState(priceProp);
+    const [aisle, setAisle] = React.useState(aisleProp);
     const [imageUrl, setimageUrl] = React.useState("https://smart-grocery-project.s3.us-west-1.amazonaws.com/default-item.jpeg");
-    const [quantityValue, setQuantityValue] = React.useState<number>(0);
+    const [quantityValue, setQuantityValue] = React.useState(quantityProp);
 
     
 
@@ -42,7 +49,8 @@ const Item :FC<Props> = () => {
                         <Text style={styles.itemPrice}>$ </Text>
                         <Text style={styles.itemPrice}>{price}</Text>
                         <Text style={styles.itemPriceDivider}> • </Text>
-                        <Text style={styles.itemAisle}>Aisle 1</Text>
+                        <Text style={styles.itemAisle}>Aisle </Text>
+                        <Text style={styles.itemAisle}>{aisle} </Text>
                     </View>
                     <View style ={styles.QuantityButtonContainer}>
                         <NumericInput value={quantityValue} onChange={value => setQuantityValue(value)} totalHeight= {35} totalWidth= {90}

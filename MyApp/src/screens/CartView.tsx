@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -19,12 +19,51 @@ import AddIcon from '../components/Add';
 import SearchBar from '../components/SearchBar';
 import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
+import {useQuery} from '@apollo/client';
+import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
 
 export interface CartProp {
   style?: ViewStyle | Array<ViewStyle> | undefined;
 }
 
 const CartView = () => {
+  const [shoppingSessionId, setshoppingSessionId] = useState("1");
+  const [empty, setEmpty] = useState(true);
+  const [listOfItems, setlistOfItems] = useState([
+    {barcode_id: '', item_aisle: '', item_brand: '', item_name: '', item_price: '', item_weight: '', quantity: 0},
+  ]);
+  const {error, loading, data, refetch} = useQuery(GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID, {
+    variables: {shopping_session_id: shoppingSessionId},
+  });
+
+
+  useEffect(() => {
+    if (data?.getItemsForShoppingSessionById[0] == undefined) {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setlistOfItems(data.getItemsForShoppingSessionById);
+      console.log(data.getItemsForShoppingSessionById);
+    }
+  }, [data]);
+
+  const getListOfItems = () => {
+    return listOfItems.map(function (method, i) {
+      return (
+        <GroceryItem 
+            idProp={method.barcode_id}
+            nameProp={method.item_name}
+            weightProp={method.item_weight}
+            brandProp={method.item_brand}
+            priceProp={method.item_price}
+            aisleProp={method.item_aisle}
+            quantityProp={method.quantity}
+            key={i}>
+        </GroceryItem>
+      );
+    });
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.sectionContainer}>
@@ -35,12 +74,9 @@ const CartView = () => {
         <AddIcon></AddIcon>
         <FilterIcon></FilterIcon>
       </View>
+      
       <ScrollView contentContainerStyle={styles._container}>
-        <GroceryItem></GroceryItem>
-        <GroceryItem></GroceryItem>
-        <GroceryItem></GroceryItem>
-        <GroceryItem></GroceryItem>
-        <GroceryItem></GroceryItem>
+        {getListOfItems()}
       </ScrollView>
     </View>
   );
