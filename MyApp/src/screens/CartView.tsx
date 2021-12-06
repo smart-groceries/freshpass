@@ -31,11 +31,12 @@ const CartView = () => {
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
   const [listOfItems, setlistOfItems] = useState([
-    {barcode_id: '', item_aisle: '', item_brand: '', item_name: '', item_price: '', item_weight: '', quantity: 0},
+    {barcode_id: '', item_aisle: '', item_brand: '', item_name: '', item_price: 0, item_weight: '', quantity: 0},
   ]);
   const {error, loading, data, refetch} = useQuery(GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID, {
     variables: {shopping_session_id: shoppingSessionId},
   });
+  const [total, setTotal] = useState(0);
 
 
   useEffect(() => {
@@ -50,6 +51,8 @@ const CartView = () => {
 
   const getListOfItems = () => {
     return listOfItems.map(function (method, i) {
+      console.log(i)
+      console.log(total)
       return (
         <GroceryItem 
             idProp={method.barcode_id}
@@ -59,7 +62,7 @@ const CartView = () => {
             priceProp={method.item_price}
             aisleProp={method.item_aisle}
             quantityProp={method.quantity}
-            key={i+1}
+            key={i}
         >
         </GroceryItem>
       );

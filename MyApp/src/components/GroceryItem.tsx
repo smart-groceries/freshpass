@@ -23,7 +23,7 @@ interface Props{
     nameProp: string
     weightProp: string
     brandProp: string
-    priceProp: string
+    priceProp: number
     aisleProp: string
     quantityProp: number
 }
