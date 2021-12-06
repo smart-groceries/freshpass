@@ -78,6 +78,25 @@ const CartView = () => {
       <ScrollView contentContainerStyle={styles._container}>
         {getListOfItems()}
       </ScrollView>
+      <TouchableOpacity
+          onPress={() => console.log("Hello")}
+          style={[
+            styles.checkOut,
+            {
+              backgroundColor: '#E89023',
+              margin: 10,
+            },
+          ]}>
+              <Text
+            style={[
+              styles.textButton,
+              {
+                color: '#FFFFFF',
+              },
+            ]}>
+            Check Out
+          </Text>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -113,6 +132,19 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginRight: 10,
     marginLeft: 10,
+  },
+  checkOut: {
+    width: 324,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    left: 25,
+  },
+  textButton: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'VarelaRound-Regular',
   },
 });
 

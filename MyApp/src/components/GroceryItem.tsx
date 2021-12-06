@@ -38,8 +38,6 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
     const [imageUrl, setimageUrl] = React.useState("https://smart-grocery-project.s3.us-west-1.amazonaws.com/default-item.jpeg");
     const [quantityValue, setQuantityValue] = React.useState(quantityProp);
 
-    
-
     return(
         <View style={styles.GroceryItemContainer}>
                 <View style={styles.LeftContainer} >
