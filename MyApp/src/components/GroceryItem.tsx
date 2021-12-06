@@ -85,16 +85,7 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
                     source={{uri: imageUrl}}>
                     </Image>
                 </View>
-
         </View>
-      </View>
-      <View style={styles.ItemPicContainer}>
-        <Image
-          style={styles.image}
-          resizeMode="contain"
-          source={require('./../assets/macncheese.png')}></Image>
-      </View>
-    </View>
   );
 };
 
