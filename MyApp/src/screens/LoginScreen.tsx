@@ -66,7 +66,7 @@ export default function App({navigation}: Props) {
       if (data.authn.account_id == 0) {
         setSubmitted(false);
         return Alert.alert(
-          'User not found',
+          'Login Failed',
           'Make sure you are using the correct email and password.',
         );
       }
