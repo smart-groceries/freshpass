@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import {useQuery} from '@apollo/client';
 type Props = {navigation: StackNavigationProp<RootStackParamList, 'Landing'>};
 
 const LandingPage = ({navigation}: Props) => {
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
