@@ -29,9 +29,10 @@ interface Props{
     priceProp: number
     aisleProp: string
     quantityProp: number
+    removeFunction: any
 }
 
-const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightProp, brandProp, priceProp, aisleProp, quantityProp}) => {
+const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightProp, brandProp, priceProp, aisleProp, quantityProp, removeFunction}) => {
     const [itemId, setItemId] = React.useState(itemIdProp);
     const [name, setName] = React.useState(nameProp);
     const [weight, setWeight] = React.useState(weightProp);
@@ -48,10 +49,9 @@ const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightPro
     });
 
     React.useEffect(() => {
-        console.log("in pushUpdate")
-        console.log(itemId)
-        console.log(quantityValue)
-        console.log(shoppingSessionIdProp)
+        if (quantityValue == 0) {
+            removeFunction(itemId)
+        }
           try {
             mutateFunction({
               variables: {
@@ -66,8 +66,6 @@ const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightPro
           if (error) {
             console.log(error);
           }
-        //removeFunction(itemId)
-
       }, [quantityValue]);
 
       React.useEffect(() => {
@@ -100,7 +98,7 @@ const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightPro
                         rightButtonBackgroundColor='#EEEEEE' 
                         leftButtonBackgroundColor='#EEEEEE'
                         textColor='#424347'
-                        minValue={1}
+                        minValue={0}
                          />
                         {/* <NumericInput 
                                 value={quantityValue}

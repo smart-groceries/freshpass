@@ -112,11 +112,10 @@ const CartView = () => {
               priceProp={item.item_price}
               aisleProp={item.item_aisle}
               quantityProp={item.quantity}
-              //removeFunction={deleteItem}
-              key={i}
+              removeFunction={deleteItem}
+              key={item.barcode_id}
           >
           </GroceryItem>
-          //<Text key={i} onPress={()=>{deleteItem(item.barcode_id)}}> {item.item_name}</Text>
       );
     });
   };
