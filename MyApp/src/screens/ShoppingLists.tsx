@@ -14,19 +14,23 @@ import {
   ViewStyle,
   Alert,
   Image,
+  FlatList,
+  ListRenderItem 
 } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import ShoppingList from '../components/ShoppingList';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
-import {useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {GET_SHOPPING_LISTS_BY_USER_ID} from '../graphql/queries';
-
+import { CREATE_SHOPPING_LIST } from '../graphql/mutations';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Lists'>;
   route: RouteProp<RootStackParamList, 'Lists'>;
 };
+
+
 const ShoppingLists = ({route, navigation}: Props) => {
   const [user, setUser] = useState({
     email: route.params.user.email,
@@ -35,15 +39,25 @@ const ShoppingLists = ({route, navigation}: Props) => {
     id: route.params.user.id,
   });
 
-  const {error, loading, data} = useQuery(GET_SHOPPING_LISTS_BY_USER_ID, {
+  const { loading, data} = useQuery(GET_SHOPPING_LISTS_BY_USER_ID, {
     variables: {id: user.id},
   });
+  const [newlist,{error}] = useMutation(CREATE_SHOPPING_LIST, {variables:{account_id : user.id}});
+  
+
   if (loading) {
     return <Text>WAITING FOR DATA</Text>;
   }
   if (error) {
     return <Text> {error.message} </Text>;
   }
+  
+  const renderItem = (data :any) => (
+    <ShoppingList
+    data={data} 
+    />
+  );
+
 
   return (
     <View style={styles.screen}>
@@ -51,20 +65,29 @@ const ShoppingLists = ({route, navigation}: Props) => {
         <SearchBar
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
-          onChangeText={text => console.log(text)}></SearchBar>
-        <TouchableOpacity style={styles.addContainer} onPress={() => {}}>
+          onChangeText={text => console.log()}></SearchBar>
+        <TouchableOpacity style={styles.addContainer} onPress={() => {newlist}
+        }>
           <Image
             style={styles.addIcon}
             resizeMode="contain"
             source={require('../assets/add_icon.png')}></Image>
         </TouchableOpacity>
       </View>
-      <ScrollView>
+      <FlatList 
+        data={data.getShoppingListsByUserId}
+        renderItem={renderItem}
+      >
+      </FlatList>
+      {/* <ScrollView>
+        if(data != null){
+
+        }
         <ShoppingList
           name={
             data.getShoppingListsByUserId[0].shopping_list_id
           }></ShoppingList>
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 };
