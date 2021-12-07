@@ -1,7 +1,7 @@
 import {typeAlias} from '@babel/types';
 import React, {useEffect, useState} from 'react';
 import {CommonActions} from '@react-navigation/routers';
-import {useNavigation} from '@react-navigation/core';
+import {useIsFocused, useNavigation} from '@react-navigation/core';
 import {
   StyleSheet,
   Text,
@@ -31,12 +31,26 @@ export default function App({navigation}: Props) {
     lname: 'null',
   });
   const [password, setPassword] = useState('');
-  const {error, loading, data} = useQuery(AUTHENTICATE, {
+  const {error, loading, data, refetch} = useQuery(AUTHENTICATE, {
     variables: {email: user.email, pass: password},
   });
   const [submitted, setSubmitted] = useState(false);
 
+  // const isFocused = useIsFocused();
+
+  // useEffect(() => {
+  //   setUser({...user, id: 0, email: 'null', fname: 'null', lname: 'null'});
+  // }, [isFocused]);
+
   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refetch();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    // console.log(data?.authn?.first_name);
     if (submitted) {
       if (loading) {
         console.log('loading');
@@ -65,7 +79,18 @@ export default function App({navigation}: Props) {
               state: {
                 index: 0,
                 routes: [
-                  {name: 'Stores'},
+                  {
+                    name: 'Stores',
+                    // ,
+                    // params: {
+                    //   user: {
+                    //     id: data.authn.account_id,
+                    //     email: data.authn.email,
+                    //     fname: data.authn.first_name,
+                    //     lname: data.authn.last_name,
+                    //   },
+                    // },
+                  },
                   {
                     name: 'Account',
                     params: {

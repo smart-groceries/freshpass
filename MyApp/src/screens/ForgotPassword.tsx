@@ -22,28 +22,6 @@ type Props = {
 };
 
 const ForgotPasswordScreen = ({navigation}: Props) => {
-  // const [data, setData] = React.useState({
-  //   email: '',
-  //   check_textInputChange: false,
-  //   secureTextEntry: true,
-  //   confirm_secureTextEntry: true,
-  // });
-
-  // const textInputChange = (val: any) => {
-  //   if (val.length !== 0) {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: false,
-  //     });
-  //   }
-  // };
   const [email, setEmail] = React.useState({
     email: '',
     emailValidated: true,

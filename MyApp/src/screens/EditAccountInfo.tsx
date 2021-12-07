@@ -13,6 +13,7 @@ import {
   StatusBar,
   Image,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 
 import {RootStackParamList} from '../navigation/RootStackParamList';
@@ -34,6 +35,8 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
     lname: route.params.user.lname,
     id: route.params.user.id,
     password: '',
+    fNameValidated: true,
+    lNameValidated: true,
   });
 
   const [submitted, setSubmitted] = React.useState(false);
@@ -60,7 +63,6 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setUser({...user, password: data.getUserPasswordById.password});
     }
   }, [data]);
@@ -73,8 +75,7 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
   }, [navigation]);
 
   useEffect(() => {
-    console.log(user.fname);
-    if (submitted) {
+    if (user.fNameValidated && user.lNameValidated && submitted) {
       try {
         updateCustomer({
           variables: {
@@ -92,13 +93,36 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
         });
       } catch {}
 
-      navigation.navigate('Account', {user});
+      navigation.navigate('Account', {
+        user: {
+          email: user.email,
+          id: user.id,
+          fname: user.fname,
+          lname: user.lname,
+        },
+      });
+
       setSubmitted(false);
+    } else if (!user.fNameValidated && !user.lNameValidated && submitted) {
+      Alert.alert(
+        'Please enter a valid first and last name',
+        'Please make sure you are entering a valid first and last name or that the field is not blank.',
+      );
+    } else if (!user.fNameValidated && submitted) {
+      Alert.alert(
+        'Enter a valid first name',
+        'Please make sure you are entering a valid first name or that the field is not empty.',
+      );
+    } else if (!user.lNameValidated && submitted) {
+      Alert.alert(
+        'Enter a valid last name',
+        'Please make sure you are entering a valid last name or that the field is not blank.',
+      );
     }
+    setSubmitted(false);
   }, [user]);
 
   useEffect(() => {}, [submitted]);
-
   // const [changed, setChanged] = React.useState(false);
 
   const obscurePassword = (password: string) => {
@@ -125,7 +149,7 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
           <TextInput
             style={styles.userDataTextInput}
             onChangeText={val => {
-              setUser({...user, fname: val});
+              setUser({...user, fname: val, fNameValidated: validateText(val)});
             }}>
             {user.fname}
           </TextInput>
@@ -135,7 +159,7 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
           <TextInput
             style={styles.userDataTextInput}
             onChangeText={val => {
-              setUser({...user, lname: val});
+              setUser({...user, lname: val, lNameValidated: validateText(val)});
             }}>
             {user.lname}
           </TextInput>
@@ -167,12 +191,17 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
         <TouchableOpacity
           style={styles.saveButton}
           onPress={() => {
+            setUser({
+              ...user,
+              fNameValidated: validateText(user.fname),
+              lNameValidated: validateText(user.lname),
+            });
             setSubmitted(true);
           }}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </ScrollView>
-      {loading ? (
+      {loading || submitted ? (
         <ActivityIndicator
           size="large"
           color="#71BF61"
