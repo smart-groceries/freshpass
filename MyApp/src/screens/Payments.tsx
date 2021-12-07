@@ -43,17 +43,6 @@ const Payments = ({route, navigation}: Props) => {
     variables: {account_id: user.id},
   });
 
-  // useEffect(() => {
-  //   if (error) {
-  //     console.log(error);
-  //   } else if (data.getCardInfoByUserId == []) {
-  //     setEmpty(true);
-  //   } else {
-  //     setEmpty(false);
-  //     setPaymentMethod(data.getCardInfoByUserId);
-  //   }
-  // }, [data]);
-
   useEffect(() => {
     if (data?.getCardInfoByUserId[0] == undefined) {
       setEmpty(true);
@@ -63,7 +52,6 @@ const Payments = ({route, navigation}: Props) => {
     }
   }, [data]);
 
-  // useEffect(() => {}, [empty]);
   useEffect(() => {}, [paymentMethod]);
 
   useEffect(() => {

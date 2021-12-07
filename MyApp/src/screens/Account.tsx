@@ -1,6 +1,7 @@
 import {tsNamedTupleMember} from '@babel/types';
 import {CommonActions} from '@react-navigation/routers';
 import React, {useEffect} from 'react';
+import {useApolloClient} from '@apollo/client';
 import {
   View,
   Text,
@@ -17,7 +18,7 @@ import {
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useIsFocused} from '@react-navigation/native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Account'>;
@@ -34,14 +35,44 @@ const AccountScreen = ({route, navigation}: Props) => {
 
   const [logOut, setLogOut] = React.useState(false);
 
+  const client = useApolloClient();
+
   useEffect(() => {
     if (logOut) {
+      client.resetStore();
       navigation.dispatch(
         CommonActions.reset({index: 0, routes: [{name: 'Landing'}]}),
       );
     }
     setLogOut(false);
   }, [logOut]);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setUser({
+      ...user,
+      id: route.params.user.id,
+      email: route.params.user.email,
+      fname: route.params.user.fname,
+      lname: route.params.user.lname,
+    });
+  }, [isFocused]);
+
+  // useEffect(() => {
+  //   // const unsubscribe = navigation.addListener('focus', () => {
+  //   //   refetch();
+  //   // });
+  //   // return unsubscribe;
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     setUser({
+  //       ...user,
+  //       fname: route.params.user.fname,
+  //       lname: route.params.user.lname,
+  //     });
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   return (
     <View style={styles.container}>
