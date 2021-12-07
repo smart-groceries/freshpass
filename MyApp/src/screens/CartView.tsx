@@ -21,7 +21,7 @@ import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
 import {useQuery, useMutation} from '@apollo/client';
 import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
-import {REMOVE_ITEM_IN_SHOPPING_SESSION} from '../graphql/mutations';
+import {REMOVE_ITEM_IN_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_SESSION} from '../graphql/mutations';
 
 export interface CartProp {
   style?: ViewStyle | Array<ViewStyle> | undefined;
@@ -40,6 +40,11 @@ const CartView = () => {
         console.log(err);
       },
   });
+  const [addFunction, addItemResult] = useMutation(ADD_ITEM_TO_SHOPPING_SESSION, {
+      onError: err => {
+        console.log(err);
+      },
+  });
   const [total, setTotal] = useState(0);
 
 
@@ -53,6 +58,54 @@ const CartView = () => {
     }
   }, [getItemsResult.data]);
 
+
+  const addItem = (
+    id: any,
+    aisle: string,
+    brand: string,
+    name: string,
+    price: number,
+    weight: string,
+  ) => {
+    var newItem = {
+      __typename: "Item",
+      barcode_id: id,
+      item_aisle: aisle,
+      item_brand: brand,
+      item_name: name,
+      item_price: price,
+      item_weight: weight,
+      quantity: 5
+    }
+    console.log("START ADD ITEM")
+    console.log("listOfItems at beginning")
+    console.log(listOfItems)
+    console.log("KEY IS")
+    console.log(id)
+    var listOfItemsCopy = listOfItems;
+    console.log("COPY BEFORE ADDITION IS")
+    console.log(listOfItemsCopy)
+    listOfItemsCopy.push(newItem);
+    console.log("COPY AFTER REMOVAL IS")
+    console.log(listOfItemsCopy)
+    setlistOfItems(listOfItemsCopy);
+    console.log(listOfItems);
+    console.log("END ADD ITEM")
+
+    try {
+      addFunction({
+        variables: {
+          barcode_id: id,
+          quantity: "1",
+          shopping_session_id: shoppingSessionId,
+        },
+      });
+    } catch {}
+    while (addItemResult.loading) {}
+    if (addItemResult.error) {
+      console.log(addItemResult.error);
+    }
+  }
 
   const deleteItem = (id: any) => {
     console.log("START DELETE ITEM")
@@ -133,6 +186,25 @@ const CartView = () => {
       <ScrollView contentContainerStyle={styles._container}>
         {getListOfItems()}
       </ScrollView>  
+      <TouchableOpacity
+          onPress={() => {addItem("2","1","Coca Cola","Coca Cola 12 Pack",4.99,"5.0")}}
+          style={[
+            styles.checkOut,
+            {
+              backgroundColor: '#E89023',
+              margin: 10,
+            },
+          ]}>
+              <Text
+            style={[
+              styles.textButton,
+              {
+                color: '#FFFFFF',
+              },
+            ]}>
+            Add Item
+          </Text>
+        </TouchableOpacity>
       <TouchableOpacity
           onPress={() => {Alert.alert(
             "Confirm Order",
