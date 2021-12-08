@@ -31,14 +31,14 @@ export interface ListProp {
     style?: ViewStyle | Array<ViewStyle> | undefined;
 }
 
-const ShoppingListView = () => {
+const ShoppingListView = ({navigation,route}:ListProp) => {
   const [shoppingSessionId, setshoppingSessionId] = useState("1");
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
 
   const [total, setTotal] = useState(0);
-
-  return (
+  console.log(route)
+  return (  
     <View style={styles.screen}>
       <View style={styles.sectionContainer}>
         <SearchBar

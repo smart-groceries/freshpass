@@ -42,7 +42,7 @@ const ShoppingListComponent = ({navigation,props}:Props) => {
       </View>
       <View>
         <TouchableOpacity
-        onPress={() => navigation.navigate('ShoppingListView')}
+        onPress={() => navigation.navigate('ShoppingListView',props)}
         style={styles.button}>
           <Text>View List</Text>
         </TouchableOpacity>
