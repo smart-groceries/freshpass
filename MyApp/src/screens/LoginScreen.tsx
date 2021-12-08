@@ -15,7 +15,7 @@ import {
 import {Dispatch} from 'react';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AUTHENTICATE} from '../graphql/queries';
+import {AUTHENTICATE, GET_GROCER_BY_ID, IS_CUSTOMER} from '../graphql/queries';
 import {useQuery} from '@apollo/client';
 import {ScrollView} from 'react-native-gesture-handler';
 
@@ -34,6 +34,19 @@ export default function App({navigation}: Props) {
   const {error, loading, data, refetch} = useQuery(AUTHENTICATE, {
     variables: {email: user.email, pass: password},
   });
+
+  const {
+    error: isCustomerError,
+    loading: isCustomerLoading,
+    data: isCustomerData,
+  } = useQuery(IS_CUSTOMER, {variables: {account_id: data?.authn?.account_id}});
+
+  const {
+    error: getGrocerError,
+    loading: getGrocerLoading,
+    data: getGrocerData,
+  } = useQuery(GET_GROCER_BY_ID, {variables: {id: data?.authn?.account_id}});
+
   const [submitted, setSubmitted] = useState(false);
 
   // const isFocused = useIsFocused();
@@ -70,50 +83,76 @@ export default function App({navigation}: Props) {
           'Make sure you are using the correct email and password.',
         );
       }
+      if (isCustomerData?.isCustomer?.authorized === true) {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'Home',
+                state: {
+                  index: 0,
+                  routes: [
+                    {
+                      name: 'Stores',
+                      // ,
+                      // params: {
+                      //   user: {
+                      //     id: data.authn.account_id,
+                      //     email: data.authn.email,
+                      //     fname: data.authn.first_name,
+                      //     lname: data.authn.last_name,
+                      //   },
+                      // },
+                    },
+                    {
+                      name: 'Account',
+                      params: {
+                        user: {
+                          id: data.authn.account_id,
+                          email: data.authn.email,
+                          fname: data.authn.first_name,
+                          lname: data.authn.last_name,
+                        },
+                      },
+                    },
+                    {
+                      name: 'Lists',
+                      params: {
+                        user: {
+                          id: data.authn.account_id,
+                          email: data.authn.email,
+                          fname: data.authn.first_name,
+                          lname: data.authn.last_name,
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          }),
+        );
+      }
+    }
+    if (isCustomerData?.isCustomer?.authorized === false) {
+      // console.log('working on it');
+      console.log(getGrocerData);
+      console.log(data.authn.account_id);
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
           routes: [
             {
-              name: 'Home',
-              state: {
-                index: 0,
-                routes: [
-                  {
-                    name: 'Stores',
-                    // ,
-                    // params: {
-                    //   user: {
-                    //     id: data.authn.account_id,
-                    //     email: data.authn.email,
-                    //     fname: data.authn.first_name,
-                    //     lname: data.authn.last_name,
-                    //   },
-                    // },
-                  },
-                  {
-                    name: 'Account',
-                    params: {
-                      user: {
-                        id: data.authn.account_id,
-                        email: data.authn.email,
-                        fname: data.authn.first_name,
-                        lname: data.authn.last_name,
-                      },
-                    },
-                  },
-                  {
-                    name: 'Lists',
-                    params: {
-                      user: {
-                        id: data.authn.account_id,
-                        email: data.authn.email,
-                        fname: data.authn.first_name,
-                        lname: data.authn.last_name,
-                      },
-                    },
-                  },
-                ],
+              name: 'StoreHome',
+              params: {
+                grocer: {
+                  account_id: getGrocerData.getUserById.account_id,
+                  email: getGrocerData.getUserById.email,
+                  balance: getGrocerData.getUserById.balance,
+                  address: getGrocerData.getUserById.address,
+                  grocer_name: getGrocerData.getUserById.grocer_name,
+                },
               },
             },
           ],
