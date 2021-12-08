@@ -29,6 +29,18 @@ export type RootStackParamList = {
       lname: string;
     };
   };
+
+  EditItem: {
+    item: {
+      id: string
+      name: string
+      weight: string
+      brand: string
+      price: number
+      aisle: string
+      quantity: number
+    }
+  };
   PaymentMethods: {
     user: {
       id: number;
