@@ -81,4 +81,13 @@ export type RootStackParamList = {
   };
   StoreLocator: undefined;
   PasswordResetLinkSent: undefined;
+  StoreHome: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
 };
