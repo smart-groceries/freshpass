@@ -76,7 +76,7 @@ export default function App({navigation}: Props) {
           'Make sure you are entering valid credentials.',
         );
       }
-      if (data.authn.account_id == 0) {
+      if (data?.authn?.account_id == 0) {
         setSubmitted(false);
         return Alert.alert(
           'Login Failed',

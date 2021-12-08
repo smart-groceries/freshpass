@@ -213,6 +213,11 @@ export default function App() {
               component={StoreHomeTabs}
               options={{headerShown: false}}
             />
+            <Stack.Screen
+              name="EditItem"
+              component={EditItem}
+              options={{headerShown: false}}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>
