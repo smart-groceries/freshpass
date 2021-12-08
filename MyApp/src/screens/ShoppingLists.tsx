@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -38,12 +38,29 @@ const ShoppingLists = ({route, navigation}: Props) => {
     lname: route.params.user.lname,
     id: route.params.user.id,
   });
-
-  const { loading, data} = useQuery(GET_SHOPPING_LISTS_BY_USER_ID, {
+  const { error,loading, data} = useQuery(GET_SHOPPING_LISTS_BY_USER_ID, {
     variables: {id: user.id},
   });
-  const [newlist,{error}] = useMutation(CREATE_SHOPPING_LIST, {variables:{account_id : user.id}});
-  
+  const [mutateFunction, createShoppingResult] = useMutation(CREATE_SHOPPING_LIST, {
+    onError: err => {
+      console.log(err);
+    },
+  });  
+  const [addItemState,setaddItemState] = useState(false);
+  useEffect(() => {
+    try {
+      mutateFunction({
+        variables: {
+          account_id: user.id,
+        },
+      });
+    } catch {}
+    while (createShoppingResult.loading) { }
+    if (createShoppingResult.error) {
+      console.log(createShoppingResult.error);
+    }
+  }, [addItemState]);
+
 
   if (loading) {
     return <Text>WAITING FOR DATA</Text>;
@@ -60,6 +77,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
   );
 
 
+
   return (
     <View style={styles.screen}>
       <View style={styles.sectionContainer}>
@@ -67,8 +85,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
           onChangeText={text => console.log()}></SearchBar>
-        <TouchableOpacity style={styles.addContainer} onPress={() => {newlist}
-        }>
+        <TouchableOpacity style={styles.addContainer} onPress={() => setaddItemState(true)}>
           <Image
             style={styles.addIcon}
             resizeMode="contain"
