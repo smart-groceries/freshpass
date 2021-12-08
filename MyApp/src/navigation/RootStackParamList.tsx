@@ -13,7 +13,7 @@ export type RootStackParamList = {
   Create: undefined;
   Forgot: undefined;
   PaymentConfirm: undefined;
-  
+
   Account: {
     user: {
       id: number;
@@ -22,7 +22,7 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   EditAccount: {
     user: {
       id: number;
@@ -31,7 +31,7 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   PaymentMethods: {
     user: {
       id: number;
@@ -40,7 +40,7 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   AddPayment: {
     user: {
       id: number;
@@ -49,10 +49,10 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   OrderRejected: undefined;
   CartView: undefined;
-  
+
   Lists: {
     user: {
       id: number;
@@ -61,15 +61,15 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   ListInfo: {
     info: {
       data: [];
-    }
+    };
   };
 
-  ShoppingListView:undefined;
-  
+  ShoppingListView: undefined;
+
   ChangePassword: {
     user: {
       id: number;
@@ -81,7 +81,8 @@ export type RootStackParamList = {
   };
   StoreLocator: undefined;
   PasswordResetLinkSent: undefined;
-  StoreHome: {
+  StoreHome: undefined;
+  StoreAccount: {
     grocer: {
       account_id: number;
       email: string;

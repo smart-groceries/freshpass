@@ -45,6 +45,8 @@ import BackendConnector from './src/components/BackendConnector';
 import PasswordLinkSent from './src/screens/PasswordLinkSent';
 import GrocerAccountScreen from './src/screens/GrocerAccount';
 import ShoppingListView from './src/screens/ShoppingListView';
+import GrocerCatalog from './src/screens/GrocerCatalog';
+// import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
 function HomeTabs() {
@@ -87,9 +89,49 @@ function HomeTabs() {
   );
 }
 
-// function StoreHomeTabs() {
+function StoreHomeTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName="StoreAccount"
+      screenOptions={({route}) => ({
+        tabBarIcon: () => {
+          let iconName = require('./src/assets/account_icon.png');
+          if (route.name === 'StoreAccount') {
+            iconName = require('./src/assets/barcode_icon.png');
+          } else if (route.name === 'Scanner') {
+            iconName = require('./src/assets/stores_icon.png');
+          } else if (route.name === 'Catalog') {
+            iconName = require('./src/assets/lists_icon.png');
+          }
+          return (
+            <Image
+              resizeMode="contain"
+              source={iconName}
+              style={styles.navIcons}></Image>
+          );
+        },
+        headerShown: true,
+        headerTitleStyle: {fontFamily: 'VarelaRound-Regular'},
+        tabBarActiveTintColor: 'black',
+        tabBarLabelStyle: {fontFamily: 'VarelaRound-Regular'},
+        tabBarActiveBackgroundColor: '#F3F3F3',
+      })}>
+      <Tab.Screen
+        name="StoreAccount"
+        component={StoreAccountScreen}
+        options={{headerTitle: 'Account'}}
+      />
 
-// }
+      <Tab.Screen name="Scanner" component={StoreLocator} />
+
+      <Tab.Screen
+        name="Catalog"
+        component={GrocerCatalog}
+        options={{headerTitle: 'Shopping Lists'}}
+      />
+    </Tab.Navigator>
+  );
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -99,6 +141,9 @@ const client = BackendConnector();
 
 export default function App() {
   return (
+    //   <StripeProvider
+    //   publishableKey="pk_live_51K4JbiC1zr0L760t6MnUztbJuDYbJE7pFUQk6YVbxebSaEwJof5EIepK3yefC84PgzXvFb3PlRya3SyQjgpqme4z00b8LDyxwc"
+    //   merchantIdentifier="freshpass">
     <ApolloProvider client={client}>
       <MenuProvider>
         <NavigationContainer>
@@ -134,9 +179,9 @@ export default function App() {
               options={{headerShown: false}}
             />
             <Stack.Screen
-            name= "ShoppingListView"
-            component = {ShoppingListView}
-            options = {{headerShown:false}}
+              name="ShoppingListView"
+              component={ShoppingListView}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="PaymentMethods"
@@ -165,13 +210,14 @@ export default function App() {
             />
             <Stack.Screen
               name="StoreHome"
-              component={GrocerAccountScreen}
+              component={StoreHomeTabs}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>
     </ApolloProvider>
+    // </StripeProvider>
   );
 }
 
