@@ -83,6 +83,14 @@ export default function App({navigation}: Props) {
           'Make sure you are using the correct email and password.',
         );
       }
+      if (getGrocerError) {
+        console.log(getGrocerError.message);
+        setSubmitted(false);
+        return Alert.alert(
+          'Error',
+          'Make sure you are using the correct email and password.',
+        );
+      }
       if (isCustomerData?.isCustomer?.authorized === true) {
         navigation.dispatch(
           CommonActions.reset({
@@ -135,10 +143,13 @@ export default function App({navigation}: Props) {
         );
       }
     }
-    if (isCustomerData?.isCustomer?.authorized === false) {
+    if (
+      isCustomerData?.isCustomer?.authorized === false &&
+      getGrocerData?.getUserById?.account_id != undefined
+    ) {
       // console.log('working on it');
-      console.log(getGrocerData);
-      console.log(data.authn.account_id);
+      // console.log(getGrocerData);
+      // console.log(data.authn.account_id);
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
