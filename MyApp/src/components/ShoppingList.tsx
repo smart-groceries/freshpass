@@ -35,8 +35,8 @@ const ShoppingList = (props:any) => {
   return (
     <View style={[styles.List, {flexDirection: 'row'}]}>
       <View style={[styles.listInfoContainer, {flexDirection: 'column'}]}>
-        <Text style={styles.ListNameText}> {props.name} :List Name {ListNumber}</Text>
-        <Text style={styles.ItemsSavedText}>{ListNumber} : 200 Items Saved</Text>
+        <Text style={styles.ListNameText}> List {props.data.item.shopping_list_id}</Text>
+        <Text style={styles.ItemsSavedText}>{props.data.item.items.length} Items Saved</Text>
       </View>
       <View>
         <TouchableOpacity style={styles.button}>

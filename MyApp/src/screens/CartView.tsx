@@ -54,7 +54,7 @@ const CartView = () => {
       console.log(i)
       console.log(total)
       return (
-        <GroceryItem 
+        <GroceryItem
             idProp={method.barcode_id}
             nameProp={method.item_name}
             weightProp={method.item_weight}
