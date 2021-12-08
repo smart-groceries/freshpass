@@ -1,7 +1,7 @@
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import * as React from 'react';
 import {RootStackParamList} from '../navigation/RootStackParamList';
-import {RouteProp} from '@react-navigation/native';
+import {NavigationContainer, RouteProp} from '@react-navigation/native';
 
 import {
   View,
@@ -16,30 +16,34 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useState} from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 export interface ShoppingListProps {
   onPress?: () => void;
   ListNumber?: Number;
 }
 
 type Props = {
-  route:RouteProp<RootStackParamList, 'ListInfo'>;
+  navigation: StackNavigationProp<RootStackParamList, 'Lists'>;
+  props:any;
 }
 
-const ShoppingList = (props:any) => {
+const ShoppingListComponent = ({navigation,props}:Props) => {
   const [ListNumber, setListNumber] = useState(0);
   const [ListName, setListName] = useState('List');
   const onPress = (name: string) => {
     setListName(name);
   };
-
+  console.log(props)
   return (
     <View style={[styles.List, {flexDirection: 'row'}]}>
       <View style={[styles.listInfoContainer, {flexDirection: 'column'}]}>
-        <Text style={styles.ListNameText}> List {props.data.item.shopping_list_id}</Text>
-        <Text style={styles.ItemsSavedText}>{props.data.item.items.length} Items Saved</Text>
+        <Text style={styles.ListNameText}> List {props.item.shopping_list_id}</Text>  
+        <Text style={styles.ItemsSavedText}>{props.item.items.length} Items Saved</Text>
       </View>
       <View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('ShoppingListView')}
+        style={styles.button}>
           <Text>View List</Text>
         </TouchableOpacity>
       </View>
@@ -99,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShoppingList;
+export default ShoppingListComponent;

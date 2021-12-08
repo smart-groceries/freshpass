@@ -43,6 +43,8 @@ import {createHttpLink} from 'apollo-link-http';
 // import { InMemoryCache } from "apollo-cache-inmemory";
 import BackendConnector from './src/components/BackendConnector';
 import PasswordLinkSent from './src/screens/PasswordLinkSent';
+import GrocerAccountScreen from './src/screens/GrocerAccount';
+import ShoppingListView from './src/screens/ShoppingListView';
 
 // home screens with nav bar
 function HomeTabs() {
@@ -84,6 +86,10 @@ function HomeTabs() {
     </Tab.Navigator>
   );
 }
+
+// function StoreHomeTabs() {
+
+// }
 
 const Tab = createBottomTabNavigator();
 
@@ -128,6 +134,11 @@ export default function App() {
               options={{headerShown: false}}
             />
             <Stack.Screen
+            name= "ShoppingListView"
+            component = {ShoppingListView}
+            options = {{headerShown:false}}
+            />
+            <Stack.Screen
               name="PaymentMethods"
               component={Payments}
               options={{headerShown: true, title: 'Payment Methods'}}
@@ -150,6 +161,11 @@ export default function App() {
             <Stack.Screen
               name="PasswordResetLinkSent"
               component={PasswordLinkSent}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="StoreHome"
+              component={GrocerAccountScreen}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
