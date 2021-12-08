@@ -20,8 +20,9 @@ import {
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
-import {useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {GET_CARD_INFO_BY_USER_ID} from '../graphql/queries';
+import {DELETE_CARD_INFO} from '../graphql/mutations';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'PaymentMethods'>;
@@ -41,6 +42,15 @@ const Payments = ({route, navigation}: Props) => {
   const [empty, setEmpty] = useState(true);
   const {error, loading, data, refetch} = useQuery(GET_CARD_INFO_BY_USER_ID, {
     variables: {account_id: user.id},
+  });
+
+  const [
+    deleteCard,
+    {error: deleteCardError, loading: deleteCardLoading, data: deleteCardData},
+  ] = useMutation(DELETE_CARD_INFO, {
+    onError: err => {
+      console.log(err);
+    },
   });
 
   useEffect(() => {
@@ -77,7 +87,29 @@ const Payments = ({route, navigation}: Props) => {
   const paymentMethods = () => {
     return paymentMethod.map(function (method, i) {
       return (
-        <TouchableOpacity style={styles.paymentMethod} key={i}>
+        <TouchableOpacity
+          style={styles.paymentMethod}
+          key={i}
+          onLongPress={() => {
+            Alert.alert(
+              'Delete Payment Method?',
+              'Do you want to delete this payment method?',
+              [
+                {
+                  text: 'Yes',
+                  style: 'default',
+                  onPress: () => {
+                    deleteCard({variables: {card_number: method.card_number}});
+                    Alert.alert(
+                      'Deleted Successfully',
+                      'Payment method was deleted successfully.',
+                    );
+                  },
+                },
+                {text: 'No', style: 'cancel'},
+              ],
+            );
+          }}>
           <View style={styles.paymentTextContainer}>
             <Text style={styles.userInfoText}>{method.name_on_card}</Text>
             <Text style={styles.userInfoText}>
