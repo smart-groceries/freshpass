@@ -43,6 +43,7 @@ import {createHttpLink} from 'apollo-link-http';
 // import { InMemoryCache } from "apollo-cache-inmemory";
 import BackendConnector from './src/components/BackendConnector';
 import PasswordLinkSent from './src/screens/PasswordLinkSent';
+import ShoppingListView from './src/screens/ShoppingListView';
 
 // home screens with nav bar
 function HomeTabs() {
@@ -126,6 +127,11 @@ export default function App() {
               name="Forgot"
               component={ForgotPasswordScreen}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+            name= "ShoppingListView"
+            component = {ShoppingListView}
+            options = {{headerShown:false}}
             />
             <Stack.Screen
               name="PaymentMethods"

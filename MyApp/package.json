@@ -24,6 +24,7 @@
     "aws-appsync": "^4.1.4",
     "aws-appsync-auth-link": "^3.0.7",
     "aws-appsync-react": "^4.0.10",
+    "aws-sdk": "^2.1044.0",
     "events": "^3.3.0",
     "graphql": "^15.7.2",
     "graphql-tag": "^2.12.5",

@@ -18,7 +18,7 @@ import {
   ListRenderItem 
 } from 'react-native';
 import SearchBar from '../components/SearchBar';
-import ShoppingList from '../components/ShoppingList';
+import ShoppingListComponent from '../components/ShoppingListComponent';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
@@ -53,8 +53,9 @@ const ShoppingLists = ({route, navigation}: Props) => {
   }
   
   const renderItem = (data :any) => (
-    <ShoppingList
-    data={data} 
+    <ShoppingListComponent
+    navigation = {navigation}
+    props={data}
     />
   );
 
