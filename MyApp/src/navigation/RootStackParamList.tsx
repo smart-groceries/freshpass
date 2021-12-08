@@ -57,8 +57,8 @@ export type RootStackParamList = {
   };
   ListInfo: {
     info: {
-      name: string;
-    };
+      "data": [String];
+    }
   };
   ChangePassword: {
     user: {
