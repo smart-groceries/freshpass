@@ -21,14 +21,19 @@ import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
 import {useQuery, useMutation} from '@apollo/client';
 import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
-import {REMOVE_ITEM_IN_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_SESSION} from '../graphql/mutations';
+import {REMOVE_ITEM_IN_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_SESSION, UPDATE_ITEM_IN_STORE_CATALOG} from '../graphql/mutations';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../navigation/RootStackParamList';
 
 export interface CartProp {
   style?: ViewStyle | Array<ViewStyle> | undefined;
+  navigation: StackNavigationProp<RootStackParamList, 'Confirmation'>;
 }
 
-const CartView = () => {
+const CartView = ({navigation}: CartProp) => {
   const [shoppingSessionId, setshoppingSessionId] = useState("1");
+  const [grocerId, setGrocerId] = useState("5");
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
   const [listOfItems, setlistOfItems] = useState([]);
@@ -47,6 +52,11 @@ const CartView = () => {
   });
   const [total, setTotal] = useState(0);
 
+  useEffect(() => {
+    if(orderComplete ==true)  {
+      navigation.navigate('OrderRejected', {info: {shoppingSessionId}});
+    }
+  }, [orderComplete]);
 
   useEffect(() => {
     if (getItemsResult.data?.getItemsForShoppingSessionById[0] == undefined) {
@@ -58,6 +68,52 @@ const CartView = () => {
     }
   }, [getItemsResult.data]);
 
+  useEffect(() => {
+    console.log("✅")
+    var newTotal = 0
+    for (var element in listOfItems)  {
+      newTotal += (listOfItems[element].quantity) * (listOfItems[element].item_price);
+    }
+    newTotal = newTotal.toFixed(2);
+    setTotal(newTotal);
+  }, [listOfItems]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getItemsResult.refetch();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const updateQuantity = (id: any, newQuantity: number) => {
+    console.log("START DELETE ITEM")
+    console.log("listOfItems at beginning")
+    console.log(listOfItems)
+    console.log("KEY IS")
+    console.log(id)
+    var listOfItemsCopy = listOfItems;
+    var position = 0;
+    for (var element in listOfItemsCopy)  {
+      console.log("ELEMENT IS")
+      console.log(element)
+      console.log("ELEMENT.BARCODEID IS")
+      console.log(listOfItemsCopy[element].barcode_id)
+
+      if (listOfItemsCopy[element].barcode_id == id) {
+        position = +element;
+      }
+    }
+    console.log("POSITION IS")
+    console.log(position)
+    console.log("COPY BEFORE REMOVAL IS")
+    console.log(listOfItemsCopy)
+    listOfItemsCopy[position].quantity = newQuantity
+    console.log("COPY AFTER REMOVAL IS")
+    console.log(listOfItemsCopy)
+    setlistOfItems(listOfItemsCopy);
+    console.log(listOfItems);
+    console.log("END DELETE ITEM")
+  }
 
   const addItem = (
     id: any,
@@ -75,7 +131,7 @@ const CartView = () => {
       item_name: name,
       item_price: price,
       item_weight: weight,
-      quantity: 5
+      quantity: 1
     }
     console.log("START ADD ITEM")
     console.log("listOfItems at beginning")
@@ -166,6 +222,7 @@ const CartView = () => {
               aisleProp={item.item_aisle}
               quantityProp={item.quantity}
               removeFunction={deleteItem}
+              updateTotalFunction={updateQuantity}
               key={item.barcode_id}
           >
           </GroceryItem>
@@ -175,6 +232,10 @@ const CartView = () => {
 
   return (
     <View style={styles.screen}>
+      <View style={styles.titleSectionContainer}>
+          <Text style={styles.title}>Shopping Session</Text>
+          <Text style={styles.instructionText}>Sample Text</Text>
+      </View>
       <View style={styles.sectionContainer}>
         <SearchBar
           placeholder="Search"
@@ -185,9 +246,20 @@ const CartView = () => {
 
       <ScrollView contentContainerStyle={styles._container}>
         {getListOfItems()}
-      </ScrollView>  
+      </ScrollView> 
+      <View style={styles.totalContainer}>
+        <View style={styles.LeftContainer} >
+            <Text style={styles.leftTotalAmount}>Total </Text>
+        </View>
+        <View style={styles.MiddleContainer}>
+        </View>
+        <View style={styles.RightContainer}>  
+            <Text style={styles.dollarSignTotalAmount}>$ </Text>
+            <Text style={styles.rightTotalAmount}>{total} </Text>
+        </View>
+      </View>
       <TouchableOpacity
-          onPress={() => {addItem("2","1","Coca Cola","Coca Cola 12 Pack",4.99,"5.0")}}
+          onPress={() => {navigation.navigate('AddItemSelectionScreen', {info: {grocerId, listOfItems, shoppingSessionId}})}}
           style={[
             styles.checkOut,
             {
@@ -286,6 +358,63 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'VarelaRound-Regular',
+  },
+  totalContainer:{
+    backgroundColor:'transparent',
+    flexDirection:"row",
+    fontFamily: 'VarelaRound-Regular',
+    paddingBottom: 8,
+    paddingTop: 8,
+    paddingLeft: 35,
+    paddingRight: 35
+  },
+  LeftContainer:{
+    flex:1,  
+    backgroundColor:'transparent',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  MiddleContainer:{
+    flexDirection:'row'
+  },
+  RightContainer:{
+    flexDirection: 'row'
+  },
+  leftTotalAmount: {
+      flex: 1,
+      fontSize: 24,
+      color: '#424347',
+      fontFamily: 'VarelaRound-Regular',
+  },
+  dollarSignTotalAmount: {
+    fontSize: 24,
+    color: '#424347',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  rightTotalAmount: {
+    fontSize: 24,
+    color: '#424347',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  title: {
+    marginTop: 60,
+    fontSize: 32,
+    color: '#424347',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  instructionText: {
+    fontSize: 13,
+    color: '#BBBBBB',
+    fontFamily: 'VarelaRound-Regular',
+    marginTop: 7,
+    marginBottom: 7
+  },
+  titleSectionContainer: {
+    marginTop: 5,
+    paddingHorizontal: 20,
+    flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'space-between',
+    //alignItems: 'flex-start',
   },
 });
 

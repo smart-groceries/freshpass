@@ -45,8 +45,16 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  OrderRejected: undefined;
-  CartView: undefined;
+  OrderRejected: {
+    info: {
+      shoppingSessionId: any;
+    }
+  };
+  CartView: {
+    info: {
+      shoppingSessionId: string;
+    }
+  };
   Lists: {
     user: {
       id: number;
@@ -59,6 +67,18 @@ export type RootStackParamList = {
     info: {
       name: string;
     };
+  };
+  Confirmation: {
+    info: {
+      shoppingSessionId: string;
+    }
+  };
+  AddItemSelectionScreen: {
+    info: {
+      grocerId: string;
+      listOfItems: any;
+      shoppingSessionId: string;
+    }
   };
   ChangePassword: {
     user: {
