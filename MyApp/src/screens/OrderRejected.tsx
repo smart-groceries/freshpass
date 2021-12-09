@@ -9,7 +9,7 @@ import {
   ImageStyle,
   TextStyle,
 } from 'react-native';
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
@@ -122,7 +122,7 @@ interface Style {
 
 const styles = StyleSheet.create<Style>({
   rejectedContainer: {
-    marginTop: 10,
+    marginTop: 100,
   },
   rejectedText: {
     color: '#E89023',

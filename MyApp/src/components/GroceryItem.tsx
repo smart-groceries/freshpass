@@ -73,16 +73,6 @@ const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightPro
         }
         )
       }, []);
-
-    React.useEffect(() => {
-      getImageUrl("item", id)
-      .then(data => {
-        const result = data;
-        setImageUrl(result);
-        console.log(imageUrl);
-      }
-      )
-    }, []);
     return(
         <View style={styles.GroceryItemContainer}>
                 <View style={styles.LeftContainer} >
