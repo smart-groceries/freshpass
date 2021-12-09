@@ -75,7 +75,6 @@ const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightPro
         getImageUrl("item", itemId)
         .then(urlData => {
           setImageUrl(urlData.toString());
-          console.log(imageUrl);
         }
         )
       }, []);

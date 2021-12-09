@@ -35,9 +35,6 @@ const OrderPending = ({route, navigation}: Props) => {
     } else {
       setEmpty(false);
       setShoppingSession(getShoppingSessionResult.data.getShoppingSessionById);
-      console.log(shoppingSession);
-      console.log(shoppingSession.state_id);
-      console.log(getShoppingSessionResult.data.getShoppingSessionById);
     }
   }, [getShoppingSessionResult.data]);
 

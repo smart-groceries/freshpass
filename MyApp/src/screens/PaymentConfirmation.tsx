@@ -33,7 +33,6 @@ const PaymentConfirmation = ({navigation}: Props) => {
     if (getItemsResult.data?.getItemsForShoppingSessionById[0] == undefined) {
     } else {
       setlistOfItems(getItemsResult.data.getItemsForShoppingSessionById);
-      console.log(getItemsResult.data.getItemsForShoppingSessionById);
     }
   }, [getItemsResult.data]);
 

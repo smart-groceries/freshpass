@@ -70,8 +70,6 @@ const CartView = ({route, navigation}: CartProp) => {
     } else {
       setEmpty(false);
       setGrocer(getGrocerResult.data.getUserById);
-      console.log("🏓");
-      console.log(getGrocerResult.data.getUserById);
     }
   }, [getGrocerResult.data]);
 
@@ -111,8 +109,6 @@ const CartView = ({route, navigation}: CartProp) => {
   }, [listOfItems]);
 
   useEffect(() => {
-    console.log(" IN UPDATE TOTAL");
-    console.log(updateTotal);
     if (updateTotal == true) {
       var newTotal = 0
       for (var element in listOfItems)  {
@@ -132,33 +128,15 @@ const CartView = ({route, navigation}: CartProp) => {
   }, [navigation]);
 
   const updateQuantity = (id: any, newQuantity: number) => {
-    console.log("START DELETE ITEM")
-    console.log("listOfItems at beginning")
-    console.log(listOfItems)
-    console.log("KEY IS")
-    console.log(id)
     var listOfItemsCopy = listOfItems;
     var position = 0;
     for (var element in listOfItemsCopy)  {
-      console.log("ELEMENT IS")
-      console.log(element)
-      console.log("ELEMENT.BARCODEID IS")
-      console.log(listOfItemsCopy[element].barcode_id)
-
       if (listOfItemsCopy[element].barcode_id == id) {
         position = +element;
       }
     }
-    console.log("POSITION IS")
-    console.log(position)
-    console.log("COPY BEFORE REMOVAL IS")
-    console.log(listOfItemsCopy)
     listOfItemsCopy[position].quantity = newQuantity
-    console.log("COPY AFTER REMOVAL IS")
-    console.log(listOfItemsCopy)
     setlistOfItems(listOfItemsCopy);
-    console.log(listOfItems);
-    console.log("END DELETE ITEM");
     setUpdateTotal(true);
   }
 
@@ -184,20 +162,9 @@ const CartView = ({route, navigation}: CartProp) => {
       item_weight: weight,
       quantity: 1
     }
-    console.log("START ADD ITEM")
-    console.log("listOfItems at beginning")
-    console.log(listOfItems)
-    console.log("KEY IS")
-    console.log(id)
     var listOfItemsCopy = listOfItems;
-    console.log("COPY BEFORE ADDITION IS")
-    console.log(listOfItemsCopy)
     listOfItemsCopy.push(newItem);
-    console.log("COPY AFTER REMOVAL IS")
-    console.log(listOfItemsCopy)
     setlistOfItems(listOfItemsCopy);
-    console.log(listOfItems);
-    console.log("END ADD ITEM")
 
     try {
       addFunction({
@@ -215,33 +182,15 @@ const CartView = ({route, navigation}: CartProp) => {
   }
 
   const deleteItem = (id: any) => {
-    console.log("START DELETE ITEM")
-    console.log("listOfItems at beginning")
-    console.log(listOfItems)
-    console.log("KEY IS")
-    console.log(id)
     var listOfItemsCopy = listOfItems;
     var position = 0;
     for (var element in listOfItemsCopy)  {
-      console.log("ELEMENT IS")
-      console.log(element)
-      console.log("ELEMENT.BARCODEID IS")
-      console.log(listOfItemsCopy[element].barcode_id)
-
       if (listOfItemsCopy[element].barcode_id == id){
         position = +element;
       }
     }
-    console.log("POSITION IS")
-    console.log(position)
-    console.log("COPY BEFORE REMOVAL IS")
-    console.log(listOfItemsCopy)
     listOfItemsCopy.splice(position,1);
-    console.log("COPY AFTER REMOVAL IS")
-    console.log(listOfItemsCopy)
     setlistOfItems(listOfItemsCopy);
-    console.log(listOfItems);
-    console.log("END DELETE ITEM")
     setUpdateTotal(true);
 
     try {
@@ -261,8 +210,6 @@ const CartView = ({route, navigation}: CartProp) => {
 
   const getListOfItems = () => {
     return listOfItems.map(function (item, i) {
-      //console.log("KEY IS")
-      //console.log(i)
       return (
           <GroceryItem
               shoppingSessionIdProp={shoppingSessionId}
