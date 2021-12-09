@@ -11,10 +11,13 @@ import ForgotPasswordScreen from './src/screens/ForgotPassword';
 import CreateAccountScreen from './src/screens/CreateAccount';
 import LoginScreen from './src/screens/LoginScreen';
 import ShoppingLists from './src/screens/ShoppingLists';
+import OrderPending from './src/screens/OrderPending';
 import {createStackNavigator} from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
+import AddItemSelectionScreen from './src/screens/AddItemSelectionScreen';
+
 import EditItem from './src/screens/EditItem';
 import {AppRegistry} from 'react-native';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
@@ -48,6 +51,7 @@ import GrocerCatalog from './src/screens/GrocerCatalog';
 import BarcodeScanner from './src/screens/BarcodeScanner';
 import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
 import BankAccountScreen from './src/screens/BankAccount';
+import TestStartSession from './src/screens/TestStartSession';
 // import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
@@ -80,7 +84,7 @@ function HomeTabs() {
       })}>
       <Tab.Screen name="Account" component={AccountScreen} />
 
-      <Tab.Screen name="Stores" component={StoreLocator} />
+      <Tab.Screen name="Stores" component={TestStartSession} />
 
       <Tab.Screen
         name="Lists"
@@ -223,9 +227,29 @@ export default function App() {
               options={{headerShown: true, title: 'Edit Account'}}
             />
             <Stack.Screen
-              name="Bank"
-              component={BankAccountScreen}
-              options={{title: 'Bank Account'}}
+              name="OrderRejected"
+              component={OrderRejected}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="OrderPending"
+              component={OrderPending}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="CartView"
+              component={CartView}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AddItemSelectionScreen"
+              component={AddItemSelectionScreen}
+              options={{headerShown: false}}
+            />
+             <Stack.Screen
+              name="PaymentConfirm"
+              component={PaymentConfirmation}
+              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
