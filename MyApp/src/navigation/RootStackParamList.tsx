@@ -12,8 +12,11 @@ export type RootStackParamList = {
   Login: undefined;
   Create: undefined;
   Forgot: undefined;
-  PaymentConfirm: undefined;
-
+  PaymentConfirm: {
+      info: {
+      shoppingSessionId: any;
+    }
+  };
   Account: {
     user: {
       id: number;
@@ -60,10 +63,21 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-
-  OrderRejected: undefined;
-  CartView: undefined;
-
+  OrderRejected: {
+    info: {
+      shoppingSessionId: any;
+    }
+  };
+  OrderPending: {
+    info: {
+      shoppingSessionId: any;
+    }
+  };
+  CartView: {
+    info: {
+      shoppingSessionId: string;
+    }
+  };
   Lists: {
     user: {
       id: number;
@@ -78,7 +92,13 @@ export type RootStackParamList = {
       data: [];
     };
   };
-
+  AddItemSelectionScreen: {
+    info: {
+      grocerId: string;
+      listOfItems: any;
+      shoppingSessionId: string;
+    }
+  };
   ShoppingListView:  undefined;
 
   ChangePassword: {user: {id: number; password: string}};

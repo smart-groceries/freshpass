@@ -370,3 +370,20 @@ export const UPDATE_PASSWORD = gql`
     }
   }
 `;
+
+export const UPDATE_SHOPPING_SESSION = gql`
+mutation MyMutation(
+  $shopping_session_id: ID!,
+  $new_value: String!,
+  $field_name: String!
+) {
+  updateShoppingSession(
+    field_name: $field_name,
+    name: "updateShoppingSession",
+    new_value: $new_value,
+    shopping_session_id: $shopping_session_id
+  ) {
+    message
+  }
+}
+`;

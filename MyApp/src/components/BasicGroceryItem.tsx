@@ -9,85 +9,74 @@ import {
   ImageStyle,
   StyleSheet,
   Text,
-  Alert
+  Alert,
+  TouchableOpacity
 } from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useMutation} from '@apollo/client';
 import getImageUrl from '../utils/images';
-import { UPDATE_ITEM_IN_SHOPPING_SESSION } from '../graphql/mutations';
+import { ADD_ITEM_TO_SHOPPING_SESSION } from '../graphql/mutations';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-interface GroceryItemDetails {
-  name: string;
-}
 
 interface Props{
-    shoppingSessionIdProp: string    
     itemIdProp: string
     nameProp: string
     weightProp: string
     brandProp: string
     priceProp: number
     aisleProp: string
-    quantityProp: number
-    removeFunction: any
-    updateTotalFunction: any
+    shoppingSessionId: string
+    navigateFunction: any
 }
 
-const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightProp, brandProp, priceProp, aisleProp, quantityProp, removeFunction, updateTotalFunction}) => {
+const BasicGroceryItem :FC<Props> = ({itemIdProp, nameProp, weightProp, brandProp, priceProp, aisleProp, shoppingSessionId, navigateFunction}) => {
     const [itemId, setItemId] = React.useState(itemIdProp);
     const [name, setName] = React.useState(nameProp);
     const [weight, setWeight] = React.useState(weightProp);
     const [brand, setBrand] = React.useState(brandProp);
     const [price, setPrice] = React.useState(priceProp);
     const [aisle, setAisle] = React.useState(aisleProp);
-    const [quantityValue, setQuantityValue] = React.useState(quantityProp);
-    const [imageUrl, setImageUrl] = React.useState("");
-    const [pushUpdate, setPushUpdate] = React.useState(false);
-    const [mutateFunction, {data, loading, error}] = useMutation(UPDATE_ITEM_IN_SHOPPING_SESSION, {
+    const [imageUrl, setImageUrl] = React.useState(""); 
+    const [tapped, setTapped] = React.useState(false);
+    const [addFunction, addItemResult] = useMutation(ADD_ITEM_TO_SHOPPING_SESSION, {
         onError: err => {
           console.log(err);
         },
     });
 
-    React.useEffect(() => {
-        updateTotalFunction(itemId, quantityValue);
-        if (quantityValue == 0) {
-            removeFunction(itemId)
+    const addItem = () => { 
+        try {
+          addFunction({
+            variables: {
+              barcode_id: itemId,
+              quantity: "1",
+              shopping_session_id: shoppingSessionId,
+            },
+          });
+        } catch {}
+        while (addItemResult.loading) {}
+        if (addItemResult.error) {
+          console.log(addItemResult.error);
         }
-          try {
-            mutateFunction({
-              variables: {
-                barcode_id: itemId,
-                field_name: "quantity",
-                new_value: quantityValue,
-                shopping_session_id: shoppingSessionIdProp,
-              },
-            });
-          } catch {}
-          while (loading) { }
-          if (error) {
-            console.log(error);
-          }
-      }, [quantityValue]);
-
-      
-      React.useEffect(() => {
-        getImageUrl("item", itemId)
-        .then(urlData => {
-          setImageUrl(urlData.toString());
-        }
-        )
-      }, []);
+    }
 
     React.useEffect(() => {
-      getImageUrl("item", id)
-      .then(data => {
-        const result = data;
-        setImageUrl(result);
+    getImageUrl("item", itemId)
+    .then(urlData => {
+        setImageUrl(urlData.toString());
         console.log(imageUrl);
-      }
-      )
+    }
+    )
     }, []);
+
+    React.useEffect(() => {
+        if (tapped) {
+            addItem();
+            navigateFunction();
+        }
+    }, [tapped]);
+
     return(
         <View style={styles.GroceryItemContainer}>
                 <View style={styles.LeftContainer} >
@@ -100,32 +89,12 @@ const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightPro
                         <Text style={styles.itemAisle}>Aisle </Text>
                         <Text style={styles.itemAisle}>{aisle} </Text>
                     </View>
-                    <View style ={styles.QuantityButtonContainer}>
-                        <NumericInput value={quantityValue} onChange={
-                            value => setQuantityValue(value)
-                        
-                        } totalHeight= {35} totalWidth= {90}
-                        rounded
-                        rightButtonBackgroundColor='#EEEEEE' 
-                        leftButtonBackgroundColor='#EEEEEE'
-                        textColor='#424347'
-                        minValue={0}
-                         />
-                        {/* <NumericInput 
-                                value={quantityValue}
-                                onChange={value => setQuantityValue(value)} 
-                                onLimitReached={(isMax,msg) => console.log(isMax,msg)}
-                                totalWidth={240} 
-                                totalHeight={50} 
-                                iconSize={25}
-                                step={1.5}
-                                valueType='real'
-                                rounded 
-                                textColor='#B0228C' 
-                                iconStyle={{ color: 'white' }} 
-                                rightButtonBackgroundColor='#EA3788' 
-                                leftButtonBackgroundColor='#E56B70'/> */}
-        </View>
+                    <View style ={styles.AddButtonContainer}>
+                        <TouchableOpacity style={styles.addButton}
+                                  onPress={ () => {setTapped(true)}}>
+                            <Text style={styles.addButtonText}>Add Item</Text>
+                        </TouchableOpacity>
+                    </View>
         <View style={styles.ItemControllerContainer}>
           {/* <TouchableHighlight>
                             <Image resizeMode='contain' source={require('./assets/filter_icon.png')}/>
@@ -140,10 +109,10 @@ const Item :FC<Props> = ({shoppingSessionIdProp, itemIdProp, nameProp, weightPro
                     </Image>
                 </View>
         </View>
-  );
+    );
 };
 
-export default Item;
+export default BasicGroceryItem;
 
 const styles = StyleSheet.create({
     GroceryItemContainer:{
@@ -158,7 +127,7 @@ const styles = StyleSheet.create({
         backgroundColor:'transparent',
         flexDirection:'row',
     },
-    QuantityButtonContainer:{
+    AddButtonContainer:{
         backgroundColor:'transparent',
         flexDirection:"row",
         fontFamily: 'VarelaRound-Regular',
@@ -213,6 +182,20 @@ const styles = StyleSheet.create({
     itemAisle: {
         fontSize: 14,
         color: '#E89023',
+        fontFamily: 'VarelaRound-Regular'
+    },
+    addButton: {
+        backgroundColor: '#F3F3F3',
+        width: 96,
+        height: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        fontFamily: 'VarelaRound-Regular'
+    },
+    addButtonText: {
+        fontSize: 14,
+        color: '#BBBBBB',
         fontFamily: 'VarelaRound-Regular'
     }
 });
