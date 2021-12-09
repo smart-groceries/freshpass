@@ -38,17 +38,17 @@ const ShoppingListView = ({navigation,route}:ListProp) => {
   const [orderComplete, setOrderComplete] = useState(false);
   const [listOfItems, setlistOfItems] = React.useState(route.params);
   console.log('Inside Shopping List View')  
-
+  console.log(route.params)
   const renderItem = (data :any) => (
     <GroceryItem
-    idProp={data.barcode_id}
+    idProp={console.log("DATA "+data)}
     nameProp={data.item_name}
     weightProp={data.item_weight}
     brandProp={data.item_brand}
     priceProp={data.item_price}
     aisleProp={data.item_aisle}
     quantityProp={data.quantity}
-    key={data.barcode_id}>
+    key={data.barcode_id}> 
     </GroceryItem>
   );
 
