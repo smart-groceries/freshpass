@@ -54,6 +54,7 @@ import BarcodeScanner from './src/screens/BarcodeScanner';
 import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
 import BankAccountScreen from './src/screens/BankAccount';
 import TestStartSession from './src/screens/TestStartSession';
+import GrocerFetchOrder from './src/screens/GrocerFetchOrder';
 // import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
