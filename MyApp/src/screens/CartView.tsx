@@ -20,7 +20,7 @@ import SearchBar from '../components/SearchBar';
 import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
 import {useQuery, useMutation} from '@apollo/client';
-import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
+import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID, GET_SHOPPING_SESSION_BY_ID, GET_GROCER_BY_ID} from '../graphql/queries';
 import {REMOVE_ITEM_IN_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_SESSION, UPDATE_ITEM_IN_STORE_CATALOG, UPDATE_SHOPPING_SESSION} from '../graphql/mutations';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
@@ -38,6 +38,8 @@ const CartView = ({route, navigation}: CartProp) => {
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
   const [listOfItems, setlistOfItems] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [grocer, setGrocer] = useState("");
   const [updateTotal, setUpdateTotal] = useState(false);
   const getItemsResult = useQuery(GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID, {
     variables: {shopping_session_id: shoppingSessionId},
@@ -58,7 +60,20 @@ const CartView = ({route, navigation}: CartProp) => {
       console.log(err);
     },
   });
-  const [total, setTotal] = useState(0);
+  const getGrocerResult = useQuery(GET_GROCER_BY_ID, {
+    variables: {id: grocerId}
+  });
+
+  useEffect(() => {
+    if (getGrocerResult.data?.getUserById == undefined) {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setGrocer(getGrocerResult.data.getUserById);
+      console.log("🏓");
+      console.log(getGrocerResult.data.getUserById);
+    }
+  }, [getGrocerResult.data]);
 
   useEffect(() => {
     if(orderComplete==true)  {
@@ -89,6 +104,7 @@ const CartView = ({route, navigation}: CartProp) => {
       console.log(getItemsResult.data.getItemsForShoppingSessionById);
     }
   }, [getItemsResult.data]);
+
 
   useEffect(() => {
     setUpdateTotal(true);
@@ -270,7 +286,7 @@ const CartView = ({route, navigation}: CartProp) => {
     <View style={styles.screen}>
       <View style={styles.titleSectionContainer}>
           <Text style={styles.title}>Cart</Text>
-          <Text style={styles.instructionText}>Grocer Name Here</Text>
+          <Text style={styles.instructionText}>{grocer.grocer_name} - {grocer.address}</Text>
       </View>
       <View style={styles.sectionContainer}>
         <SearchBar
@@ -294,25 +310,6 @@ const CartView = ({route, navigation}: CartProp) => {
             <Text style={styles.rightTotalAmount}>{total} </Text>
         </View>
       </View>
-      <TouchableOpacity
-          onPress={() => {navigation.navigate('AddItemSelectionScreen', {info: {grocerId, listOfItems, shoppingSessionId}})}}
-          style={[
-            styles.checkOut,
-            {
-              backgroundColor: '#E89023',
-              margin: 10,
-            },
-          ]}>
-              <Text
-            style={[
-              styles.textButton,
-              {
-                color: '#FFFFFF',
-              },
-            ]}>
-            Add Item
-          </Text>
-        </TouchableOpacity>
       <TouchableOpacity
           onPress={() => {Alert.alert(
             "Confirm Order",
@@ -389,6 +386,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 12,
     left: 25,
+    marginBottom: 60
   },
   textButton: {
     fontSize: 16,
