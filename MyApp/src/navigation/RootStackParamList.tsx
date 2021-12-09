@@ -104,4 +104,13 @@ export type RootStackParamList = {
       grocer_name: string;
     };
   };
+  Bank: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
 };

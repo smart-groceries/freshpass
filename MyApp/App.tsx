@@ -47,6 +47,7 @@ import ShoppingListView from './src/screens/ShoppingListView';
 import GrocerCatalog from './src/screens/GrocerCatalog';
 import BarcodeScanner from './src/screens/BarcodeScanner';
 import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
+import BankAccountScreen from './src/screens/BankAccount';
 // import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
@@ -220,6 +221,11 @@ export default function App() {
               name="EditStoreAccount"
               component={EditStoreAccountScreen}
               options={{headerShown: true, title: 'Edit Account'}}
+            />
+            <Stack.Screen
+              name="Bank"
+              component={BankAccountScreen}
+              options={{title: 'Bank Account'}}
             />
           </Stack.Navigator>
         </NavigationContainer>

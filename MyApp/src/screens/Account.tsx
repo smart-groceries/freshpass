@@ -73,10 +73,10 @@ const AccountScreen = ({route, navigation}: Props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.userInfo]}>
-        <Image
+        {/* <Image
           source={require('../assets/profile_photo.png')}
           style={[{borderRadius: 20, marginRight: 15}]}
-        />
+        /> */}
         <View
           style={{
             flexDirection: 'column',

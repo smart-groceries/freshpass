@@ -139,7 +139,7 @@ const StoreAccountScreen = ({route, navigation}: Props) => {
                   {color: '#999999'},
                   {fontSize: 11},
                 ]}>
-                Name, Address, Email
+                Name, Email, Password
               </Text>
             </View>
           </View>
