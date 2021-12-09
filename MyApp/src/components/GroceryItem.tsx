@@ -37,6 +37,8 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
     const [aisle, setAisle] = React.useState(aisleProp);
     const [quantityValue, setQuantityValue] = React.useState(quantityProp);
     const [imageUrl, setImageUrl] = React.useState("");
+    console.log(name)
+    console.log(name)
 
     React.useEffect(() => {
       getImageUrl("item", id)

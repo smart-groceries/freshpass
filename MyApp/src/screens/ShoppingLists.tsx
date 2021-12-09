@@ -46,6 +46,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
       console.log(err);
     },
   });
+  
   const [addItemState,setaddItemState] = useState(false);
   useEffect(() => {
     try {
