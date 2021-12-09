@@ -246,10 +246,15 @@ export default function App() {
               component={AddItemSelectionScreen}
               options={{headerShown: false}}
             />
-             <Stack.Screen
+            <Stack.Screen
               name="PaymentConfirm"
               component={PaymentConfirmation}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Bank"
+              component={BankAccountScreen}
+              options={{title: 'Bank Account Information'}}
             />
           </Stack.Navigator>
         </NavigationContainer>
