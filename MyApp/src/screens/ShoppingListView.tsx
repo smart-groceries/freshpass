@@ -41,14 +41,7 @@ const ShoppingListView = ({navigation,route}:ListProp) => {
   console.log(route.params)
   const renderItem = (data :any) => (
     <GroceryItem
-    idProp={console.log("DATA "+data)}
-    nameProp={data.item_name}
-    weightProp={data.item_weight}
-    brandProp={data.item_brand}
-    priceProp={data.item_price}
-    aisleProp={data.item_aisle}
-    quantityProp={data.quantity}
-    key={data.barcode_id}> 
+      props = {data}
     </GroceryItem>
   );
 

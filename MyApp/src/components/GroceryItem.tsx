@@ -1,17 +1,12 @@
-import RNBounceable from '@freakycoder/react-native-bounceable';
-import * as React from 'react';
-import {FC} from 'react';
-import NumericInput from 'react-native-numeric-input';
 import {
   View,
   Image,
-  ViewStyle,
-  ImageStyle,
   StyleSheet,
   Text,
-  Alert
 } from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
+import * as React from 'react';
+import {FC} from 'react';
+import NumericInput from 'react-native-numeric-input';
 import {useMutation} from '@apollo/client';
 import getImageUrl from '../utils/images';
 import { UPDATE_ITEM_IN_SHOPPING_SESSION } from '../graphql/mutations';
