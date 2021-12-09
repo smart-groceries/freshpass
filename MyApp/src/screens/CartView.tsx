@@ -15,7 +15,7 @@ import {
   Alert,
 } from 'react-native';
 import FilterIcon from '../components/Filter';
-import AddIcon from '../components/Add';
+import AddIcon from '../components/AddShoppingSession';
 import SearchBar from '../components/SearchBar';
 import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
