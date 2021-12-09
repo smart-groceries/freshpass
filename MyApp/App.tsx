@@ -16,6 +16,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
+import EmployerCartView from './src/screens/EmployerCartView';
+import GrocerOrderCompletion from './src/screens/GrocerOrderCompletion';
 import AddItemSelectionScreen from './src/screens/AddItemSelectionScreen';
 
 import EditItem from './src/screens/EditItem';
@@ -246,9 +248,24 @@ export default function App() {
               component={AddItemSelectionScreen}
               options={{headerShown: false}}
             />
-             <Stack.Screen
+            <Stack.Screen
               name="PaymentConfirm"
               component={PaymentConfirmation}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Bank"
+              component={BankAccountScreen}
+              options={{title: 'Bank Account Information'}}
+            />
+            <Stack.Screen
+              name="EmployerCartView"
+              component={EmployerCartView}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="GrocerOrderCompletion"
+              component={GrocerOrderCompletion}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
