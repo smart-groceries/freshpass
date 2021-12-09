@@ -160,7 +160,7 @@ export default function App({navigation}: Props) {
                 index: 0,
                 routes: [
                   {
-                    name: 'Stores',
+                    name: 'Scanner',
                     // ,
                     // params: {
                     //   user: {
@@ -172,24 +172,26 @@ export default function App({navigation}: Props) {
                     // },
                   },
                   {
-                    name: 'Account',
+                    name: 'StoreAccount',
                     params: {
-                      user: {
-                        id: data.authn.account_id,
-                        email: data.authn.email,
-                        fname: data.authn.first_name,
-                        lname: data.authn.last_name,
+                      grocer: {
+                        account_id: getGrocerData.getUserById.account_id,
+                        email: getGrocerData.getUserById.email,
+                        balance: getGrocerData.getUserById.balance,
+                        address: getGrocerData.getUserById.address,
+                        grocer_name: getGrocerData.getUserById.grocer_name,
                       },
                     },
                   },
                   {
-                    name: 'Lists',
+                    name: 'Catalog',
                     params: {
-                      user: {
-                        id: data.authn.account_id,
-                        email: data.authn.email,
-                        fname: data.authn.first_name,
-                        lname: data.authn.last_name,
+                      grocer: {
+                        account_id: getGrocerData.getUserById.account_id,
+                        email: getGrocerData.getUserById.email,
+                        balance: getGrocerData.getUserById.balance,
+                        address: getGrocerData.getUserById.address,
+                        grocer_name: getGrocerData.getUserById.grocer_name,
                       },
                     },
                   },
