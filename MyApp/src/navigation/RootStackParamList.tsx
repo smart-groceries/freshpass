@@ -50,6 +50,11 @@ export type RootStackParamList = {
       shoppingSessionId: any;
     }
   };
+  OrderPending: {
+    info: {
+      shoppingSessionId: any;
+    }
+  };
   CartView: {
     info: {
       shoppingSessionId: string;

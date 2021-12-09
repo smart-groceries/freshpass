@@ -28,11 +28,12 @@ import {RootStackParamList} from '../navigation/RootStackParamList';
 
 export interface CartProp {
   style?: ViewStyle | Array<ViewStyle> | undefined;
-  navigation: StackNavigationProp<RootStackParamList, 'Confirmation'>;
+  navigation: StackNavigationProp<RootStackParamList, 'CartView'>;
+  route: RouteProp<RootStackParamList, 'CartView'>;
 }
 
-const CartView = ({navigation}: CartProp) => {
-  const [shoppingSessionId, setshoppingSessionId] = useState("1");
+const CartView = ({route, navigation}: CartProp) => {
+  const [shoppingSessionId, setshoppingSessionId] = useState(route.params.info.shoppingSessionId);
   const [grocerId, setGrocerId] = useState("5");
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
@@ -53,9 +54,10 @@ const CartView = ({navigation}: CartProp) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    if(orderComplete ==true)  {
-      navigation.navigate('OrderRejected', {info: {shoppingSessionId}});
+    if(orderComplete==true)  {
+      navigation.navigate('OrderPending', {info: {shoppingSessionId}});
     }
+    setOrderComplete(false);
   }, [orderComplete]);
 
   useEffect(() => {
