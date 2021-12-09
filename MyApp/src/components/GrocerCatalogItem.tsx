@@ -71,25 +71,23 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
                         <Text style={styles.itemPriceDivider}> • </Text>
                         <Text style={styles.itemAisle}>Aisle </Text>
                         <Text style={styles.itemAisle}>{item.aisle} </Text>
-                    </View>
-                    
+        </View>
         <Button
         onPress={() => navigation.navigate('EditItem',{item})}
         title="Edit Item"
         />
 
-            <View>
+        <View>
           {/* <TouchableHighlight>
                             <Image resizeMode='contain' source={require('./assets/filter_icon.png')}/>
                         </TouchableHighlight> */}
-                    </View>  
-                </View>
+        </View>  
+        </View>
                 <View style={styles.ItemPicContainer}>
                     <Image
-                    style={styles.image}
-                    resizeMode="contain"
-                    source={{uri: imageUrl}}>
-                    </Image>
+                        style={styles.image}
+                        resizeMode="contain"
+                        source={{uri: imageUrl}}/>
                 </View>
         </View>
   );

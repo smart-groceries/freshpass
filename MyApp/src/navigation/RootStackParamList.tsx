@@ -79,7 +79,7 @@ export type RootStackParamList = {
     };
   };
 
-  ShoppingListView: undefined;
+  ShoppingListView:  undefined;
 
   ChangePassword: {
     user: {
