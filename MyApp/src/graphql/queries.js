@@ -129,6 +129,17 @@ export const GET_SHOPPING_LISTS_BY_USER_ID = gql`
     }
 `;
 
+export const GET_SHOPPING_SESSION_BY_ID = gql`
+    query MyQuery($shopping_session_id: Int!) {
+        getShoppingSessionById(name: "getShoppingSessionById", shopping_session_id: $shopping_session_id) {
+            account_id
+            shopping_session_id
+            state_id
+            store_id
+        }
+    }
+`;
+
 export const GET_SHOPPING_STATE_BY_ID = gql`
     query MyQuery($state_id: ID!) {
         getShoppingStateById(name: "getShoppingStateById", state_id: $state_id) {

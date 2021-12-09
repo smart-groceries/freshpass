@@ -26,6 +26,7 @@ export interface AddIconProps {
   addIconImageStyle?: ImageStyle | Array<ImageStyle>;
   onPress?: () => void;
   onAddPress?: () => void;
+  navigateToAddScreen: any;
 }
 
 export default class AddIcon extends React.Component<AddIconProps> {
@@ -61,8 +62,8 @@ export default class AddIcon extends React.Component<AddIconProps> {
         <Menu>
           <MenuTrigger>{this.renderAddIcon()}</MenuTrigger>
           <MenuOptions>
-            <MenuOption>
-              <Text style={styles.menuText}>Closest</Text>
+            <MenuOption onSelect = {() => {this.props.navigateToAddScreen()}}>
+              <Text style={styles.menuText}> Add Item Through Catalog</Text>
             </MenuOption>
             <MenuOption>
               <Text style={styles.menuText}>Farthest</Text>

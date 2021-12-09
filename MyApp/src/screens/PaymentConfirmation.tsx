@@ -1,6 +1,6 @@
 import {typeAlias} from '@babel/types';
 import RNBounceable from '@freakycoder/react-native-bounceable';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Text,
@@ -10,19 +10,47 @@ import {
   ImageStyle,
   TextStyle,
 } from 'react-native';
-import {useState} from 'react';
-
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
+import {useQuery} from '@apollo/client';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'PaymentConfirm'>;
 };
 const PaymentConfirmation = ({navigation}: Props) => {
-  const [orderNumber, setOrderNumber] = useState(0);
+  const [shoppingSessionId, setShoppingSessionId] = useState("1");
+  const [listOfItems, setlistOfItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [tax, setTax] = useState(0);
+
+  const getItemsResult = useQuery(GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID, {
+    variables: {shopping_session_id: shoppingSessionId},
+  });
+
+  useEffect(() => {
+    if (getItemsResult.data?.getItemsForShoppingSessionById[0] == undefined) {
+    } else {
+      setlistOfItems(getItemsResult.data.getItemsForShoppingSessionById);
+    }
+  }, [getItemsResult.data]);
+
+  useEffect(() => {
+    var newSubtotal: number = 0
+    for (var element in listOfItems)  {
+      newSubtotal += (listOfItems[element].quantity) * (listOfItems[element].item_price);
+    }
+    newSubtotal = +newSubtotal.toFixed(2);
+    setSubtotal(newSubtotal);
+    var newTax: number = newSubtotal * .095;
+    newTax = +newTax.toFixed(2);
+    setTax(newTax);
+    var newTotal = newSubtotal+newTax;
+    newTotal = +newTotal.toFixed(2);
+    setTotal(newTotal);
+  }, [listOfItems]);
+
   const renderOpenListIcon = () => {
     return (
       <View style={styles.openListContainer}>
@@ -36,33 +64,29 @@ const PaymentConfirmation = ({navigation}: Props) => {
 
   return (
     <View style={[_container()]}>
-      <View style={styles.checkMarkContainer}>
+      <View style={[styles.checkMarkContainer, {marginTop: 100}]}>
         <Image source={require('../assets/checkmark.png')}></Image>
       </View>
       <Text style={styles.validatedText}>Order Validated!</Text>
-      <Text style={styles.orderNumber}>Order Number: #{orderNumber}</Text>
-      <View style={styles.orderedItemsContainer}>
-        <Text style={styles.orderedItems}>Ordered Items</Text>
-        {renderOpenListIcon()}
-      </View>
-      <View style={styles.totalContainer}>
+      <Text style={styles.orderNumber}>Order Number: #{shoppingSessionId}</Text>
+      <View style={[styles.totalContainer, {marginTop: 120}]}>
         <View style={styles.subTotalContainer}>
           <Text style={styles.subtotal}>Subtotal</Text>
-          <Text style={styles.subtotal}>{subtotal}</Text>
+          <Text style={styles.subtotal}>${subtotal}</Text>
         </View>
         <View style={styles.subTotalContainer}>
           <Text style={styles.subtotal}>Tax</Text>
-          <Text style={styles.subtotal}>{tax}</Text>
+          <Text style={styles.subtotal}>(${subtotal} x 9.5%) = ${tax}</Text>
         </View>
         <View style={styles.subTotalContainer}>
           <Text style={styles.orderedItems}>Total</Text>
-          <Text style={styles.orderedItems}>{total}</Text>
+          <Text style={styles.orderedItems}>${total}</Text>
         </View>
       </View>
       <RNBounceable
-        style={styles.exitContainer}
+        style={styles.buttonContainer}
         onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.exit}>Exit</Text>
+        <Text style={styles.buttonText}>Exit</Text>
       </RNBounceable>
     </View>
   );
@@ -75,11 +99,11 @@ interface Style {
   orderNumber: TextStyle;
   orderedItems: TextStyle;
   subtotal: TextStyle;
-  exit: TextStyle;
+  buttonText: TextStyle;
   checkMarkContainer: ViewStyle;
   orderedItemsContainer: ViewStyle;
   totalContainer: ViewStyle;
-  exitContainer: ViewStyle;
+  buttonContainer: ViewStyle;
   subTotalContainer: ViewStyle;
 }
 
@@ -143,20 +167,20 @@ const styles = StyleSheet.create<Style>({
     display: 'flex',
     flexDirection: 'column',
   },
-  exitContainer: {
-    width: '80%',
-    height: '10%',
-    borderRadius: 50,
-    backgroundColor: '#71BF61',
-    alignItems: 'center',
+  buttonContainer: {
+    width: 324,
+    height: 55,
     justifyContent: 'center',
-    opacity: 0.33,
-    margin: 20,
+    alignItems: 'center',
+    borderRadius: 12,
+    backgroundColor: '#71BF61',
+    margin: 10,
   },
-  exit: {
+  buttonText: {
     fontFamily: 'VarelaRound-Regular',
-    fontSize: 20,
-    color: '#71BF61',
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: 'bold'
   },
   subTotalContainer: {
     justifyContent: 'space-between',
