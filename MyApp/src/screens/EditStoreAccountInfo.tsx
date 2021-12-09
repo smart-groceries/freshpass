@@ -140,6 +140,17 @@ const EditStoreAccountScreen = ({route, navigation}: Props) => {
           </TextInput>
         </View>
         <View style={styles.largeItemContainer}>
+          <Text style={styles.itemText}>Address:</Text>
+          {/* <TouchableOpacity style={styles.editButton}>
+          <Text>Edit</Text>
+        </TouchableOpacity> */}
+          <View style={styles.userDataView}>
+            <Text style={[styles.userDataText, {opacity: 0.5}]}>
+              {grocer.address}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.largeItemContainer}>
           <Text style={styles.itemText}>Email:</Text>
           {/* <TouchableOpacity style={styles.editButton}>
           <Text>Edit</Text>
@@ -280,7 +291,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   saveButton: {
-    marginVertical: '50%',
+    marginVertical: '25%',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
