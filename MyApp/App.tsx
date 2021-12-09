@@ -16,6 +16,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
+import EmployerCartView from './src/screens/EmployerCartView';
+import GrocerOrderCompletion from './src/screens/GrocerOrderCompletion';
 import AddItemSelectionScreen from './src/screens/AddItemSelectionScreen';
 
 import EditItem from './src/screens/EditItem';
@@ -52,6 +54,7 @@ import BarcodeScanner from './src/screens/BarcodeScanner';
 import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
 import BankAccountScreen from './src/screens/BankAccount';
 import TestStartSession from './src/screens/TestStartSession';
+import GrocerFetchOrder from './src/screens/GrocerFetchOrder';
 // import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
@@ -255,6 +258,16 @@ export default function App() {
               name="Bank"
               component={BankAccountScreen}
               options={{title: 'Bank Account Information'}}
+            />
+            <Stack.Screen
+              name="EmployerCartView"
+              component={EmployerCartView}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="GrocerOrderCompletion"
+              component={GrocerOrderCompletion}
+              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
