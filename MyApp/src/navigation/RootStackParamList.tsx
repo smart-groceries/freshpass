@@ -13,7 +13,15 @@ export type RootStackParamList = {
   Create: undefined;
   Forgot: undefined;
   PaymentConfirm: undefined;
-  
+  Catalog: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  }
   Account: {
     user: {
       id: number;
@@ -32,8 +40,22 @@ export type RootStackParamList = {
     };
   };
 
+  GrocerCatalogItem: {
+    item: {
+      storeId: number
+      id: string
+      name: string
+      weight: string
+      brand: string
+      price: number
+      aisle: string
+      quantity: number
+    }
+  };
+
   EditItem: {
     item: {
+      storeId: number
       id: string
       name: string
       weight: string
@@ -78,6 +100,10 @@ export type RootStackParamList = {
       data: [];
     }
   };
+
+AddItem: {
+  grocer_id: number;
+}
 
   ShoppingListView:undefined;
   

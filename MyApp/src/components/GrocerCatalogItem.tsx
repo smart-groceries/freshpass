@@ -21,12 +21,14 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {useQuery} from '@apollo/client';
 import {GET_CARD_INFO_BY_USER_ID} from '../graphql/queries';
+import { int } from 'aws-sdk/clients/datapipeline';
 
 interface GroceryItemDetails {
   name: string;
 }
 
 interface Props{    
+    storeId: number
     idProp: string
     nameProp: string
     weightProp: string
@@ -34,12 +36,13 @@ interface Props{
     priceProp: number
     aisleProp: string
     quantityProp: number
-    navigation: StackNavigationProp<RootStackParamList, 'EditItem'>;
-    route: RouteProp<RootStackParamList, 'EditItem'>;
+    navigation: StackNavigationProp<RootStackParamList, 'GrocerCatalogItem'>;
+    route: RouteProp<RootStackParamList, 'GrocerCatalogItem'>;
 }
 
-const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, aisleProp, quantityProp, navigation}) => {
+const Item :FC<Props> = ({storeId,idProp, nameProp, weightProp, brandProp, priceProp, aisleProp, quantityProp, navigation}) => {
     const [item,setItem] = React.useState({
+        storeId: storeId,
         id: idProp,
         name: nameProp,
         weight: weightProp,
@@ -59,7 +62,6 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
       }
       )
     }, []);
-    console.log(item);
     return(
         <View style={styles.GroceryItemContainer}>
                 <View style={styles.LeftContainer} >
@@ -77,6 +79,10 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
         onPress={() => navigation.navigate('EditItem',{item})}
         title="Edit Item"
         />
+
+        {/* <TouchableHighlight
+        onPress={() => navigation.navigate('EditItem',{item})}
+        /> */}
 
             <View>
           {/* <TouchableHighlight>

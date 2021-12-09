@@ -22,7 +22,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {useMutation, useQuery} from '@apollo/client';
 import {GET_USER_PASSWORD_BY_USER_ID} from '../graphql/queries';
-import {UPDATE_CUSTOMER} from '../graphql/mutations';
+import {UPDATE_CUSTOMER, UPDATE_ITEM_IN_STORE_CATALOG} from '../graphql/mutations';
 import Item from '../components/GroceryItem';
 
 
@@ -39,7 +39,10 @@ type Props = {
 }
 
 const EditItem = ({route,navigation}: Props) => {
+    const [submitted, setSubmitted] = React.useState(false);
+
     const [item, setItem] = React.useState({
+        storeId: route.params.item.storeId,
         id: route.params.item.id,
         name: route.params.item.name,
         weight: route.params.item.weight,
@@ -48,144 +51,339 @@ const EditItem = ({route,navigation}: Props) => {
         aisle: route.params.item.aisle,
         quantity: route.params.item.quantity,
     });
+
+    const [EditItemFunction, EditItemFunctionResult] = useMutation(UPDATE_ITEM_IN_STORE_CATALOG, {
+        onError: err => {
+          console.log(err);
+        },
+      });
     
+    const EditItemWrapperFunc = (field_input: String, new_value_input: any) => {
+        console.log(item.storeId)
+        
+        try {
+            EditItemFunction({
+            variables: {
+              field_name: field_input,
+              new_value: new_value_input,
+              barcode_id: item.id,
+              store_id: item.storeId
+            },
+            
+          });
+        } catch {}
+        while (EditItemFunctionResult.loading) {}
+        if (EditItemFunctionResult.error) {
+          console.log(EditItemFunctionResult.error);
+        }
+    }
+
     console.log('QUANTITY: ' + item.quantity)
     console.log(item)
-    return(
-        <View>
+    return (
+        <View style={submitted ? styles.containerLoading : styles.container}>
             <Image
-            //style = {styles.image}
-            source={require('./../assets/macncheese.png')}/>
-            <View style={styles.itemContainer}>
+                //style = {styles.image}
+                source={require('./../assets/macncheese.png')}/>
+    
+          <StatusBar backgroundColor="#009387" barStyle="light-content" />
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+    
+            <View style={styles.action}>
+              <Text style={[styles.text_footer]}>Barcode Id</Text>
+              <View style={styles.inputView}>
                 <TextInput
-                    style={styles.userDataTextInput}
-                    placeholder = {item.name}
-                    placeholderTextColor="#003f5c"/>
+                  placeholder="Barcode ID"
+                  placeholderTextColor="#003f5c"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={val =>
+                    setItem({
+                      ...item,
+                      id:val,
+                    })
+                  }
+                />
+              </View>
             </View>
-        
-            <TextInput
-            style={styles.TextInput}
-            placeholder= {item.brand}
-            placeholderTextColor="#003f5c"/>
+    
+            <View style={styles.action}>
+              <Text style={[styles.text_footer]}>Item Brand</Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  placeholder="Item Quantity"
+                  placeholderTextColor="#003f5c"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={val =>
+                    setItem({
+                      ...item,
+                      quantity: +val,
+                    })
+                  }
+                />
+              </View>
+    
+            </View>
+    
+            <View style={styles.action}>
+              <Text style={[styles.text_footer]}>Item Title</Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  placeholder="Item Aisle"
+                  placeholderTextColor="#003f5c"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={val =>
+                    setItem({
+                      ...item,
+                      aisle: val,
+                    })
+                  }
+                />
+              </View>
+    
+            </View>
+    
+            <View style={styles.action}>
+              <Text style={[styles.text_footer]}>Item Weight</Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  placeholder="Item Price"
+                  placeholderTextColor="#003f5c"
+                  style={styles.textInput}
+                  autoCapitalize="none"
+                  onChangeText={val =>
+                    setItem({
+                      ...item,
+                      price: +val,
+                    })
+                  }
+                />
+              </View>
+    
+            </View>
+                   
+    
+            <View style={styles.button}>
+              <TouchableOpacity
+                onPress={() => {
+                    EditItemWrapperFunc('item_price', item.price)
+                }}
+                style={[
+                  styles.signIn,
+                  {
+                    borderColor: '#71BF61',
+                    backgroundColor: '#71BF61',
+                    borderWidth: 1,
+                    marginTop: 10,
+                  },
+                ]}>
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      color: '#FFFFFF',
+                    },
+                  ]}>
+                  Add Item
+                </Text>
+              </TouchableOpacity>
+            </View>
             
-            <TextInput
-            style={styles.TextInput}
-            placeholder= {item.price.toString()}
-            placeholderTextColor="#003f5c"/>
-            
-            <TextInput
-            style={styles.TextInput}
-            placeholder= {item.quantity.toString()}
-            placeholderTextColor="#003f5c"/>
-            
-            <TextInput
-            style={styles.IDText}
-            placeholder="ID"
-            placeholderTextColor="#003f5c"/>
-            
-
-            <TouchableHighlight 
-            style={styles.saveButton}
-            >
-                <Text style={styles.SaveText}>Save</Text>
-            </TouchableHighlight>
+          </ScrollView>
+          {submitted ? (
+            <ActivityIndicator size="large" style={styles.loading} color="green" />
+          ) : null}
         </View>
-    );
+          );
+    };
+    
+//     return(
+//         <View style={{alignItems:'center'}}>
+//             <Image
+//             //style = {styles.image}
+//             source={require('./../assets/macncheese.png')}/>
 
-};
+//             <View style={styles.itemContainer}>
+//                 <TextInput
+//                     style={styles.userDataTextInput}
+//                     placeholder = {item.id}
+//                     placeholderTextColor="#003f5c"/>
+//             </View>
+//             <View style={styles.itemContainer}>
+//                 <TextInput
+//                     style={styles.userDataTextInput}
+//                     placeholder = {item.name}
+//                     //onChangeText = 
+//                     placeholderTextColor="#003f5c"/>
+//             </View>
+        
+//             <View style={styles.itemContainer}>
+//                 <TextInput
+//                     style={styles.userDataTextInput}
+//                     placeholder = {item.brand}
+//                     placeholderTextColor="#003f5c"/>
+//             </View>
+            
+//             <View style={styles.itemContainer}>
+//                 <TextInput
+//                     style={styles.userDataTextInput}
+//                     placeholder = {item.price.toString()}
+//                     placeholderTextColor="#003f5c"/>
+//             </View>
+            
+//             <View style={styles.itemContainer}>
+//                 <TextInput
+//                     style={styles.userDataTextInput}
+//                     placeholder = {item.quantity.toString()}
+//                     placeholderTextColor="#003f5c"/>
+//             </View>
+            
+
+//             <TouchableHighlight 
+//             style={styles.saveButton}
+//             >
+//                 <Text style={styles.SaveText}>Save</Text>
+//             </TouchableHighlight>
+
+//             <TouchableHighlight 
+//             style={styles.cancelButton}
+//             >
+//                 <Text style={styles.SaveText}>Cancel</Text>
+//             </TouchableHighlight>
+//         </View>
+//     );
+
+// };
 
 
 
 
 const styles = StyleSheet.create({
-    image:{
-        alignSelf:'center'
-    },
-    itemContainer: {
-        backgroundColor: 'white',
-        alignItems: 'flex-start',
-        flexDirection: 'column',
-        width: '100%',
-        height: 85,
-        justifyContent: 'space-evenly',
-        marginVertical: 10,
-        paddingHorizontal: 15,
+    container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
       },
-    userDataTextInput: {
-        alignSelf: 'flex-start',
-        fontFamily: 'VarelaRound-Regular',
-        width: '100%',
-        backgroundColor: '#F3F3F3',
-        borderRadius: 12,
-        paddingHorizontal: 10,
-        color: 'black',
-        marginVertical: 10,
-        // borderColor: '#999999',
-        // borderWidth: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-        // fontSize: 20,
+      containerLoading: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        opacity: 0.6,
       },
-    userDataView: {
-        alignSelf: 'flex-start',
-        width: '100%',
-        backgroundColor: '#F3F3F3',
-        borderRadius: 12,
-        paddingHorizontal: 10,
-        height: 50,
-        alignItems: 'flex-start',
+    
+      imageContainer: {
+        alignItems: 'center',
+        // resizeMode: 'contain',
+        // flex: 1,
+        // position: 'absolute',
         justifyContent: 'center',
-        marginVertical: 10,
+        marginTop: 50,
+        marginBottom: -50,
+        // marginTop: 100,
+        // backgroundColor: 'black',
       },
-    largeItemContainer: {
-        backgroundColor: 'white',
-        alignItems: 'flex-start',
-        flexDirection: 'row',
-        width: '95%',
-        height: 85,
-        justifyContent: 'space-between',
-        margin: 10,
-        paddingHorizontal: 15,
-        flexWrap: 'wrap',
-      }, 
-
-    saveButton: {
-        marginVertical: '10%',
-        alignSelf: 'center',
+      inputView: {
+        width: 324,
+        height: 55,
+        // marginBottom: 20,
+    
+        backgroundColor: '#FDF2E6',
+        alignItems: 'center',
+        borderRadius: 12,
+        justifyContent: 'center',
+      },
+    
+      scrollContainer: {
+        alignItems: 'center',
+        // paddingTop: 50,
+        backgroundColor: '#FFFFFF',
+      },
+    
+      header: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        paddingHorizontal: 20,
+        paddingBottom: 50,
+      },
+      footer: {
+        flex: Platform.OS === 'android' ? 3 : 5,
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingHorizontal: 20,
+        paddingVertical: 30,
+      },
+      text_header: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 30,
+        fontFamily: 'VarelaRound-Regular',
+      },
+      text_footer: {
+        color: '#E89023',
+        fontSize: 18,
+        fontFamily: 'VarelaRound-Regular',
+        marginVertical: 0,
+      },
+      action: {
+        height: 130,
+        // justifyContent: 'space-evenly',
+        // backgroundColor: 'black',
+      },
+      textInput: {
+        // flex: 1,
+        // marginTop: Platform.OS === 'android' ? 0 : -12,
+        // paddingLeft: 10,
+        // height: 55,
+        color: '#003f5c',
+        width: '90%',
+        fontFamily: 'VarelaRound-Regular',
+        flex: 1,
+      },
+      button: {
+        alignItems: 'center',
+        // marginTop: 10,
+      },
+      signIn: {
+        width: 324,
+        height: 55,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 55,
-        width: 324,
-        backgroundColor: '#71BF61',
         borderRadius: 12,
       },
-
-    TextInput:{
-        width:"90%",
-        left:20,
-        marginTop:20,
-        borderRadius:4,
-        borderColor:'black',
-        borderWidth:1,
-        color:'black',
-        alignContent:"center",
-        alignItems:"center"
-    },
-    IDText:{
-        width:"90%",
-        left:20,
-        marginTop:20,
-        borderRadius:4,
-        borderColor:'black',
-        borderWidth:1,
-
-        color:'black',
-        backgroundColor:'grey'
-    },
-    SaveText:{
-        textAlign:'center',
-    }
-})
+      textSign: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        fontFamily: 'VarelaRound-Regular',
+      },
+      textPrivate: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        margin: 20,
+        justifyContent: 'center',
+        fontFamily: 'VarelaRound-Regular',
+      },
+      color_textPrivate: {
+        color: 'green',
+      },
+      errorText: {
+        color: 'red',
+        fontFamily: 'VarelaRound-Regular',
+        marginTop: 5,
+      },
+      loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        transform: [{scale: 2.5}],
+      },
+    });
 
 
 export default EditItem;

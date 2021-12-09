@@ -20,16 +20,18 @@ import GroceryItem from '../components/GroceryItem';
 import GrocerCatalogItem from '../components/GrocerCatalogItem';
 import { RootStackParamList } from '../navigation/RootStackParamList';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/core';
 
 
 export interface GrocerCatalogProp {
     style?: ViewStyle | Array<ViewStyle> | undefined;
-    navigation: StackNavigationProp<RootStackParamList, 'EditItem'>;
+    navigation: StackNavigationProp<RootStackParamList, 'Catalog'>;
+    route: RouteProp<RootStackParamList, 'Catalog'>; 
 }
 
 
-const GrocerCatalog = ({navigation}:GrocerCatalogProp) => {
-    const [storeId, setstoreId] = useState("5");
+const GrocerCatalog = ({navigation,route}:GrocerCatalogProp) => {
+    const [storeId, setstoreId] = useState(route.params.grocer.account_id);
     const [catalogItemsList, setcatalogItemsList] = useState([
         
     ])
@@ -52,9 +54,10 @@ useEffect(() => {
 
 const getCatalogItemList = () => {
     return catalogItemsList.map(function (method, i){
-        
+        console.log(storeId);
         return (
             <GrocerCatalogItem
+                storeId={storeId}
                 key={method.barcode_id}
                 idProp={method.barcode_id}
                 nameProp={method.item_name}
@@ -63,7 +66,7 @@ const getCatalogItemList = () => {
                 priceProp={method.item_price}
                 aisleProp={method.item_aisle}
                 quantityProp={method.quantity} 
-                navigation={navigation}
+                navigation={navigation}               
                  >
 
             </GrocerCatalogItem>
@@ -79,7 +82,7 @@ return (<ScrollView contentContainerStyle={styles._container}>
 const styles = StyleSheet.create({
     screen: {
       flex: 1,
-      backgroundColor: '#FFFFFF',
+      backgroundColor: 'white',
     },
     text: {
       fontFamily: 'VarelaRound-Regular',
