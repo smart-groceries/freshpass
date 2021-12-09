@@ -115,6 +115,10 @@ const CartView = ({navigation}: CartProp) => {
     console.log("END DELETE ITEM")
   }
 
+  const navigateToAddScreen = () => {
+    navigation.navigate('AddItemSelectionScreen', {info: {grocerId, listOfItems, shoppingSessionId}})
+  }
+
   const addItem = (
     id: any,
     aisle: string,
@@ -241,7 +245,7 @@ const CartView = ({navigation}: CartProp) => {
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
           onChangeText={text => console.log(text)}></SearchBar>
-        <AddIcon></AddIcon>
+        <AddIcon navigateToAddScreen={navigateToAddScreen}></AddIcon>
       </View>
 
       <ScrollView contentContainerStyle={styles._container}>
