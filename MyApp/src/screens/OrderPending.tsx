@@ -1,6 +1,6 @@
 import {typeAlias} from '@babel/types';
 import RNBounceable from '@freakycoder/react-native-bounceable';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Text,
@@ -10,10 +10,11 @@ import {
   ImageStyle,
   TextStyle,
 } from 'react-native';
-import {useState} from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useQuery} from '@apollo/client';
+import {GET_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'OrderPending'>;
@@ -21,11 +22,42 @@ type Props = {
 };
 
 const OrderPending = ({route, navigation}: Props) => {
-  const [shoppingSessionId, setShoppingSessionId] = useState(route.params.info.shoppingSessionId);
+  const [shoppingSession, setShoppingSession] = useState([]);
+  const [empty, setEmpty] = useState(true);
+  const getShoppingSessionResult = useQuery(GET_SHOPPING_SESSION_BY_ID, {
+    variables: {shopping_session_id: route.params.info.shoppingSessionId},
+    pollInterval: 1000
+  });
+
+  useEffect(() => {
+    if (getShoppingSessionResult.data?.getShoppingSessionById == undefined) {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setShoppingSession(getShoppingSessionResult.data.getShoppingSessionById);
+      console.log(shoppingSession);
+      console.log(shoppingSession.state_id);
+      console.log(getShoppingSessionResult.data.getShoppingSessionById);
+    }
+  }, [getShoppingSessionResult.data]);
+
+  useEffect(() => {
+    if (shoppingSession.state_id == 3 || shoppingSession.state_id == 5) {
+        navigation.navigate('OrderRejected', {info: { shoppingSessionId: shoppingSession.shopping_session_id}})
+    }
+    if (shoppingSession.state_id == 4) {
+      navigation.navigate('PaymentConfirm', {info: { shoppingSessionId: shoppingSession.shopping_session_id}})
+    }
+  }, [shoppingSession]);
+
+
+
   return (
     <View style={[_container()]}>
       <Text style={styles.headerText}>Validating Order...</Text>
-      <Text style={styles.orderNumber}>Order Number: #{shoppingSessionId}</Text>
+      <Text style={styles.orderNumber}>Order Number: #{shoppingSession.shopping_session_id}</Text>
+      <Text style={styles.orderNumber}>State Id: #{shoppingSession.state_id}</Text>
+    
       <View style={styles.paragraphContainer}>
         <Text style={styles.paragraph}>
         Please present this screen to the store employee at the front, by the FreshPass sign. 
@@ -34,7 +66,7 @@ const OrderPending = ({route, navigation}: Props) => {
       </View>
       <RNBounceable
         style={styles.buttonContainer}
-        onPress={() => navigation.navigate('CartView', {info: { shoppingSessionId}})}>
+        onPress={() => navigation.navigate('CartView', {info: { shoppingSessionId: shoppingSession.shopping_session_id}})}>
         <Text style={styles.buttonText}>Back to Cart</Text>
       </RNBounceable>
       </View>

@@ -21,7 +21,7 @@ import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
 import {useQuery, useMutation} from '@apollo/client';
 import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
-import {REMOVE_ITEM_IN_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_SESSION, UPDATE_ITEM_IN_STORE_CATALOG} from '../graphql/mutations';
+import {REMOVE_ITEM_IN_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_SESSION, UPDATE_ITEM_IN_STORE_CATALOG, UPDATE_SHOPPING_SESSION} from '../graphql/mutations';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
@@ -38,8 +38,10 @@ const CartView = ({route, navigation}: CartProp) => {
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
   const [listOfItems, setlistOfItems] = useState([]);
+  const [updateTotal, setUpdateTotal] = useState(false);
   const getItemsResult = useQuery(GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID, {
     variables: {shopping_session_id: shoppingSessionId},
+    pollInterval: 1000
   });
   const [deleteFunction, removeItemsResult] = useMutation(REMOVE_ITEM_IN_SHOPPING_SESSION, {
       onError: err => {
@@ -51,11 +53,29 @@ const CartView = ({route, navigation}: CartProp) => {
         console.log(err);
       },
   });
+  const [setSessionStateFunction, setSessionStateFunctionResult] = useMutation(UPDATE_SHOPPING_SESSION, {
+    onError: err => {
+      console.log(err);
+    },
+  });
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     if(orderComplete==true)  {
       navigation.navigate('OrderPending', {info: {shoppingSessionId}});
+      try {
+        setSessionStateFunction({
+          variables: {
+            new_value: "2",
+            field_name: "state_id",
+            shopping_session_id: shoppingSessionId,
+          },
+        });
+      } catch {}
+      while (setSessionStateFunctionResult.loading) {}
+      if (setSessionStateFunctionResult.error) {
+        console.log(setSessionStateFunctionResult.error);
+      }
     }
     setOrderComplete(false);
   }, [orderComplete]);
@@ -71,14 +91,22 @@ const CartView = ({route, navigation}: CartProp) => {
   }, [getItemsResult.data]);
 
   useEffect(() => {
-    console.log("✅")
-    var newTotal = 0
-    for (var element in listOfItems)  {
-      newTotal += (listOfItems[element].quantity) * (listOfItems[element].item_price);
-    }
-    newTotal = newTotal.toFixed(2);
-    setTotal(newTotal);
+    setUpdateTotal(true);
   }, [listOfItems]);
+
+  useEffect(() => {
+    console.log(" IN UPDATE TOTAL");
+    console.log(updateTotal);
+    if (updateTotal == true) {
+      var newTotal = 0
+      for (var element in listOfItems)  {
+        newTotal += (listOfItems[element].quantity) * (listOfItems[element].item_price);
+      }
+      newTotal = +newTotal.toFixed(2);
+      setTotal(newTotal);
+    }
+    setUpdateTotal(false);
+  }, [updateTotal]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -114,7 +142,8 @@ const CartView = ({route, navigation}: CartProp) => {
     console.log(listOfItemsCopy)
     setlistOfItems(listOfItemsCopy);
     console.log(listOfItems);
-    console.log("END DELETE ITEM")
+    console.log("END DELETE ITEM");
+    setUpdateTotal(true);
   }
 
   const navigateToAddScreen = () => {
@@ -197,6 +226,7 @@ const CartView = ({route, navigation}: CartProp) => {
     setlistOfItems(listOfItemsCopy);
     console.log(listOfItems);
     console.log("END DELETE ITEM")
+    setUpdateTotal(true);
 
     try {
       deleteFunction({
@@ -239,8 +269,8 @@ const CartView = ({route, navigation}: CartProp) => {
   return (
     <View style={styles.screen}>
       <View style={styles.titleSectionContainer}>
-          <Text style={styles.title}>Shopping Session</Text>
-          <Text style={styles.instructionText}>Sample Text</Text>
+          <Text style={styles.title}>Cart</Text>
+          <Text style={styles.instructionText}>Grocer Name Here</Text>
       </View>
       <View style={styles.sectionContainer}>
         <SearchBar
@@ -403,7 +433,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 60,
-    fontSize: 32,
+    fontSize: 42,
     color: '#424347',
     fontFamily: 'VarelaRound-Regular'
   },

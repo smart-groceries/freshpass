@@ -12,7 +12,11 @@ export type RootStackParamList = {
   Login: undefined;
   Create: undefined;
   Forgot: undefined;
-  PaymentConfirm: undefined;
+  PaymentConfirm: {
+      info: {
+      shoppingSessionId: any;
+    }
+  };
   Account: {
     user: {
       id: number;
@@ -72,11 +76,6 @@ export type RootStackParamList = {
     info: {
       name: string;
     };
-  };
-  Confirmation: {
-    info: {
-      shoppingSessionId: string;
-    }
   };
   AddItemSelectionScreen: {
     info: {
