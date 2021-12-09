@@ -81,19 +81,21 @@ export type RootStackParamList = {
 
   ShoppingListView:  undefined;
 
-  ChangePassword: {
-    user: {
-      id: number;
-      email: string;
-      fname: string;
-      lname: string;
-      password: string;
-    };
-  };
+  ChangePassword: {user: {id: number; password: string}};
   StoreLocator: undefined;
   PasswordResetLinkSent: undefined;
   StoreHome: undefined;
   StoreAccount: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
+  Scanner: undefined;
+  EditStoreAccount: {
     grocer: {
       account_id: number;
       email: string;
