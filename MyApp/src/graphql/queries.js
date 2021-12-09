@@ -111,12 +111,12 @@ export const GET_SHOPPING_LISTS_BY_USER_ID = gql`
         getShoppingListsByUserId(name: "getShoppingListsByUserId", id: $id) {
         items {
             barcode_id
-            # item_aisle
-            # item_brand
-            # item_name
-            # item_price
+            item_aisle
+            item_brand
+            item_name
+            item_price
             # item_wieght
-            # quantity
+            quantity
         }
         shopping_list_id
         # user {

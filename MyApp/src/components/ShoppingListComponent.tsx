@@ -33,7 +33,7 @@ const ShoppingListComponent = ({navigation,props}:Props) => {
   const onPress = (name: string) => {
     setListName(name);
   };
-  console.log(props)
+  console.log(props.item.items)
   return (
     <View style={[styles.List, {flexDirection: 'row'}]}>
       <View style={[styles.listInfoContainer, {flexDirection: 'column'}]}>
@@ -42,7 +42,7 @@ const ShoppingListComponent = ({navigation,props}:Props) => {
       </View>
       <View>
         <TouchableOpacity
-        onPress={() => navigation.navigate('ShoppingListView',props)}
+        onPress={() => navigation.navigate('ShoppingListView',props.item.items)}
         style={styles.button}>
           <Text>View List</Text>
         </TouchableOpacity>

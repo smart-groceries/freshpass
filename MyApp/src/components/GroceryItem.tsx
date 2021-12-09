@@ -34,7 +34,7 @@ const Item :FC<Props> = ({idProp, nameProp, weightProp, brandProp, priceProp, ai
     const [weight, setWeight] = React.useState(weightProp);
     const [brand, setBrand] = React.useState(brandProp);
     const [price, setPrice] = React.useState(priceProp);
-    const [aisle, setAisle] = React.useState(aisleProp);;
+    const [aisle, setAisle] = React.useState(aisleProp);
     const [quantityValue, setQuantityValue] = React.useState(quantityProp);
     const [imageUrl, setImageUrl] = React.useState("");
 
