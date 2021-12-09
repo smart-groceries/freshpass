@@ -25,12 +25,25 @@ export type RootStackParamList = {
       lname: string;
     };
   };
+
   EditAccount: {
     user: {
       id: number;
       email: string;
       fname: string;
       lname: string;
+    };
+  };
+
+  EditItem: {
+    item: {
+      id: string;
+      name: string;
+      weight: string;
+      brand: string;
+      price: number;
+      aisle: string;
+      quantity: number;
     };
   };
   PaymentMethods: {
@@ -41,6 +54,7 @@ export type RootStackParamList = {
       lname: string;
     };
   };
+
   AddPayment: {
     user: {
       id: number;
@@ -72,9 +86,10 @@ export type RootStackParamList = {
       lname: string;
     };
   };
+
   ListInfo: {
     info: {
-      name: string;
+      data: [];
     };
   };
   AddItemSelectionScreen: {
@@ -84,15 +99,38 @@ export type RootStackParamList = {
       shoppingSessionId: string;
     }
   };
-  ChangePassword: {
-    user: {
-      id: number;
-      email: string;
-      fname: string;
-      lname: string;
-      password: string;
-    };
-  };
+  ShoppingListView:  undefined;
+
+  ChangePassword: {user: {id: number; password: string}};
   StoreLocator: undefined;
   PasswordResetLinkSent: undefined;
+  StoreHome: undefined;
+  StoreAccount: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
+  Scanner: undefined;
+  EditStoreAccount: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
+  Bank: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
 };

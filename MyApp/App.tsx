@@ -43,6 +43,12 @@ import {createHttpLink} from 'apollo-link-http';
 // import { InMemoryCache } from "apollo-cache-inmemory";
 import BackendConnector from './src/components/BackendConnector';
 import PasswordLinkSent from './src/screens/PasswordLinkSent';
+import ShoppingListView from './src/screens/ShoppingListView';
+import GrocerCatalog from './src/screens/GrocerCatalog';
+import BarcodeScanner from './src/screens/BarcodeScanner';
+import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
+import BankAccountScreen from './src/screens/BankAccount';
+// import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
 function HomeTabs() {
@@ -79,6 +85,50 @@ function HomeTabs() {
       <Tab.Screen
         name="Lists"
         component={ShoppingLists}
+        options={{headerTitle: 'Shopping Lists'}}
+      />
+    </Tab.Navigator>
+  );
+}
+
+function StoreHomeTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName="StoreAccount"
+      screenOptions={({route}) => ({
+        tabBarIcon: () => {
+          let iconName = require('./src/assets/account_icon.png');
+          if (route.name === 'Scanner') {
+            iconName = require('./src/assets/barcode_icon.png');
+          } else if (route.name === 'StoreAccount') {
+            iconName = require('./src/assets/account_icon.png');
+          } else if (route.name === 'Catalog') {
+            iconName = require('./src/assets/lists_icon.png');
+          }
+          return (
+            <Image
+              resizeMode="contain"
+              source={iconName}
+              style={styles.navIcons}></Image>
+          );
+        },
+        headerShown: true,
+        headerTitleStyle: {fontFamily: 'VarelaRound-Regular'},
+        tabBarActiveTintColor: 'black',
+        tabBarLabelStyle: {fontFamily: 'VarelaRound-Regular'},
+        tabBarActiveBackgroundColor: '#F3F3F3',
+      })}>
+      <Tab.Screen
+        name="StoreAccount"
+        component={StoreAccountScreen}
+        options={{headerTitle: 'Account', title: 'Account'}}
+      />
+
+      <Tab.Screen name="Scanner" component={BarcodeScanner} />
+
+      <Tab.Screen
+        name="Catalog"
+        component={GrocerCatalog}
         options={{headerTitle: 'Shopping Lists'}}
       />
     </Tab.Navigator>
@@ -128,6 +178,11 @@ export default function App() {
               options={{headerShown: false}}
             />
             <Stack.Screen
+              name="ShoppingListView"
+              component={ShoppingListView}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
               name="PaymentMethods"
               component={Payments}
               options={{headerShown: true, title: 'Payment Methods'}}
@@ -151,6 +206,26 @@ export default function App() {
               name="PasswordResetLinkSent"
               component={PasswordLinkSent}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="StoreHome"
+              component={StoreHomeTabs}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="EditItem"
+              component={EditItem}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="EditStoreAccount"
+              component={EditStoreAccountScreen}
+              options={{headerShown: true, title: 'Edit Account'}}
+            />
+            <Stack.Screen
+              name="Bank"
+              component={BankAccountScreen}
+              options={{title: 'Bank Account'}}
             />
           </Stack.Navigator>
         </NavigationContainer>

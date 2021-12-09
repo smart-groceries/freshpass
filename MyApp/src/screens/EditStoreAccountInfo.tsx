@@ -1,61 +1,59 @@
-import {tsNamedTupleMember} from '@babel/types';
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
+import {useMutation, useQuery} from '@apollo/client';
 import {
   View,
   Text,
   Button,
   TouchableOpacity,
-  Dimensions,
-  TextInput,
-  Platform,
   StyleSheet,
-  ScrollView,
-  StatusBar,
   Image,
-  ActivityIndicator,
   Alert,
+  ScrollView,
+  TextInput,
+  ActivityIndicator,
 } from 'react-native';
-
-import {RootStackParamList} from '../navigation/RootStackParamList';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
-import {useMutation, useQuery} from '@apollo/client';
 import {GET_USER_PASSWORD_BY_USER_ID} from '../graphql/queries';
-import {UPDATE_CUSTOMER} from '../graphql/mutations';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {UPDATE_GROCER} from '../graphql/mutations';
 
 type Props = {
-  navigation: StackNavigationProp<RootStackParamList, 'EditAccount'>;
-  route: RouteProp<RootStackParamList, 'EditAccount'>;
+  navigation: StackNavigationProp<RootStackParamList, 'EditStoreAccount'>;
+  route: RouteProp<RootStackParamList, 'EditStoreAccount'>;
 };
 
-const EditAccountInfoScreen = ({route, navigation}: Props) => {
-  const [user, setUser] = React.useState({
-    email: route.params.user.email,
-    fname: route.params.user.fname,
-    lname: route.params.user.lname,
-    id: route.params.user.id,
+const EditStoreAccountScreen = ({route, navigation}: Props) => {
+  const [grocer, setGrocer] = React.useState({
+    id: route.params.grocer.account_id,
+    email: route.params.grocer.email,
+    balance: route.params.grocer.balance,
+    address: route.params.grocer.address,
+    grocer_name: route.params.grocer.grocer_name,
     password: '',
-    fNameValidated: true,
-    lNameValidated: true,
+    nameValidated: true,
+    addressValidated: true,
   });
 
   const [submitted, setSubmitted] = React.useState(false);
 
+  console.log(grocer.id);
+
   const {error, loading, data, refetch} = useQuery(
     GET_USER_PASSWORD_BY_USER_ID,
     {
-      variables: {id: user.id},
+      variables: {id: grocer.id},
     },
   );
 
   const [
-    updateCustomer,
+    updateGrocer,
     {
-      data: updateCustomerData,
-      loading: updateCustomerLoading,
-      error: updateCustomerError,
+      data: updateGrocerData,
+      loading: updateGrocerLoading,
+      error: updateGrocerError,
     },
-  ] = useMutation(UPDATE_CUSTOMER, {
+  ] = useMutation(UPDATE_GROCER, {
     onError: err => {
       console.log(err);
     },
@@ -63,7 +61,7 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
 
   useEffect(() => {
     if (data) {
-      setUser({...user, password: data.getUserPasswordById.password});
+      setGrocer({...grocer, password: data.getUserPasswordById.password});
     }
   }, [data]);
 
@@ -75,55 +73,38 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
   }, [navigation]);
 
   useEffect(() => {
-    if (user.fNameValidated && user.lNameValidated && submitted) {
+    if (grocer.nameValidated && submitted) {
       try {
-        updateCustomer({
+        updateGrocer({
           variables: {
-            customer_id: user.id,
-            field_name: 'customer_fname',
-            new_value: user.fname,
-          },
-        });
-        updateCustomer({
-          variables: {
-            customer_id: user.id,
-            field_name: 'customer_lname',
-            new_value: user.lname,
+            grocer_id: grocer.id,
+            field_name: 'grocer_name',
+            new_value: grocer.grocer_name,
           },
         });
       } catch {}
 
-      navigation.navigate('Account', {
-        user: {
-          email: user.email,
-          id: user.id,
-          fname: user.fname,
-          lname: user.lname,
+      navigation.navigate('StoreAccount', {
+        grocer: {
+          email: grocer.email,
+          account_id: grocer.id,
+          grocer_name: grocer.grocer_name,
+          address: grocer.address,
+          balance: grocer.balance,
         },
       });
 
       setSubmitted(false);
-    } else if (!user.fNameValidated && !user.lNameValidated && submitted) {
+    } else if (!grocer.nameValidated && submitted) {
       Alert.alert(
-        'Please enter a valid first and last name',
-        'Please make sure you are entering a valid first and last name or that the field is not blank.',
-      );
-    } else if (!user.fNameValidated && submitted) {
-      Alert.alert(
-        'Enter a valid first name',
-        'Please make sure you are entering a valid first name or that the field is not empty.',
-      );
-    } else if (!user.lNameValidated && submitted) {
-      Alert.alert(
-        'Enter a valid last name',
-        'Please make sure you are entering a valid last name or that the field is not blank.',
+        'Please enter a valid store name',
+        'Please make sure you are entering a valid store name or that the field is not blank.',
       );
     }
     setSubmitted(false);
-  }, [user]);
+  }, [grocer]);
 
   useEffect(() => {}, [submitted]);
-  // const [changed, setChanged] = React.useState(false);
 
   const obscurePassword = (password: string) => {
     const hidden = Array.from(password).map(char => {
@@ -144,34 +125,28 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
   return (
     <View style={loading ? styles.containerLoading : styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.itemContainer}>
-          <Text style={styles.itemText}>First Name:</Text>
+        <View style={styles.largeItemContainer}>
+          <Text style={styles.itemText}>Name:</Text>
           <TextInput
             style={styles.userDataTextInput}
             onChangeText={val => {
-              setUser({...user, fname: val, fNameValidated: validateText(val)});
+              setGrocer({
+                ...grocer,
+                grocer_name: val,
+                nameValidated: validateText(val),
+              });
             }}>
-            {user.fname}
-          </TextInput>
-        </View>
-        <View style={styles.itemContainer}>
-          <Text style={styles.itemText}>Last Name:</Text>
-          <TextInput
-            style={styles.userDataTextInput}
-            onChangeText={val => {
-              setUser({...user, lname: val, lNameValidated: validateText(val)});
-            }}>
-            {user.lname}
+            {grocer.grocer_name}
           </TextInput>
         </View>
         <View style={styles.largeItemContainer}>
           <Text style={styles.itemText}>Email:</Text>
           {/* <TouchableOpacity style={styles.editButton}>
-            <Text>Edit</Text>
-          </TouchableOpacity> */}
+          <Text>Edit</Text>
+        </TouchableOpacity> */}
           <View style={styles.userDataView}>
             <Text style={[styles.userDataText, {opacity: 0.5}]}>
-              {user.email}
+              {grocer.email}
             </Text>
           </View>
         </View>
@@ -179,22 +154,25 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
           <Text style={styles.itemText}>Password</Text>
           <TouchableOpacity
             style={styles.editButton}
-            onPress={() => navigation.navigate('ChangePassword', {user})}>
+            onPress={() =>
+              navigation.navigate('ChangePassword', {
+                user: {id: grocer.id, password: grocer.password},
+              })
+            }>
             <Text>Edit</Text>
           </TouchableOpacity>
           <View style={styles.userDataView}>
             <Text style={[styles.userDataText, {opacity: 0.5}]}>
-              {obscurePassword(user.password)}
+              {obscurePassword(grocer.password)}
             </Text>
           </View>
         </View>
         <TouchableOpacity
           style={styles.saveButton}
           onPress={() => {
-            setUser({
-              ...user,
-              fNameValidated: validateText(user.fname),
-              lNameValidated: validateText(user.lname),
+            setGrocer({
+              ...grocer,
+              nameValidated: validateText(grocer.grocer_name),
             });
             setSubmitted(true);
           }}>
@@ -323,4 +301,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditAccountInfoScreen;
+export default EditStoreAccountScreen;

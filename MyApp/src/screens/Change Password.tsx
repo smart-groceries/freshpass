@@ -23,12 +23,7 @@ type Props = {
 };
 
 const ChangePasswordScreen = ({route, navigation}: Props) => {
-  const [user, setUser] = React.useState({
-    email: route.params.user.email,
-    fname: route.params.user.fname,
-    lname: route.params.user.lname,
-    id: route.params.user.id,
-  });
+  const [user, setUser] = React.useState({id: route.params.user.id});
   const [userCredentials, setUserCredentials] = React.useState({
     password: route.params.user.password,
     newPassword: '',
@@ -51,6 +46,7 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
   const [submitted, setSubmitted] = React.useState(false);
 
   useEffect(() => {
+    console.log(userCredentials);
     if (
       userCredentials.passwordConfirmed &&
       userCredentials.passwordValidated &&
@@ -58,9 +54,12 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
       submitted
     ) {
       setSubmitted(false);
-      updatePassword({
-        variables: {id: user.id, pass: userCredentials.newPassword},
-      });
+      try {
+        updatePassword({
+          variables: {id: user.id, pass: userCredentials.newPassword},
+        });
+      } catch {}
+
       if (loading) {
         console.log('loading?');
       }
@@ -71,41 +70,36 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
           {
             text: 'Ok',
             style: 'default',
-            onPress: () => navigation.navigate('EditAccount', {user}),
+            onPress: () => navigation.pop(),
           },
         ],
       );
     }
     setSubmitted(false);
-  }, [user, submitted]);
+  }, [userCredentials]);
 
-  const validatePassword = () => {
-    if (userCredentials.newPassword.trim().length < 8) {
+  const validatePassword = (text: string) => {
+    if (text.trim().length < 8) {
       return false;
     }
     return true;
   };
 
-  const confirmPassword = () => {
-    if (
-      userCredentials.newPassword != userCredentials.confirmPassword ||
-      userCredentials.confirmPassword.trim().length < 8
-    ) {
+  const confirmPassword = (text: string) => {
+    if (text != userCredentials.newPassword || text.trim().length < 8) {
       return false;
     }
     return true;
   };
 
-  const verifyPassword = () => {
-    if (
-      userCredentials.verifyPassword != userCredentials.password ||
-      userCredentials.verifyPassword.trim().length < 8
-    ) {
+  const verifyPassword = (text: string) => {
+    if (text != userCredentials.password || text.trim().length < 8) {
       return false;
     }
     return true;
   };
-
+  // console.log(userCredentials.password);
+  // console.log(userCredentials.newPassword);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -113,15 +107,16 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
           <Text style={styles.itemText}>Current Password:</Text>
           <TextInput
             style={styles.userDataTextInput}
-            placeholder="Old Password"
+            placeholder="Current Password"
             secureTextEntry={true}
-            onChangeText={val =>
+            onChangeText={val => {
+              console.log(val);
               setUserCredentials({
                 ...userCredentials,
-                passwordVerified: verifyPassword(),
+                passwordVerified: verifyPassword(val),
                 verifyPassword: val,
-              })
-            }></TextInput>
+              });
+            }}></TextInput>
           {!userCredentials.passwordVerified ? (
             <Text style={styles.errorText}>
               * Make sure you are entering the current password
@@ -138,7 +133,7 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
               setUserCredentials({
                 ...userCredentials,
                 newPassword: val,
-                passwordValidated: validatePassword(),
+                passwordValidated: validatePassword(val),
               });
             }}></TextInput>
           {!userCredentials.passwordValidated ? (
@@ -157,7 +152,7 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
               setUserCredentials({
                 ...userCredentials,
                 confirmPassword: val,
-                passwordConfirmed: confirmPassword(),
+                passwordConfirmed: confirmPassword(val),
               });
             }}></TextInput>
           {!userCredentials.passwordConfirmed ? (
@@ -174,9 +169,11 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
           onPress={() => {
             setUserCredentials({
               ...userCredentials,
-              passwordConfirmed: confirmPassword(),
-              passwordValidated: validatePassword(),
-              passwordVerified: verifyPassword(),
+              passwordConfirmed: confirmPassword(
+                userCredentials.confirmPassword,
+              ),
+              passwordValidated: validatePassword(userCredentials.newPassword),
+              passwordVerified: verifyPassword(userCredentials.verifyPassword),
             });
             setSubmitted(true);
           }}>

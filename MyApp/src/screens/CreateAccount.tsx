@@ -80,7 +80,8 @@ const CreateAccountScreen = ({navigation}: Props) => {
             lname: user.lastName,
           },
         });
-      } catch {}
+        console.log(data);
+      } catch (e) {}
 
       navigation.navigate('Login');
     }
