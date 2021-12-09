@@ -11,10 +11,13 @@ import ForgotPasswordScreen from './src/screens/ForgotPassword';
 import CreateAccountScreen from './src/screens/CreateAccount';
 import LoginScreen from './src/screens/LoginScreen';
 import ShoppingLists from './src/screens/ShoppingLists';
+import OrderPending from './src/screens/OrderPending';
 import {createStackNavigator} from '@react-navigation/stack';
 import Payments from './src/screens/Payments';
 import AddPayment from './src/screens/AddPayment';
 import CartView from './src/screens/CartView';
+import AddItemSelectionScreen from './src/screens/AddItemSelectionScreen';
+
 import EditItem from './src/screens/EditItem';
 import {AppRegistry} from 'react-native';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
@@ -43,8 +46,13 @@ import {createHttpLink} from 'apollo-link-http';
 // import { InMemoryCache } from "apollo-cache-inmemory";
 import BackendConnector from './src/components/BackendConnector';
 import PasswordLinkSent from './src/screens/PasswordLinkSent';
-import GrocerAccountScreen from './src/screens/GrocerAccount';
 import ShoppingListView from './src/screens/ShoppingListView';
+import GrocerCatalog from './src/screens/GrocerCatalog';
+import BarcodeScanner from './src/screens/BarcodeScanner';
+import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
+import BankAccountScreen from './src/screens/BankAccount';
+import TestStartSession from './src/screens/TestStartSession';
+// import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
 function HomeTabs() {
@@ -76,7 +84,7 @@ function HomeTabs() {
       })}>
       <Tab.Screen name="Account" component={AccountScreen} />
 
-      <Tab.Screen name="Stores" component={StoreLocator} />
+      <Tab.Screen name="Stores" component={TestStartSession} />
 
       <Tab.Screen
         name="Lists"
@@ -87,9 +95,49 @@ function HomeTabs() {
   );
 }
 
-// function StoreHomeTabs() {
+function StoreHomeTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName="StoreAccount"
+      screenOptions={({route}) => ({
+        tabBarIcon: () => {
+          let iconName = require('./src/assets/account_icon.png');
+          if (route.name === 'Scanner') {
+            iconName = require('./src/assets/barcode_icon.png');
+          } else if (route.name === 'StoreAccount') {
+            iconName = require('./src/assets/account_icon.png');
+          } else if (route.name === 'Catalog') {
+            iconName = require('./src/assets/lists_icon.png');
+          }
+          return (
+            <Image
+              resizeMode="contain"
+              source={iconName}
+              style={styles.navIcons}></Image>
+          );
+        },
+        headerShown: true,
+        headerTitleStyle: {fontFamily: 'VarelaRound-Regular'},
+        tabBarActiveTintColor: 'black',
+        tabBarLabelStyle: {fontFamily: 'VarelaRound-Regular'},
+        tabBarActiveBackgroundColor: '#F3F3F3',
+      })}>
+      <Tab.Screen
+        name="StoreAccount"
+        component={StoreAccountScreen}
+        options={{headerTitle: 'Account', title: 'Account'}}
+      />
 
-// }
+      <Tab.Screen name="Scanner" component={BarcodeScanner} />
+
+      <Tab.Screen
+        name="Catalog"
+        component={GrocerCatalog}
+        options={{headerTitle: 'Shopping Lists'}}
+      />
+    </Tab.Navigator>
+  );
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -134,9 +182,9 @@ export default function App() {
               options={{headerShown: false}}
             />
             <Stack.Screen
-            name= "ShoppingListView"
-            component = {ShoppingListView}
-            options = {{headerShown:false}}
+              name="ShoppingListView"
+              component={ShoppingListView}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="PaymentMethods"
@@ -165,8 +213,48 @@ export default function App() {
             />
             <Stack.Screen
               name="StoreHome"
-              component={GrocerAccountScreen}
+              component={StoreHomeTabs}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="EditItem"
+              component={EditItem}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="EditStoreAccount"
+              component={EditStoreAccountScreen}
+              options={{headerShown: true, title: 'Edit Account'}}
+            />
+            <Stack.Screen
+              name="OrderRejected"
+              component={OrderRejected}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="OrderPending"
+              component={OrderPending}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="CartView"
+              component={CartView}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AddItemSelectionScreen"
+              component={AddItemSelectionScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="PaymentConfirm"
+              component={PaymentConfirmation}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Bank"
+              component={BankAccountScreen}
+              options={{title: 'Bank Account Information'}}
             />
           </Stack.Navigator>
         </NavigationContainer>

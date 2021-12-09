@@ -14,7 +14,10 @@ import {
   ViewStyle,
   Alert,
 } from 'react-native';
-import { GET_ALL_ITEMS, GET_ITEMS_FOR_STORE_BY_GROCER_ID } from '../graphql/queries';
+import {
+  GET_ALL_ITEMS,
+  GET_ITEMS_FOR_STORE_BY_GROCER_ID,
+} from '../graphql/queries';
 import {useQuery} from '@apollo/client';
 import GroceryItem from '../components/GroceryItem';
 import GrocerCatalogItem from '../components/GrocerCatalogItem';
@@ -29,6 +32,14 @@ export interface GrocerCatalogProp {
     route: RouteProp<RootStackParamList, 'Catalog'>; 
 }
 
+const GrocerCatalog = ({navigation}: GrocerCatalogProp) => {
+  const [storeId, setstoreId] = useState('5');
+  const [catalogItemsList, setcatalogItemsList] = useState([]);
+  const {error, loading, data, refetch} = useQuery(
+    GET_ITEMS_FOR_STORE_BY_GROCER_ID,
+    {variables: {grocer_id: storeId}},
+  );
+  const [empty, setEmpty] = useState(true);
 
 const GrocerCatalog = ({navigation,route}:GrocerCatalogProp) => {
     const [storeId, setstoreId] = useState(route.params.grocer.account_id);
@@ -51,28 +62,22 @@ useEffect(() => {
     }
   }, [data]);
 
-
-const getCatalogItemList = () => {
-    return catalogItemsList.map(function (method, i){
-        console.log(storeId);
-        return (
-            <GrocerCatalogItem
-                storeId={storeId}
-                key={method.barcode_id}
-                idProp={method.barcode_id}
-                nameProp={method.item_name}
-                weightProp={method.item_weight}
-                brandProp={method.item_brand}
-                priceProp={method.item_price}
-                aisleProp={method.item_aisle}
-                quantityProp={method.quantity} 
-                navigation={navigation}               
-                 >
-
-            </GrocerCatalogItem>
-        )
-    })
-}
+  const getCatalogItemList = () => {
+    return catalogItemsList.map(function (method, i) {
+      return (
+        <GrocerCatalogItem
+          key={method.barcode_id}
+          idProp={method.barcode_id}
+          nameProp={method.item_name}
+          weightProp={method.item_weight}
+          brandProp={method.item_brand}
+          priceProp={method.item_price}
+          aisleProp={method.item_aisle}
+          quantityProp={method.quantity}
+          navigation={navigation}></GrocerCatalogItem>
+      );
+    });
+  };
 
 return (<ScrollView contentContainerStyle={styles._container}>
     {getCatalogItemList()}
@@ -125,5 +130,5 @@ const styles = StyleSheet.create({
       fontFamily: 'VarelaRound-Regular',
     },
   });
-
-  export default GrocerCatalog;
+}
+export default GrocerCatalog;

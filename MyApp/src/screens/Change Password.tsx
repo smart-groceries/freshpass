@@ -23,12 +23,7 @@ type Props = {
 };
 
 const ChangePasswordScreen = ({route, navigation}: Props) => {
-  const [user, setUser] = React.useState({
-    email: route.params.user.email,
-    fname: route.params.user.fname,
-    lname: route.params.user.lname,
-    id: route.params.user.id,
-  });
+  const [user, setUser] = React.useState({id: route.params.user.id});
   const [userCredentials, setUserCredentials] = React.useState({
     password: route.params.user.password,
     newPassword: '',
@@ -51,6 +46,7 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
   const [submitted, setSubmitted] = React.useState(false);
 
   useEffect(() => {
+    console.log(userCredentials);
     if (
       userCredentials.passwordConfirmed &&
       userCredentials.passwordValidated &&
@@ -74,7 +70,7 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
           {
             text: 'Ok',
             style: 'default',
-            onPress: () => navigation.navigate('EditAccount', {user}),
+            onPress: () => navigation.pop(),
           },
         ],
       );
@@ -102,7 +98,8 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
     }
     return true;
   };
-
+  // console.log(userCredentials.password);
+  // console.log(userCredentials.newPassword);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -112,13 +109,14 @@ const ChangePasswordScreen = ({route, navigation}: Props) => {
             style={styles.userDataTextInput}
             placeholder="Current Password"
             secureTextEntry={true}
-            onChangeText={val =>
+            onChangeText={val => {
+              console.log(val);
               setUserCredentials({
                 ...userCredentials,
                 passwordVerified: verifyPassword(val),
                 verifyPassword: val,
-              })
-            }></TextInput>
+              });
+            }}></TextInput>
           {!userCredentials.passwordVerified ? (
             <Text style={styles.errorText}>
               * Make sure you are entering the current password

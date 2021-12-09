@@ -111,12 +111,12 @@ export const GET_SHOPPING_LISTS_BY_USER_ID = gql`
         getShoppingListsByUserId(name: "getShoppingListsByUserId", id: $id) {
         items {
             barcode_id
-            # item_aisle
-            # item_brand
-            # item_name
-            # item_price
+            item_aisle
+            item_brand
+            item_name
+            item_price
             # item_wieght
-            # quantity
+            quantity
         }
         shopping_list_id
         # user {
@@ -125,6 +125,17 @@ export const GET_SHOPPING_LISTS_BY_USER_ID = gql`
         #   first_name
         #   last_name
         # }
+        }
+    }
+`;
+
+export const GET_SHOPPING_SESSION_BY_ID = gql`
+    query MyQuery($shopping_session_id: Int!) {
+        getShoppingSessionById(name: "getShoppingSessionById", shopping_session_id: $shopping_session_id) {
+            account_id
+            shopping_session_id
+            state_id
+            store_id
         }
     }
 `;

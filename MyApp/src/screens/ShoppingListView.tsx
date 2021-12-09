@@ -13,6 +13,7 @@ import {
   ScrollViewBase,
   ViewStyle,
   Alert,
+  FlatList,
 } from 'react-native';
 import FilterIcon from '../components/Filter';
 import AddIcon from '../components/Add';
@@ -20,23 +21,28 @@ import SearchBar from '../components/SearchBar';
 import GroceryItem from '../components/GroceryItem';
 import NumericInput from 'react-native-numeric-input';
 import {useQuery} from '@apollo/client';
-import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID} from '../graphql/queries';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/RootStackParamList';
-import { RouteProp } from '@react-navigation/native';
+import {
+  GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID,
+  GET_ITEM_BY_ID,
+} from '../graphql/queries';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import {RouteProp} from '@react-navigation/native';
 
 export interface ListProp {
-    navigation: StackNavigationProp<RootStackParamList, 'ShoppingListView'>;
-    route: RouteProp<RootStackParamList, 'ShoppingListView'>;
-    style?: ViewStyle | Array<ViewStyle> | undefined;
+  navigation: StackNavigationProp<RootStackParamList, 'ShoppingListView'>;
+  route: RouteProp<RootStackParamList, 'ShoppingListView'>;
+  style?: ViewStyle | Array<ViewStyle> | undefined;
 }
 
-const ShoppingListView = () => {
-  const [shoppingSessionId, setshoppingSessionId] = useState("1");
+const ShoppingListView = ({navigation, route}: ListProp) => {
+  const [shoppingSessionId, setshoppingSessionId] = useState('1');
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
-
-  const [total, setTotal] = useState(0);
+  const [listOfItems, setlistOfItems] = React.useState(route.params);
+  console.log('Inside Shopping List View');
+  console.log(route.params);
+  const renderItem = (data: any) => <GroceryItem props={data}></GroceryItem>;
 
   return (
     <View style={styles.screen}>
@@ -47,53 +53,42 @@ const ShoppingListView = () => {
           onChangeText={text => console.log(text)}></SearchBar>
         <AddIcon></AddIcon>
       </View>
-      
-      <ScrollView contentContainerStyle={styles._container}>
-      <GroceryItem
-            idProp={"1"}
-            nameProp={"Nane"}
-            weightProp={"Weight"}
-            brandProp={"Brand"}
-            priceProp={4.20}
-            aisleProp={"1"}
-            quantityProp={1}
-            key={1}
-        >
-        </GroceryItem>
-      </ScrollView>
+      <FlatList data={route.params} renderItem={renderItem}></FlatList>
       <TouchableOpacity
-          onPress={() => {Alert.alert(
-            "Confirm Order",
-            "Please confirm that all items in your cart are correct and that you would like to check out",
+        onPress={() => {
+          Alert.alert(
+            'Confirm Order',
+            'Please confirm that all items in your cart are correct and that you would like to check out',
             [
               {
-                text: "Go back",
+                text: 'Go back',
               },
               {
-                text: "Confirm",
+                text: 'Confirm',
                 onPress: () => {
                   setOrderComplete(true);
                 },
               },
-            ]
-          );}}
+            ],
+          );
+        }}
+        style={[
+          styles.checkOut,
+          {
+            backgroundColor: '#E89023',
+            margin: 10,
+          },
+        ]}>
+        <Text
           style={[
-            styles.checkOut,
+            styles.textButton,
             {
-              backgroundColor: '#E89023',
-              margin: 10,
+              color: '#FFFFFF',
             },
           ]}>
-              <Text
-            style={[
-              styles.textButton,
-              {
-                color: '#FFFFFF',
-              },
-            ]}>
-            Check Out
-          </Text>
-        </TouchableOpacity>
+          Check Out
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

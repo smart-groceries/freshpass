@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useApolloClient} from '@apollo/client';
 import {
   View,
   Text,
@@ -7,26 +8,68 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
 
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {CommonActions, RouteProp, useIsFocused} from '@react-navigation/native';
 
-const StoreAccountScreen = () => {
-  const [data, setData] = React.useState({
-    email: 'store@gmail.com',
-    name: 'Store McStoreFace',
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, 'StoreAccount'>;
+  route: RouteProp<RootStackParamList, 'StoreAccount'>;
+};
+const StoreAccountScreen = ({route, navigation}: Props) => {
+  const [grocer, setGrocer] = React.useState({
+    account_id: route.params.grocer.account_id,
+    email: route.params.grocer.email,
+    balance: route.params.grocer.balance,
+    address: route.params.grocer.address,
+    grocer_name: route.params.grocer.grocer_name,
   });
+
+  const [logOut, setLogOut] = React.useState(false);
+
+  const client = useApolloClient();
+  useEffect(() => {
+    if (logOut) {
+      client.resetStore();
+      navigation.dispatch(
+        CommonActions.reset({index: 0, routes: [{name: 'Landing'}]}),
+      );
+    }
+    setLogOut(false);
+  }, [logOut]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setGrocer({
+        ...grocer,
+        grocer_name: route.params.grocer.grocer_name,
+      });
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    setGrocer({
+      ...grocer,
+      account_id: route.params.grocer.account_id,
+      email: route.params.grocer.email,
+      grocer_name: route.params.grocer.grocer_name,
+      balance: route.params.grocer.balance,
+      address: route.params.grocer.address,
+    });
+  }, [isFocused]);
+
   return (
     <View style={styles.container}>
-      {/* <Text style={[styles.text_header, {marginTop: 65}]}>
-        Account Settings
-      </Text> */}
       <View style={[styles.userInfo]}>
-        <Image
+        {/* <Image
           source={require('../assets/profile_photo.png')}
           style={[{borderRadius: 20, marginRight: 15}]}
-        />
+        /> */}
         <View
           style={{
             flexDirection: 'column',
@@ -34,28 +77,30 @@ const StoreAccountScreen = () => {
             justifyContent: 'center',
           }}>
           <Text style={[styles.userInfoText, {fontSize: 20, margin: 1}]}>
-            {data.name}
+            {grocer.grocer_name}
           </Text>
           <Text style={[styles.userInfoText, {fontSize: 14, margin: 1}]}>
-            {data.email}
+            {grocer.address}
           </Text>
         </View>
       </View>
-      <View style={styles.optionContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.accountEditOption}>
-          {/* <View style={[styles.accountEditOption, {marginTop: 48}]}> */}
+      <View style={[styles.optionContainer]}>
+        <TouchableOpacity
+          onPress={() => {
+            // navigation.navigate('PaymentMethods', {grocer});
+          }}
+          style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>
             <View style={styles.iconContainer}>
               <Image
                 source={require('../assets/credit_card.png')}
                 resizeMode="stretch"
-                // style={styles.icon}
               />
             </View>
 
             <View style={styles.optionTextContainer}>
               <Text style={[styles.userInfoText, {fontSize: 15}]}>
-                Payment Settings
+                Bank Information
               </Text>
               <Text
                 style={[
@@ -63,22 +108,24 @@ const StoreAccountScreen = () => {
                   {color: '#999999'},
                   {fontSize: 11},
                 ]}>
-                See currently saved Bank info
+                See currently saved bank information
               </Text>
             </View>
           </View>
           <Image source={require('../assets/chevron_pointing_right.png')} />
-          {/* </View> */}
         </TouchableOpacity>
       </View>
-      <View style={styles.optionContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.accountEditOption}>
+      <View style={[styles.optionContainer]}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('EditStoreAccount', {grocer});
+          }}
+          style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>
             <View style={styles.iconContainer}>
               <Image
                 source={require('../assets/account_icon_dark.png')}
                 resizeMode="stretch"
-                // style={styles.icon}
               />
             </View>
 
@@ -92,7 +139,7 @@ const StoreAccountScreen = () => {
                   {color: '#999999'},
                   {fontSize: 11},
                 ]}>
-                Profile, Password
+                Name, Email, Password
               </Text>
             </View>
           </View>
@@ -100,15 +147,25 @@ const StoreAccountScreen = () => {
           {/* </View> */}
         </TouchableOpacity>
       </View>
-      <View style={styles.optionContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.accountEditOption}>
+      <View style={[styles.optionContainerLogOut]}>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert('Log out', 'Are you sure you want to log out?', [
+              {text: 'Cancel', style: 'cancel'},
+              {
+                text: 'Log out',
+                style: 'default',
+                onPress: () => setLogOut(true),
+              },
+            ]);
+          }}
+          style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>
             <View style={styles.optionTextContainer}>
               <Text style={[styles.userInfoText, {fontSize: 15}]}>Log Out</Text>
             </View>
           </View>
           <Image source={require('../assets/chevron_pointing_right.png')} />
-          {/* </View> */}
         </TouchableOpacity>
       </View>
     </View>
@@ -119,7 +176,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
@@ -227,18 +284,31 @@ const styles = StyleSheet.create({
     // flexDirection: 'column',
     // justifyContent: 'center',
     // borderTopWidth: 1,
+
+    backgroundColor: '#F3F3F3',
     // borderColor: '#BBBBBB',
     width: '100%',
     // backgroundColor: 'black',
     paddingVertical: 20,
-    height: 75,
+    height: 55,
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+  },
+  optionContainerLogOut: {
+    backgroundColor: '#E89023',
+    width: '100%',
+    paddingVertical: 20,
+    height: 55,
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    marginVertical: 5,
   },
   accountEditOption: {
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    // backgroundColor: 'grey',
     height: '100%',
   },
   optionInfoContainer: {
@@ -255,7 +325,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     // backgroundColor: 'red',
-    height: '100%',
+    height: 55,
     width: '80%',
   },
   iconContainer: {

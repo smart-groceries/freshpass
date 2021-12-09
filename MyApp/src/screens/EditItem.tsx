@@ -25,18 +25,17 @@ import {GET_USER_PASSWORD_BY_USER_ID} from '../graphql/queries';
 import {UPDATE_CUSTOMER, UPDATE_ITEM_IN_STORE_CATALOG} from '../graphql/mutations';
 import Item from '../components/GroceryItem';
 
-
 type Props = {
-    // idProp: string
-    // nameProp: string
-    // weightProp: string
-    // brandProp: string
-    // priceProp: number
-    // aisleProp: string
-    // quantityProp: number
-    navigation: StackNavigationProp<RootStackParamList, 'EditItem'>;
-    route: RouteProp<RootStackParamList, 'EditItem'>;
-}
+  // idProp: string
+  // nameProp: string
+  // weightProp: string
+  // brandProp: string
+  // priceProp: number
+  // aisleProp: string
+  // quantityProp: number
+  navigation: StackNavigationProp<RootStackParamList, 'EditItem'>;
+  route: RouteProp<RootStackParamList, 'EditItem'>;
+};
 
 const EditItem = ({route,navigation}: Props) => {
     const [submitted, setSubmitted] = React.useState(false);
@@ -257,8 +256,7 @@ const EditItem = ({route,navigation}: Props) => {
 
 // };
 
-
-
+ 
 
 const styles = StyleSheet.create({
     container: {
@@ -382,8 +380,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         transform: [{scale: 2.5}],
-      },
-    });
+      },  
 
+});
 
 export default EditItem;

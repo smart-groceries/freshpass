@@ -45,7 +45,8 @@ const ShoppingLists = ({route, navigation}: Props) => {
     onError: err => {
       console.log(err);
     },
-  });  
+  });
+  
   const [addItemState,setaddItemState] = useState(false);
   useEffect(() => {
     try {
@@ -84,7 +85,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
         <SearchBar
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
-          onChangeText={text => console.log()}></SearchBar>
+          onChangeText={text => console.log(data.getShoppingListsByUserId)}></SearchBar>
         <TouchableOpacity style={styles.addContainer} onPress={() => setaddItemState(true)}>
           <Image
             style={styles.addIcon}

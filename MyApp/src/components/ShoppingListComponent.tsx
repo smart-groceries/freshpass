@@ -1,22 +1,16 @@
-import RNBounceable from '@freakycoder/react-native-bounceable';
-import * as React from 'react';
-import {RootStackParamList} from '../navigation/RootStackParamList';
-import {NavigationContainer, RouteProp} from '@react-navigation/native';
-
 import {
   View,
-  Image,
   ViewStyle,
   ImageStyle,
   StyleSheet,
-  ImageComponent,
-  AppRegistry,
   Text,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import {useState} from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
+import * as React from 'react';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+
 export interface ShoppingListProps {
   onPress?: () => void;
   ListNumber?: Number;
@@ -33,7 +27,10 @@ const ShoppingListComponent = ({navigation,props}:Props) => {
   const onPress = (name: string) => {
     setListName(name);
   };
-  console.log(props)
+
+  const[shoppingListID] = useState(props.item.shopping_list_id)
+  console.log(props.item.items)
+  
   return (
     <View style={[styles.List, {flexDirection: 'row'}]}>
       <View style={[styles.listInfoContainer, {flexDirection: 'column'}]}>
@@ -42,7 +39,7 @@ const ShoppingListComponent = ({navigation,props}:Props) => {
       </View>
       <View>
         <TouchableOpacity
-        onPress={() => navigation.navigate('ShoppingListView')}
+        onPress={() => navigation.navigate('ShoppingListView',props.item.items)}
         style={styles.button}>
           <Text>View List</Text>
         </TouchableOpacity>

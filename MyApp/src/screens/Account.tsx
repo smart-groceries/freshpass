@@ -59,28 +59,24 @@ const AccountScreen = ({route, navigation}: Props) => {
     });
   }, [isFocused]);
 
-  // useEffect(() => {
-  //   // const unsubscribe = navigation.addListener('focus', () => {
-  //   //   refetch();
-  //   // });
-  //   // return unsubscribe;
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     setUser({
-  //       ...user,
-  //       fname: route.params.user.fname,
-  //       lname: route.params.user.lname,
-  //     });
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setUser({
+        ...user,
+        fname: route.params.user.fname,
+        lname: route.params.user.lname,
+      });
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
       <View style={[styles.userInfo]}>
-        <Image
+        {/* <Image
           source={require('../assets/profile_photo.png')}
           style={[{borderRadius: 20, marginRight: 15}]}
-        />
+        /> */}
         <View
           style={{
             flexDirection: 'column',

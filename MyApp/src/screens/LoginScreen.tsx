@@ -76,7 +76,7 @@ export default function App({navigation}: Props) {
           'Make sure you are entering valid credentials.',
         );
       }
-      if (data.authn.account_id == 0) {
+      if (data?.authn?.account_id == 0) {
         setSubmitted(false);
         return Alert.alert(
           'Login Failed',
@@ -156,14 +156,46 @@ export default function App({navigation}: Props) {
           routes: [
             {
               name: 'StoreHome',
-              params: {
-                grocer: {
-                  account_id: getGrocerData.getUserById.account_id,
-                  email: getGrocerData.getUserById.email,
-                  balance: getGrocerData.getUserById.balance,
-                  address: getGrocerData.getUserById.address,
-                  grocer_name: getGrocerData.getUserById.grocer_name,
-                },
+              state: {
+                index: 0,
+                routes: [
+                  {
+                    name: 'Scanner',
+                    // ,
+                    // params: {
+                    //   user: {
+                    //     id: data.authn.account_id,
+                    //     email: data.authn.email,
+                    //     fname: data.authn.first_name,
+                    //     lname: data.authn.last_name,
+                    //   },
+                    // },
+                  },
+                  {
+                    name: 'StoreAccount',
+                    params: {
+                      grocer: {
+                        account_id: getGrocerData.getUserById.account_id,
+                        email: getGrocerData.getUserById.email,
+                        balance: getGrocerData.getUserById.balance,
+                        address: getGrocerData.getUserById.address,
+                        grocer_name: getGrocerData.getUserById.grocer_name,
+                      },
+                    },
+                  },
+                  {
+                    name: 'Catalog',
+                    params: {
+                      grocer: {
+                        account_id: getGrocerData.getUserById.account_id,
+                        email: getGrocerData.getUserById.email,
+                        balance: getGrocerData.getUserById.balance,
+                        address: getGrocerData.getUserById.address,
+                        grocer_name: getGrocerData.getUserById.grocer_name,
+                      },
+                    },
+                  },
+                ],
               },
             },
           ],

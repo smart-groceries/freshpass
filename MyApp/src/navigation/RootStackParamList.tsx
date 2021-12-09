@@ -12,16 +12,11 @@ export type RootStackParamList = {
   Login: undefined;
   Create: undefined;
   Forgot: undefined;
-  PaymentConfirm: undefined;
-  Catalog: {
-    grocer: {
-      account_id: number;
-      email: string;
-      balance: number;
-      address: string;
-      grocer_name: string;
-    };
-  }
+  PaymentConfirm: {
+      info: {
+      shoppingSessionId: any;
+    }
+  };
   Account: {
     user: {
       id: number;
@@ -30,7 +25,7 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   EditAccount: {
     user: {
       id: number;
@@ -39,7 +34,15 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-
+  Catalog: {
+    grocer:{
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    }
+  };
   GrocerCatalogItem: {
     item: {
       storeId: number
@@ -73,7 +76,7 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   AddPayment: {
     user: {
       id: number;
@@ -82,10 +85,21 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
-  OrderRejected: undefined;
-  CartView: undefined;
-  
+  OrderRejected: {
+    info: {
+      shoppingSessionId: any;
+    }
+  };
+  OrderPending: {
+    info: {
+      shoppingSessionId: any;
+    }
+  };
+  CartView: {
+    info: {
+      shoppingSessionId: string;
+    }
+  };
   Lists: {
     user: {
       id: number;
@@ -94,31 +108,51 @@ export type RootStackParamList = {
       lname: string;
     };
   };
-  
+
   ListInfo: {
     info: {
       data: [];
-    }
-  };
-
-AddItem: {
-  grocer_id: number;
-}
-
-  ShoppingListView:undefined;
-  
-  ChangePassword: {
-    user: {
-      id: number;
-      email: string;
-      fname: string;
-      lname: string;
-      password: string;
     };
   };
+  AddItemSelectionScreen: {
+    info: {
+      grocerId: string;
+      listOfItems: any;
+      shoppingSessionId: string;
+    }
+  };
+  ShoppingListView:  undefined;
+
+  AddItem: {
+    grocer_id: number;
+  };
+
+  
+  ChangePassword: {user: {id: number; password: string}};
+
   StoreLocator: undefined;
   PasswordResetLinkSent: undefined;
-  StoreHome: {
+  StoreHome: undefined;
+  StoreAccount: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
+  Scanner: undefined;
+  EditStoreAccount: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
+  Bank: {
     grocer: {
       account_id: number;
       email: string;
@@ -128,3 +162,4 @@ AddItem: {
     };
   };
 };
+
