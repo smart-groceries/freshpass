@@ -24,6 +24,9 @@ import GrocerCatalogItem from '../components/GrocerCatalogItem';
 import { RootStackParamList } from '../navigation/RootStackParamList';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/core';
+import SearchBar from '../components/SearchBar';
+import AddIcon from '../components/AddShoppingSession';
+import AddItem from './AddItem';
 
 
 export interface GrocerCatalogProp {
@@ -32,15 +35,6 @@ export interface GrocerCatalogProp {
     route: RouteProp<RootStackParamList, 'Catalog'>; 
 }
 
-const GrocerCatalog = ({navigation}: GrocerCatalogProp) => {
-  const [storeId, setstoreId] = useState('5');
-  const [catalogItemsList, setcatalogItemsList] = useState([]);
-  const {error, loading, data, refetch} = useQuery(
-    GET_ITEMS_FOR_STORE_BY_GROCER_ID,
-    {variables: {grocer_id: storeId}},
-  );
-  const [empty, setEmpty] = useState(true);
-
 const GrocerCatalog = ({navigation,route}:GrocerCatalogProp) => {
     const [storeId, setstoreId] = useState(route.params.grocer.account_id);
     const [catalogItemsList, setcatalogItemsList] = useState([
@@ -48,6 +42,7 @@ const GrocerCatalog = ({navigation,route}:GrocerCatalogProp) => {
     ])
     const {error, loading, data, refetch} = useQuery(GET_ITEMS_FOR_STORE_BY_GROCER_ID, 
         {variables: {grocer_id: storeId},
+        fetchPolicy: "network-only",
     });
     const [empty, setEmpty] = useState(true);
     
@@ -60,12 +55,28 @@ useEffect(() => {
       setEmpty(false);
       setcatalogItemsList(data.getItemsForStoreByGrocerId);
     }
+
   }, [data]);
 
+  useEffect(() => {
+  }, [catalogItemsList]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refetch();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const navigateToAddScreen = () => {
+    navigation.navigate('AddItem', {grocer_id:storeId})
+  }
   const getCatalogItemList = () => {
+
     return catalogItemsList.map(function (method, i) {
       return (
         <GrocerCatalogItem
+          storeId={storeId}
           key={method.barcode_id}
           idProp={method.barcode_id}
           nameProp={method.item_name}
@@ -74,15 +85,27 @@ useEffect(() => {
           priceProp={method.item_price}
           aisleProp={method.item_aisle}
           quantityProp={method.quantity}
-          navigation={navigation}></GrocerCatalogItem>
+          navigation={navigation}>
+          </GrocerCatalogItem>
       );
     });
   };
 
-return (<ScrollView contentContainerStyle={styles._container}>
-    {getCatalogItemList()}
-  </ScrollView>);
+return (
+    <View style={styles.screen}>
+      <View style={styles.sectionContainer}>
+      <SearchBar
+        placeholder="Search"
+        onPress={() => Alert.alert('onPress')}
+        onChangeText={text => console.log(text)}></SearchBar>
+      <AddIcon navigateToAddScreen={navigateToAddScreen}></AddIcon>
+    </View>
 
+    <ScrollView contentContainerStyle={styles._container}>
+      {getCatalogItemList()}
+    </ScrollView>
+    </View>
+ );
 };
 const styles = StyleSheet.create({
     screen: {
@@ -130,5 +153,5 @@ const styles = StyleSheet.create({
       fontFamily: 'VarelaRound-Regular',
     },
   });
-}
+
 export default GrocerCatalog;

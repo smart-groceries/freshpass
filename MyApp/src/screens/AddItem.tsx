@@ -21,13 +21,15 @@ import {ApolloError, useMutation, useQuery} from '@apollo/client';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {ADD_ITEM_TO_STORE_CATALOG, CREATE_ACCOUNT, CREATE_NEW_ITEM} from '../graphql/mutations';
 import {AUTHENTICATE} from '../graphql/queries';
+import { RouteProp } from '@react-navigation/core';
 
 //ADD CORRECT NAVIGATION LATER
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, 'AddItem'>;
+    route: RouteProp<RootStackParamList, 'AddItem'>;
   };
 
-const AddItem = ({navigation}: Props) => {
+const AddItem = ({navigation,route}: Props) => {
     const [submitted, setSubmitted] = React.useState(false);
   
     const [createNewItem, createNewItemResult] = useMutation(CREATE_NEW_ITEM, {
@@ -43,6 +45,7 @@ const AddItem = ({navigation}: Props) => {
       });
 
       const [item, setItem] = React.useState({
+        storeId: route.params.grocer_id,
         barcode_id: 0,
         item_maker: '',
         item_name: '',
@@ -69,22 +72,24 @@ const AddItem = ({navigation}: Props) => {
           console.log(createNewItemResult.error);
         }
         
-        // try {
-        //     addItemToCatalog({
-        //     variables: {
-        //         barcode_id: item.barcode_id,
-        //         //store_id: $store_id,
-        //         item_aisle: item.item_aisle,
-        //         item_price: item.item_price,
-        //         quantity: item.item_quantity
-        //     },
+      }
+      const AddItemToCatalog = () => {
+        try {
+            addItemToCatalog({
+            variables: {
+                barcode_id: item.barcode_id,
+                store_id: item.storeId,
+                item_aisle: item.item_aisle,
+                item_price: item.item_price,
+                quantity: item.item_quantity
+            },
             
-        //   });
-        // } catch {}
-        // while (addItemToCatalogResult.loading) {}
-        // if (addItemToCatalogResult.error) {
-        //   console.log(addItemToCatalogResult.error);
-        // }
+          });
+        } catch {}
+        while (addItemToCatalogResult.loading) {}
+        if (addItemToCatalogResult.error) {
+          console.log(addItemToCatalogResult.error);
+        }
       }
 
       useEffect( () => {
@@ -93,10 +98,7 @@ const AddItem = ({navigation}: Props) => {
 
       return (
     <View style={submitted ? styles.containerLoading : styles.container}>
-        <Image
-            //style = {styles.image}
-            source={require('./../assets/macncheese.png')}/>
-
+      
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
 
@@ -209,6 +211,25 @@ const AddItem = ({navigation}: Props) => {
                 })
               }
             />
+        </View>
+
+          </View>
+
+          <View style={styles.action}>
+          <Text style={[styles.text_footer]}>Item Price</Text>
+          <View style={styles.inputView}>
+            <TextInput
+              placeholder="Item Price"
+              placeholderTextColor="#003f5c"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={val =>
+                setItem({
+                  ...item,
+                  item_price: +val,
+                })
+              }
+            />
           </View>
 
         </View>
@@ -217,6 +238,9 @@ const AddItem = ({navigation}: Props) => {
           <TouchableOpacity
             onPress={() => {
                 createItem()
+                AddItemToCatalog()
+                navigation.pop()
+                
             }}
             style={[
               styles.signIn,

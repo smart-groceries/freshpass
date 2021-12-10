@@ -62,7 +62,10 @@ const Item :FC<Props> = ({storeId,idProp, nameProp, weightProp, brandProp, price
       }
       )
     }, []);
+    
+
     return(
+        
         <View style={styles.GroceryItemContainer}>
                 <View style={styles.LeftContainer} >
                     <Text style={styles.itemTitle}>{item.name}</Text>

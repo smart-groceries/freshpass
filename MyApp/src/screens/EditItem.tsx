@@ -24,6 +24,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {GET_USER_PASSWORD_BY_USER_ID} from '../graphql/queries';
 import {UPDATE_CUSTOMER, UPDATE_ITEM_IN_STORE_CATALOG} from '../graphql/mutations';
 import Item from '../components/GroceryItem';
+import getImageUrl from '../utils/images';
 
 type Props = {
   // idProp: string
@@ -39,7 +40,7 @@ type Props = {
 
 const EditItem = ({route,navigation}: Props) => {
     const [submitted, setSubmitted] = React.useState(false);
-
+    
     const [item, setItem] = React.useState({
         storeId: route.params.item.storeId,
         id: route.params.item.id,
@@ -77,22 +78,39 @@ const EditItem = ({route,navigation}: Props) => {
         }
     }
 
-    console.log('QUANTITY: ' + item.quantity)
-    console.log(item)
+    const [imageUrl, setImageUrl] = React.useState("");
+
+    React.useEffect(() => {
+      getImageUrl("item", item.id)
+      .then(data => {
+        const result = data;
+        setImageUrl(result.toString());
+        console.log(imageUrl);
+      }
+      )
+    }, []);
+    
+    console.log("IMAGE URL:")
+    console.log(imageUrl)
     return (
-        <View style={submitted ? styles.containerLoading : styles.container}>
-            <Image
-                //style = {styles.image}
-                source={require('./../assets/macncheese.png')}/>
+        <View>
+            <View style={styles.ItemPicContainer}>
+                    <Image
+                        style={styles.image}
+                        resizeMode="contain"
+                        source={{uri: imageUrl}}>
+                    </Image>
+                </View>
     
           <StatusBar backgroundColor="#009387" barStyle="light-content" />
           <ScrollView contentContainerStyle={styles.scrollContainer}>
     
             <View style={styles.action}>
-              <Text style={[styles.text_footer]}>Barcode Id</Text>
+              <Text style={[styles.text_footer]}>Item Id</Text>
               <View style={styles.inputView}>
                 <TextInput
-                  placeholder="Barcode ID"
+                  editable = {false}
+                  placeholder={item.id}
                   placeholderTextColor="#003f5c"
                   style={styles.textInput}
                   autoCapitalize="none"
@@ -107,10 +125,10 @@ const EditItem = ({route,navigation}: Props) => {
             </View>
     
             <View style={styles.action}>
-              <Text style={[styles.text_footer]}>Item Brand</Text>
+              <Text style={[styles.text_footer]}>Item Quantity</Text>
               <View style={styles.inputView}>
                 <TextInput
-                  placeholder="Item Quantity"
+                  placeholder={item.quantity.toString()}
                   placeholderTextColor="#003f5c"
                   style={styles.textInput}
                   autoCapitalize="none"
@@ -120,17 +138,17 @@ const EditItem = ({route,navigation}: Props) => {
                       quantity: +val,
                     })
                   }
-                />
+                >{item.quantity}</TextInput>
               </View>
     
             </View>
     
             <View style={styles.action}>
-              <Text style={[styles.text_footer]}>Item Title</Text>
+              <Text style={[styles.text_footer]}>Item Aisle</Text>
               <View style={styles.inputView}>
                 <TextInput
-                  placeholder="Item Aisle"
-                  placeholderTextColor="#003f5c"
+                //   placeholder={item.aisle}
+                //   placeholderTextColor="#003f5c"
                   style={styles.textInput}
                   autoCapitalize="none"
                   onChangeText={val =>
@@ -139,17 +157,17 @@ const EditItem = ({route,navigation}: Props) => {
                       aisle: val,
                     })
                   }
-                />
+                >{item.aisle}</TextInput>
               </View>
     
             </View>
     
             <View style={styles.action}>
-              <Text style={[styles.text_footer]}>Item Weight</Text>
+              <Text style={[styles.text_footer]}>Item Price</Text>
               <View style={styles.inputView}>
-                <TextInput
-                  placeholder="Item Price"
-                  placeholderTextColor="#003f5c"
+                <TextInput 
+                  //placeholder={item.price.toString()}
+                  //placeholderTextColor="#003f5c"
                   style={styles.textInput}
                   autoCapitalize="none"
                   onChangeText={val =>
@@ -158,7 +176,9 @@ const EditItem = ({route,navigation}: Props) => {
                       price: +val,
                     })
                   }
-                />
+                >
+                    {item.price}
+                </TextInput>
               </View>
     
             </View>
@@ -167,7 +187,10 @@ const EditItem = ({route,navigation}: Props) => {
             <View style={styles.button}>
               <TouchableOpacity
                 onPress={() => {
-                    EditItemWrapperFunc('item_price', item.price)
+                    EditItemWrapperFunc('quantity', item.quantity);
+                    EditItemWrapperFunc('item_price', item.price);
+                    EditItemWrapperFunc('item_aisle', item.aisle);
+                    navigation.pop();
                 }}
                 style={[
                   styles.signIn,
@@ -185,7 +208,7 @@ const EditItem = ({route,navigation}: Props) => {
                       color: '#FFFFFF',
                     },
                   ]}>
-                  Add Item
+                  Edit Item
                 </Text>
               </TouchableOpacity>
             </View>
@@ -381,6 +404,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         transform: [{scale: 2.5}],
       },  
+      ItemPicContainer:{
+        flex:1,
+        alignContent:'flex-end',
+        justifyContent:'flex-end',
+        backgroundColor:'transparent',
+    },
+    image:{
+        flex:1,
+        width: 125,
+        height: 125,
+        alignSelf:'flex-end'
+    }
 
 });
 

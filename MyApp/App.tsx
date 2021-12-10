@@ -52,6 +52,7 @@ import BarcodeScanner from './src/screens/BarcodeScanner';
 import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
 import BankAccountScreen from './src/screens/BankAccount';
 import TestStartSession from './src/screens/TestStartSession';
+import AddItem from './src/screens/AddItem';
 // import {StripeProvider} from '@stripe/stripe-react-native';
 
 // home screens with nav bar
@@ -255,6 +256,11 @@ export default function App() {
               name="Bank"
               component={BankAccountScreen}
               options={{title: 'Bank Account Information'}}
+            />
+            <Stack.Screen
+              name="AddItem"
+              component={AddItem}
+              options={{title: 'Add Item To Catalog'}}
             />
           </Stack.Navigator>
         </NavigationContainer>

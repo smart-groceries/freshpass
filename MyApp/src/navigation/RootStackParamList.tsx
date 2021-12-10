@@ -121,6 +121,8 @@ export type RootStackParamList = {
       shoppingSessionId: string;
     }
   };
+
+  
   ShoppingListView:  undefined;
 
   AddItem: {
