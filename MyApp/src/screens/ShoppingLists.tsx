@@ -45,7 +45,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
     variables: {id: user.id},
   });
   // getLists({ variables: {id: user.id} })    
-  console.log(getListsResult.data.getShoppingListCartByID[0])
+  // console.log(getListsResult.data.getShoppingListCartByID)
   const [mutateFunction, createShoppingResult] = useMutation(CREATE_SHOPPING_LIST, {
     onError: err => {
       console.log(err);
