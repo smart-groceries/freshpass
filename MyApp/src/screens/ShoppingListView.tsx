@@ -1,59 +1,255 @@
-import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
-  Button,
   TouchableOpacity,
-  Dimensions,
-  TextInput,
-  Platform,
   StyleSheet,
   ScrollView,
-  StatusBar,
-  ScrollViewBase,
   ViewStyle,
   Alert,
-  FlatList,
 } from 'react-native';
-import FilterIcon from '../components/Filter';
-import AddIcon from '../components/Add';
+import React, {useEffect, useState} from 'react';
+import AddIcon from '../components/AddShoppingSession';
 import SearchBar from '../components/SearchBar';
-import GroceryItem from '../components/GroceryItem';
-import NumericInput from 'react-native-numeric-input';
-import {useQuery} from '@apollo/client';
-import {
-  GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID,
-  GET_ITEM_BY_ID,
-} from '../graphql/queries';
+import {useQuery, useMutation} from '@apollo/client';
+import {GET_ITEMS_FOR_SHOPPING_SESSION_BY_ID, GET_SHOPPING_SESSION_BY_ID, GET_GROCER_BY_ID, GET_CUSTOMER_BY_ID, GET_SHOPPING_LISTS_BY_USER_ID} from '../graphql/queries';
+import {REMOVE_ITEM_IN_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_SESSION, UPDATE_ITEM_IN_STORE_CATALOG, UPDATE_SHOPPING_SESSION, ADD_ITEM_TO_SHOPPING_LIST, REMOVE_ITEM_IN_SHOPPING_LIST} from '../graphql/mutations';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../navigation/RootStackParamList';
 import {RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../navigation/RootStackParamList';
+import ShoppingListItem from '../components/ShoppingListItem';
 
-export interface ListProp {
+export interface CartProp {
+  style?: ViewStyle | Array<ViewStyle> | undefined;
   navigation: StackNavigationProp<RootStackParamList, 'ShoppingListView'>;
   route: RouteProp<RootStackParamList, 'ShoppingListView'>;
-  style?: ViewStyle | Array<ViewStyle> | undefined;
 }
 
-const ShoppingListView = ({navigation, route}: ListProp) => {
-  const [shoppingSessionId, setshoppingSessionId] = useState('1');
+const ShoppingListView = ({route, navigation}: CartProp) => {
+  console.log("SHOPPINGLISTVIEW "+ route.params)
+  const [shoppingListID, setShoppingListID] = useState(route.params);
+  const [customerId, setCustomerId] = useState("1");
   const [empty, setEmpty] = useState(true);
   const [orderComplete, setOrderComplete] = useState(false);
-  const [listOfItems, setlistOfItems] = React.useState(route.params);
-  console.log('Inside Shopping List View');
-  console.log(route.params);
-  const renderItem = (data: any) => <GroceryItem props={data}></GroceryItem>;
+  const [listOfItems, setlistOfItems] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [grocer, setGrocer] = useState("");
+  const [updateTotal, setUpdateTotal] = useState(false);
+
+  const {error,loading, data} = useQuery(GET_SHOPPING_LISTS_BY_USER_ID, {
+      variables: {id: shoppingListID},
+      pollInterval: 1000
+  });
+  const [deleteFunction, removeItemsResult] = useMutation(REMOVE_ITEM_IN_SHOPPING_LIST, {
+      onError: err => {
+        console.log(err);
+      },
+  });
+  const [addFunction, addItemResult] = useMutation(ADD_ITEM_TO_SHOPPING_LIST, {
+      onError: err => {
+        console.log(err);
+      },
+  });
+  // const [setSessionStateFunction, setSessionStateFunctionResult] = useMutation(UPDATE_SHOPPING_SESSION, {
+  //   onError: err => {
+  //     console.log(err);
+  //   },
+  // });
+  const getGrocerResult = useQuery(GET_CUSTOMER_BY_ID, {
+    variables: {id: customerId}
+  });
+  useEffect(() => {
+    if (getGrocerResult.data?.getUserById == undefined) {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setGrocer(getGrocerResult.data.getUserById);
+    }
+  }, [getGrocerResult.data]);
+
+  // useEffect(() => {
+  //   if(orderComplete==true)  {
+  //     navigation.navigate('OrderPending', {info: {shoppingSessionId}});
+  //     try {
+  //       setSessionStateFunction({
+  //         variables: {
+  //           new_value: "2",
+  //           field_name: "state_id",
+  //           shopping_session_id: shoppingSessionId,
+  //         },
+  //       });
+  //     } catch {}
+  //     while (setSessionStateFunctionResult.loading) {}
+  //     if (setSessionStateFunctionResult.error) {
+  //       console.log(setSessionStateFunctionResult.error);
+  //     }
+  //   }
+  //   setOrderComplete(false);
+  // }, [orderComplete]);
+
+  useEffect(() => {
+    if (data == undefined) {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setlistOfItems(data.getShoppingListsByUserId[0].items);
+      console.log(data.getShoppingListsByUserId[0].items);
+    }
+  }, [data]);
+
+
+  useEffect(() => {
+    setUpdateTotal(true);
+  }, [listOfItems]);
+
+  useEffect(() => {
+    if (updateTotal == true) {
+      var newTotal = 0
+      for (var element in listOfItems)  {
+        newTotal += (listOfItems[element].quantity) * (listOfItems[element].item_price);
+      }
+      newTotal = +newTotal.toFixed(2);
+      setTotal(newTotal);
+    }
+    setUpdateTotal(false);
+  }, [updateTotal]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // data.refetch();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const updateQuantity = (id: any, newQuantity: number) => {
+    var listOfItemsCopy = listOfItems;
+    var position = 0;
+    for (var element in listOfItemsCopy)  {
+      if (listOfItemsCopy[element].barcode_id == id) {
+        position = +element;
+      }
+    }
+    listOfItemsCopy[position].quantity = newQuantity
+    setlistOfItems(listOfItemsCopy);
+    setUpdateTotal(true);
+  }
+
+  const navigateToAddScreen = () => {
+    navigation.navigate('AddItemSelectionScreen', {info: {grocerId: customerId, listOfItems, shoppingSessionId: shoppingListID}})
+  }
+
+  const addItem = (
+    id: any,
+    aisle: string,
+    brand: string,
+    name: string,
+    price: number,
+    weight: string,
+  ) => {
+    var newItem = {
+      __typename: "Item",
+      barcode_id: id,
+      item_aisle: aisle,
+      item_brand: brand,
+      item_name: name,
+      item_price: price,
+      item_weight: weight,
+      quantity: 1
+    }
+    var listOfItemsCopy = listOfItems;
+    listOfItemsCopy.push(newItem);
+    setlistOfItems(listOfItemsCopy);
+
+    try {
+      addFunction({
+        variables: {
+          barcode_id: id,
+          quantity: "1",
+          shopping_list_id: shoppingListID,
+        },
+      });
+    } catch {}
+    while (addItemResult.loading) {}
+    if (addItemResult.error) {
+      console.log(addItemResult.error);
+    }
+  }
+
+  const deleteItem = (id: any) => {
+    var listOfItemsCopy = listOfItems;
+    var position = 0;
+    for (var element in listOfItemsCopy)  {
+      if (listOfItemsCopy[element].barcode_id == id){
+        position = +element;
+      }
+    }
+    listOfItemsCopy.splice(position,1);
+    setlistOfItems(listOfItemsCopy);
+    setUpdateTotal(true);
+
+    try {
+      deleteFunction({
+        variables: {
+          barcode_id: id,
+          shopping_session_id: shoppingListID,
+        },
+      });
+    } catch {}
+    while (removeItemsResult.loading) {}
+    if (removeItemsResult.error) {
+      console.log(removeItemsResult.error);
+    }
+  }
+
+
+  const getListOfItems = () => {
+    return listOfItems.map(function (item, i) {
+      return (
+          <ShoppingListItem
+            shoppingSessionId={shoppingListID}
+              itemIdProp={item.barcode_id}
+              nameProp={item.item_name}
+              weightProp={item.item_weight}
+              brandProp={item.item_brand}
+              priceProp={item.item_price}
+              aisleProp={item.item_aisle}
+              quantityProp={item.quantity}
+              removeFunction={deleteItem}
+              updateTotalFunction={updateQuantity}
+              key={item.barcode_id}
+          >
+          </ShoppingListItem>
+      );
+    });
+  };
 
   return (
     <View style={styles.screen}>
+      <View style={styles.titleSectionContainer}>
+          <Text style={styles.title}>Shopping List {shoppingListID}</Text>
+          <Text style={styles.instructionText}>{grocer.grocer_name} - {grocer.address}</Text>
+      </View>
       <View style={styles.sectionContainer}>
         <SearchBar
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
           onChangeText={text => console.log(text)}></SearchBar>
-        <AddIcon></AddIcon>
+        <AddIcon navigateToAddScreen={navigateToAddScreen}></AddIcon>
       </View>
-      <FlatList data={route.params} renderItem={renderItem}></FlatList>
+
+      <ScrollView contentContainerStyle={styles._container}>
+        {getListOfItems()}
+      </ScrollView> 
+      <View style={styles.totalContainer}>
+        <View style={styles.LeftContainer} >
+            <Text style={styles.leftTotalAmount}>Total </Text>
+        </View>
+        <View style={styles.MiddleContainer}>
+        </View>
+        <View style={styles.RightContainer}>  
+            <Text style={styles.dollarSignTotalAmount}>$ </Text>
+            <Text style={styles.rightTotalAmount}>{total} </Text>
+        </View>
+      </View>
       <TouchableOpacity
         onPress={() => {
           Alert.alert(
@@ -132,11 +328,69 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 12,
     left: 25,
+    marginBottom: 60
   },
   textButton: {
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'VarelaRound-Regular',
+  },
+  totalContainer:{
+    backgroundColor:'transparent',
+    flexDirection:"row",
+    fontFamily: 'VarelaRound-Regular',
+    paddingBottom: 8,
+    paddingTop: 8,
+    paddingLeft: 35,
+    paddingRight: 35
+  },
+  LeftContainer:{
+    flex:1,  
+    backgroundColor:'transparent',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  MiddleContainer:{
+    flexDirection:'row'
+  },
+  RightContainer:{
+    flexDirection: 'row'
+  },
+  leftTotalAmount: {
+      flex: 1,
+      fontSize: 24,
+      color: '#424347',
+      fontFamily: 'VarelaRound-Regular',
+  },
+  dollarSignTotalAmount: {
+    fontSize: 24,
+    color: '#424347',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  rightTotalAmount: {
+    fontSize: 24,
+    color: '#424347',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  title: {
+    marginTop: 60,
+    fontSize: 42,
+    color: '#424347',
+    fontFamily: 'VarelaRound-Regular'
+  },
+  instructionText: {
+    fontSize: 13,
+    color: '#BBBBBB',
+    fontFamily: 'VarelaRound-Regular',
+    marginTop: 7,
+    marginBottom: 7
+  },
+  titleSectionContainer: {
+    marginTop: 5,
+    paddingHorizontal: 20,
+    flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'space-between',
+    //alignItems: 'flex-start',
   },
 });
 

@@ -45,6 +45,7 @@ const EditAccountInfoScreen = ({route, navigation}: Props) => {
     GET_USER_PASSWORD_BY_USER_ID,
     {
       variables: {id: user.id},
+      pollInterval: 1000,
     },
   );
 

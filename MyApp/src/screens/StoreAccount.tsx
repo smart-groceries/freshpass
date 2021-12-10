@@ -87,7 +87,7 @@ const StoreAccountScreen = ({route, navigation}: Props) => {
       <View style={[styles.optionContainer]}>
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate('PaymentMethods', {grocer});
+            navigation.navigate('Bank', {grocer});
           }}
           style={styles.accountEditOption}>
           <View style={styles.optionInfoContainer}>
