@@ -85,7 +85,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
         <SearchBar
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
-          onChangeText={text => console.log(data.getShoppingListsByUserId)}></SearchBar>
+          onChangeText={text => console.log(data.getShoppingListsByUserId[0].items)}></SearchBar>
         <TouchableOpacity style={styles.addContainer} onPress={() => setaddItemState(true)}>
           <Image
             style={styles.addIcon}

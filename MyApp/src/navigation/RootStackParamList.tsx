@@ -73,7 +73,17 @@ export type RootStackParamList = {
       shoppingSessionId: any;
     };
   };
+  GrocerOrderCompletion: {
+    info: {
+      shoppingSessionId: any;
+    };
+  };
   CartView: {
+    info: {
+      shoppingSessionId: string;
+    };
+  };
+  EmployerCartView: {
     info: {
       shoppingSessionId: string;
     };
@@ -99,7 +109,11 @@ export type RootStackParamList = {
       shoppingSessionId: string;
     };
   };
-  ShoppingListView: undefined;
+  ShoppingListView: {
+    info: {
+      shoppingListId: string;
+    };
+  };
 
   ChangePassword: {user: {id: number; password: string}};
   StoreLocator: undefined;
