@@ -13,9 +13,9 @@ export type RootStackParamList = {
   Create: undefined;
   Forgot: undefined;
   PaymentConfirm: {
-      info: {
+    info: {
       shoppingSessionId: any;
-    }
+    };
   };
   Account: {
     user: {
@@ -34,17 +34,39 @@ export type RootStackParamList = {
       lname: string;
     };
   };
+  Catalog: {
+    grocer:{
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    }
+  };
+  GrocerCatalogItem: {
+    item: {
+      storeId: number
+      id: string
+      name: string
+      weight: string
+      brand: string
+      price: number
+      aisle: string
+      quantity: number
+    }
+  };
 
   EditItem: {
     item: {
-      id: string;
-      name: string;
-      weight: string;
-      brand: string;
-      price: number;
-      aisle: string;
-      quantity: number;
-    };
+      storeId: number
+      id: string
+      name: string
+      weight: string
+      brand: string
+      price: number
+      aisle: string
+      quantity: number
+    }
   };
   PaymentMethods: {
     user: {
@@ -66,27 +88,27 @@ export type RootStackParamList = {
   OrderRejected: {
     info: {
       shoppingSessionId: any;
-    }
+    };
   };
   OrderPending: {
     info: {
       shoppingSessionId: any;
-    }
+    };
   };
   GrocerOrderCompletion: {
     info: {
       shoppingSessionId: any;
-    }
+    };
   };
   CartView: {
     info: {
       shoppingSessionId: string;
-    }
+    };
   };
   EmployerCartView: {
     info: {
       shoppingSessionId: string;
-    }
+    };
   };
   Lists: {
     user: {
@@ -107,15 +129,23 @@ export type RootStackParamList = {
       grocerId: string;
       listOfItems: any;
       shoppingSessionId: string;
-    }
+    };
   };
-  ShoppingListView:  {
+  ShoppingListView: {
     info: {
       shoppingListId: string;
-    }
+    };
   };
 
+  
+
+  AddItem: {
+    grocer_id: number;
+  };
+
+  
   ChangePassword: {user: {id: number; password: string}};
+
   StoreLocator: undefined;
   PasswordResetLinkSent: undefined;
   StoreHome: undefined;
@@ -147,4 +177,14 @@ export type RootStackParamList = {
       grocer_name: string;
     };
   };
+  AddBank: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
 };
+

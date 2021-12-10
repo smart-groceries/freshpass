@@ -13,9 +13,10 @@ import {
 
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
-import {useQuery} from '@apollo/client';
+import {RouteProp, useIsFocused} from '@react-navigation/native';
+import {useMutation, useQuery} from '@apollo/client';
 import {GET_BANK_INFO_BY_ID} from '../graphql/queries';
+import {DELETE_BANK_INFO} from '../graphql/mutations';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Bank'>;
@@ -24,36 +25,82 @@ type Props = {
 
 const BankAccountScreen = ({route, navigation}: Props) => {
   const [grocer, setGrocer] = useState({
-    id: route.params.grocer.account_id,
+    account_id: route.params.grocer.account_id,
     email: route.params.grocer.email,
     balance: route.params.grocer.balance,
     address: route.params.grocer.address,
     grocer_name: route.params.grocer.grocer_name,
   });
 
-  const {data, loading, error} = useQuery(GET_BANK_INFO_BY_ID, {
-    variables: {account_id: grocer.id},
+  const {data, loading, error, refetch} = useQuery(GET_BANK_INFO_BY_ID, {
+    variables: {account_id: grocer.account_id},
+    pollInterval: 1000,
   });
 
-  const [bankInfo, setBankInfo] = useState([
-    {account_number: 0, route_number: 0},
-  ]);
+  const [bankInfo, setBankInfo] = useState({
+    account_number: '',
+    route_number: '',
+  });
+
+  const [
+    deleteCard,
+    {error: deleteCardError, loading: deleteCardLoading, data: deleteCardData},
+  ] = useMutation(DELETE_BANK_INFO, {
+    onError: err => {
+      console.log(err);
+    },
+  });
 
   const [empty, setEmpty] = useState(true);
+  useEffect(() => {
+    if (data?.getBankInfoByID[0] == undefined) {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+      setBankInfo({
+        account_number: data.getBankInfoByID[0].account_number,
+        route_number: data.getBankInfoByID[0].routing_number,
+      });
+    }
+  }, [data]);
 
+  useEffect(() => {}, [bankInfo]);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    refetch();
+  }, [useIsFocused]);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     refetch();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
+
+  const obscureBankNumber = (text: string) => {
+    // const hiddenPart = text.slice(0, -4);
+    // const visible = text.slice(-4);
+    const hidden = Array.from(text).map(char => {
+      return '*';
+    });
+    // hidden.push(visible);
+    return hidden;
+  };
   return (
     <View style={loading ? styles.mainContainerLoading : styles.mainContainer}>
       {empty ? (
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scroll}>
             <View>
-              <Text style={styles.headerText}>Add Payment Methods</Text>
+              <Text style={styles.headerText}>Add Bank Account</Text>
               <TouchableOpacity
                 style={styles.paymentMethod}
-                // onPress={() => navigation.navigate('AddPayment', {user})}
-              >
+                onPress={() => navigation.navigate('AddBank', {grocer})}>
                 <View style={styles.paymentTextContainer}>
-                  <Text style={styles.userInfoText}>Add payment method</Text>
+                  <Text style={styles.userInfoText}>
+                    Add Bank Account Information
+                  </Text>
                 </View>
                 <Image
                   source={require('../assets/chevron_pointing_right.png')}></Image>
@@ -64,23 +111,47 @@ const BankAccountScreen = ({route, navigation}: Props) => {
       ) : (
         <View style={styles.mainContainer}>
           <ScrollView contentContainerStyle={styles.scroll}>
-            <Text style={styles.headerText}>Saved Payment Methods</Text>
-            {/* {paymentMethods()} */}
-            <View>
-              <View>
-                <Text style={styles.headerText}>Add Payment Methods</Text>
-                <TouchableOpacity
-                  style={styles.paymentMethod}
-                  // onPress={() => navigation.navigate('AddPayment', {user})}
-                >
-                  <View style={styles.paymentTextContainer}>
-                    <Text style={styles.userInfoText}>Add payment method</Text>
-                  </View>
-                  <Image
-                    source={require('../assets/chevron_pointing_right.png')}></Image>
-                </TouchableOpacity>
+            <Text style={styles.headerText}>
+              Saved Bank Account Information
+            </Text>
+            <TouchableOpacity
+              style={styles.paymentMethod}
+              onLongPress={() => {
+                Alert.alert(
+                  'Delete Payment Method?',
+                  'Do you want to delete this payment method?',
+                  [
+                    {
+                      text: 'Yes',
+                      style: 'default',
+                      onPress: () => {
+                        deleteCard({
+                          variables: {
+                            account_number: bankInfo.account_number,
+                            routing_number: bankInfo.route_number,
+                          },
+                        });
+                        Alert.alert(
+                          'Deleted Successfully',
+                          'Payment method was deleted successfully.',
+                        );
+                      },
+                    },
+                    {text: 'No', style: 'cancel'},
+                  ],
+                );
+              }}>
+              <View style={styles.paymentTextContainer}>
+                <Text style={styles.userInfoText}>
+                  Routing Number: {bankInfo.route_number}
+                </Text>
+                <Text style={styles.userInfoText}>
+                  Account Number: {obscureBankNumber(bankInfo.account_number)}
+                </Text>
               </View>
-            </View>
+              <Image
+                source={require('../assets/chevron_pointing_right.png')}></Image>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       )}

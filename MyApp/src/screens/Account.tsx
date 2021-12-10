@@ -59,16 +59,16 @@ const AccountScreen = ({route, navigation}: Props) => {
     });
   }, [isFocused]);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setUser({
-        ...user,
-        fname: route.params.user.fname,
-        lname: route.params.user.lname,
-      });
-    });
-    return unsubscribe;
-  }, [navigation]);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     setUser({
+  //       ...user,
+  //       fname: route.params.user.fname,
+  //       lname: route.params.user.lname,
+  //     });
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   return (
     <View style={styles.container}>

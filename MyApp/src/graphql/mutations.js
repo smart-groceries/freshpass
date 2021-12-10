@@ -351,7 +351,7 @@ export const UPDATE_ITEM_IN_STORE_CATALOG = gql`
       field_name: $field_name, 
       name: "updateIteminStoreCatalog",
       new_value: $new_value, 
-      tore_id: $store_id
+      store_id: $store_id
     ) {
         message
     }

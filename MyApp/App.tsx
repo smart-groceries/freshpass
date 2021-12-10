@@ -54,6 +54,8 @@ import BarcodeScanner from './src/screens/BarcodeScanner';
 import EditStoreAccountScreen from './src/screens/EditStoreAccountInfo';
 import BankAccountScreen from './src/screens/BankAccount';
 import TestStartSession from './src/screens/TestStartSession';
+import AddItem from './src/screens/AddItem';
+import AddBankAccountScreen from './src/screens/AddBankAccount';
 import GrocerFetchOrder from './src/screens/GrocerFetchOrder';
 // import {StripeProvider} from '@stripe/stripe-react-native';
 
@@ -87,7 +89,7 @@ function HomeTabs() {
       })}>
       <Tab.Screen name="Account" component={AccountScreen} />
 
-      <Tab.Screen name="Stores" component={TestStartSession} />
+      <Tab.Screen name="Stores" component={StoreLocator} />
 
       <Tab.Screen
         name="Lists"
@@ -260,6 +262,12 @@ export default function App() {
               options={{title: 'Bank Account Information'}}
             />
             <Stack.Screen
+              name="AddItem"
+              component={AddItem}
+              options={{title: 'Add Item To Catalog'}}
+              name="AddBank"
+            />
+            <Stack.Screen
               name="EmployerCartView"
               component={EmployerCartView}
               options={{headerShown: false}}
@@ -269,6 +277,12 @@ export default function App() {
               component={GrocerOrderCompletion}
               options={{headerShown: false}}
             />
+            <Stack.Screen
+              component={AddBankAccountScreen}
+              options={{headerShown: true}}
+              name= 'Add Bank Account Information'
+            />
+            
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>

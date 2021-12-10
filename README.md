@@ -66,6 +66,8 @@ npm install aws-appsync-auth-link --legacy-peer-deps
 npm install apollo-link-http --legacy-peer-deps
 npm install react-native-google-places-autocomplete
 npm install aws-sdk
+npm install react-native-camera --save
+react-native link react-native-camera
 ```
 ### Connecting to the backend
 We are using GraphQL to send queries to our backend, which is set up to recieve these calls through AWS AppSync and to be handled by AWS Lambda.
