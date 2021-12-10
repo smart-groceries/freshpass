@@ -27,6 +27,7 @@ import { RouteProp } from '@react-navigation/core';
 import SearchBar from '../components/SearchBar';
 import AddIcon from '../components/AddShoppingSession';
 import AddItem from './AddItem';
+import { useIsFocused } from '@react-navigation/native';
 
 
 export interface GrocerCatalogProp {
@@ -46,27 +47,23 @@ const GrocerCatalog = ({navigation,route}:GrocerCatalogProp) => {
     });
     const [empty, setEmpty] = useState(true);
     
-    
 
-useEffect(() => {
-    if (data?.getItemsForStoreByGrocerId[0] == undefined) {
-      setEmpty(true);
-    } else {
-      setEmpty(false);
-      setcatalogItemsList(data.getItemsForStoreByGrocerId);
-    }
+    const isFocused = useIsFocused();
 
-  }, [data]);
-
-  useEffect(() => {
-  }, [catalogItemsList]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    useEffect(() => {
       refetch();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    }, [isFocused]);
+
+    useEffect(() => {
+        if (data?.getItemsForStoreByGrocerId[0] == undefined) {
+          setEmpty(true);
+        } else {
+          setEmpty(false);
+          setcatalogItemsList(data.getItemsForStoreByGrocerId);
+        }
+
+      }, [data]);
+
 
   const navigateToAddScreen = () => {
     navigation.navigate('AddItem', {grocer_id:storeId})

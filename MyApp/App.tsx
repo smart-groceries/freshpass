@@ -89,7 +89,7 @@ function HomeTabs() {
       })}>
       <Tab.Screen name="Account" component={AccountScreen} />
 
-      <Tab.Screen name="Stores" component={StoreLocator} />
+      <Tab.Screen name="Stores" component={TestStartSession} />
 
       <Tab.Screen
         name="Lists"
@@ -265,7 +265,6 @@ export default function App() {
               name="AddItem"
               component={AddItem}
               options={{title: 'Add Item To Catalog'}}
-              name="AddBank"
             />
             <Stack.Screen
               name="EmployerCartView"

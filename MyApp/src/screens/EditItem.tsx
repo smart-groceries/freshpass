@@ -34,6 +34,7 @@ type Props = {
   // priceProp: number
   // aisleProp: string
   // quantityProp: number
+  
   navigation: StackNavigationProp<RootStackParamList, 'EditItem'>;
   route: RouteProp<RootStackParamList, 'EditItem'>;
 };
@@ -190,6 +191,7 @@ const EditItem = ({route,navigation}: Props) => {
                     EditItemWrapperFunc('quantity', item.quantity);
                     EditItemWrapperFunc('item_price', item.price);
                     EditItemWrapperFunc('item_aisle', item.aisle);
+                    
                     navigation.pop();
                 }}
                 style={[

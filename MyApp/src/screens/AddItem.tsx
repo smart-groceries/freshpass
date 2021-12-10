@@ -237,9 +237,9 @@ const AddItem = ({navigation,route}: Props) => {
         <View style={styles.button}>
           <TouchableOpacity
             onPress={() => {
-                createItem()
-                AddItemToCatalog()
-                navigation.pop()
+                createItem();
+                AddItemToCatalog();
+                navigation.pop();
                 
             }}
             style={[
