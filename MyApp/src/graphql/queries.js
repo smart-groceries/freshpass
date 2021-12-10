@@ -106,6 +106,17 @@ export const GET_ITEMS_FOR_STORE_BY_GROCER_ID = gql`
     }
 `;
 
+export const GET_NEWEST_SHOPPING_SESSION_BY_USER_ID = gql`
+    query MyQuery($account_id: Int!) {
+        getNewestShoppingSessionByUserId(name: "getNewestShoppingSessionByUserId", account_id: $account_id) {
+        account_id
+        shopping_session_id
+        state_id
+        store_id
+        }
+    }
+`;
+
 export const GET_SHOPPING_LISTS_BY_USER_ID = gql`
     query MyQuery($id: ID!) {
         getShoppingListsByUserId(name: "getShoppingListsByUserId", id: $id) {

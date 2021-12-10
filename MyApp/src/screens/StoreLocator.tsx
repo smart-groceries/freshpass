@@ -1,10 +1,14 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import MapView, {Callout, Marker} from 'react-native-maps';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Dimensions, Alert} from 'react-native';
 import {renderToStringWithData} from '@apollo/client/react/ssr';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/RootStackParamList';
+import { ConfigurationServicePlaceholders } from 'aws-sdk/lib/config_service_placeholders';
+import { CREATE_SHOPPING_SESSION } from '../graphql/mutations';
+import { GET_NEWEST_SHOPPING_SESSION_BY_USER_ID } from '../graphql/queries';
+import {useQuery, useMutation} from '@apollo/client';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'StoreLocator'>;
@@ -25,8 +29,48 @@ export default function StoreLocator({navigation}: Props) {
     description: 'My Store',
     geometry: {location: {lat: 33.7635316460389, lng: -118.1158628065532}},
   };
-
   const GOOGLE_PLACES_API_KEY = 'AIzaSyC_eCHatI834lJ-pvFs9qxjSS-Bu-iFVQE';
+  const [startSession, setStartSession] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
+  const [shoppingSessionId, setShoppingSessionId] = useState("1");
+  const [createFunction, createFunctionResult] = useMutation(CREATE_SHOPPING_SESSION, {
+    onError: err => {
+      console.log(err);
+    },
+  });
+  const getShoppingSessionResult = useQuery(GET_NEWEST_SHOPPING_SESSION_BY_USER_ID, {
+    variables: {account_id: "1"}
+  });
+
+
+  /*useEffect(() => {
+      if (getShoppingSessionResult.data?.getNewestShoppingSessionByUserId == undefined) {
+
+      } else {
+        setShoppingSessionId(getShoppingSessionResult.data.getNewestShoppingSessionByUserId.shopping_session_id)
+      }
+      setSessionReady(false);
+  }, [getShoppingSessionResult.data]);*/
+
+  useEffect(() => {
+    if(startSession==true)  {
+        try {
+          createFunction({
+            variables: {
+              account_id: "1",
+              store_id: "5"
+            },
+          });
+        } catch {}
+        while (createFunctionResult.loading) {}
+        if (createFunctionResult.error) {
+          console.log(createFunctionResult.error);
+        }
+
+        navigation.navigate('CartView', {info: {shoppingSessionId: shoppingSessionId}});
+      }
+    setStartSession(false);
+  }, [startSession]);
 
   return (
     <View style={styles.container}>
@@ -67,7 +111,23 @@ export default function StoreLocator({navigation}: Props) {
           longitude: -118.1141,
           latitudeDelta: 0.015,
           longitudeDelta: 0.04,
-        }}>
+        }}
+        onCalloutPress={() => {Alert.alert(
+          "Start Order",
+          "Please confirm that you would like to start a shopping session at this location",
+          [
+            {
+              text: "Go back",
+            },
+            {
+              text: "Confirm",
+              onPress: () => {
+                setStartSession(true);
+              },
+            },
+          ]
+        );}}
+        >
         <Marker
           coordinate={{
             latitude: 33.76151900699398,
@@ -76,20 +136,6 @@ export default function StoreLocator({navigation}: Props) {
           image={require('./../assets/store_icon.png')}>
           <Callout>
             <Text style={styles.storename}>6290 Pacific Coast Hwy</Text>
-          </Callout>
-        </Marker>
-        <Marker
-          coordinate={{
-            latitude: 33.79385160286719,
-            longitude: -118.14131296720306,
-          }}
-          image={require('./../assets/store_icon.png')}
-
-          // navigate to initialize session screen
-          // onPress={() => navigation.navigate('Landing')}
-        >
-          <Callout>
-            <Text style={styles.storename}>1930 N. Lakewood Blvd</Text>
           </Callout>
         </Marker>
       </MapView>

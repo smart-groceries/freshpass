@@ -107,6 +107,7 @@ export type RootStackParamList = {
       grocerId: string;
       listOfItems: any;
       shoppingSessionId: string;
+      isGrocer: boolean;
     }
   };
   ShoppingListView:  undefined;
