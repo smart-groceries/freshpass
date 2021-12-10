@@ -279,9 +279,8 @@ export default function App() {
             <Stack.Screen
               component={AddBankAccountScreen}
               options={{headerShown: true}}
-              name= 'Add Bank Account Information'
+              name="Add Bank Account Information"
             />
-            
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>

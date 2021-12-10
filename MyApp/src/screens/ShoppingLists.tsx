@@ -22,8 +22,8 @@ import ShoppingListComponent from '../components/ShoppingListComponent';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
-import {useMutation, useQuery} from '@apollo/client';
-import {GET_SHOPPING_LISTS_BY_USER_ID} from '../graphql/queries';
+import {useLazyQuery, useMutation, useQuery} from '@apollo/client';
+import {GET_SHOPPING_LISTS_BY_USER_ID, GET_SHOPPING_LIST_CART_BY_ID} from '../graphql/queries';
 import { CREATE_SHOPPING_LIST } from '../graphql/mutations';
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Lists'>;
@@ -41,6 +41,11 @@ const ShoppingLists = ({route, navigation}: Props) => {
   const { error,loading, data} = useQuery(GET_SHOPPING_LISTS_BY_USER_ID, {
     variables: {id: user.id},
   });
+  const [getLists,getListsResult] = useLazyQuery(GET_SHOPPING_LIST_CART_BY_ID,{
+    variables: {id: user.id},
+  });
+  // getLists({ variables: {id: user.id} })    
+  // console.log(getListsResult.data.getShoppingListCartByID)
   const [mutateFunction, createShoppingResult] = useMutation(CREATE_SHOPPING_LIST, {
     onError: err => {
       console.log(err);
@@ -48,6 +53,10 @@ const ShoppingLists = ({route, navigation}: Props) => {
   });
   
   const [addItemState,setaddItemState] = useState(false);
+  useEffect(() =>{
+    getLists({ variables: {id: user.id} })
+  },[data]);
+  
   useEffect(() => {
     try {
       mutateFunction({
@@ -61,6 +70,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
       console.log(createShoppingResult.error);
     }
   }, [addItemState]);
+
 
 
   if (loading) {
@@ -85,7 +95,7 @@ const ShoppingLists = ({route, navigation}: Props) => {
         <SearchBar
           placeholder="Search"
           onPress={() => Alert.alert('onPress')}
-          onChangeText={text => console.log(data.getShoppingListsByUserId[0].items)}></SearchBar>
+          onChangeText={text => console.log(data.getShoppingListsByUserId)}></SearchBar>
         <TouchableOpacity style={styles.addContainer} onPress={() => setaddItemState(true)}>
           <Image
             style={styles.addIcon}
