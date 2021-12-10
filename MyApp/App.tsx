@@ -138,7 +138,7 @@ function StoreHomeTabs() {
       <Tab.Screen
         name="Catalog"
         component={GrocerCatalog}
-        options={{headerTitle: 'Shopping Lists'}}
+        options={{headerTitle: 'Catalog'}}
       />
     </Tab.Navigator>
   );
