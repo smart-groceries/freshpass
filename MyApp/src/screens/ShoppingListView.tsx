@@ -251,38 +251,40 @@ const ShoppingListView = ({route, navigation}: CartProp) => {
         </View>
       </View>
       <TouchableOpacity
-          onPress={() => {Alert.alert(
-            "Confirm Order",
-            "Please confirm that all items in your cart are correct and that you would like to check out",
+        onPress={() => {
+          Alert.alert(
+            'Confirm Order',
+            'Please confirm that all items in your cart are correct and that you would like to check out',
             [
               {
-                text: "Go back",
+                text: 'Go back',
               },
               {
-                text: "Confirm",
+                text: 'Confirm',
                 onPress: () => {
                   setOrderComplete(true);
                 },
               },
-            ]
-          );}}
+            ],
+          );
+        }}
+        style={[
+          styles.checkOut,
+          {
+            backgroundColor: '#E89023',
+            margin: 10,
+          },
+        ]}>
+        <Text
           style={[
-            styles.checkOut,
+            styles.textButton,
             {
-              backgroundColor: '#E89023',
-              margin: 10,
+              color: '#FFFFFF',
             },
           ]}>
-              <Text
-            style={[
-              styles.textButton,
-              {
-                color: '#FFFFFF',
-              },
-            ]}>
-            Check Out
-          </Text>
-        </TouchableOpacity>
+          Check Out
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

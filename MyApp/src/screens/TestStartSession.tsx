@@ -35,7 +35,7 @@ const TestStartSession = ({navigation}: CartProp) => {
   const [shoppingSessionId, setshoppingSessionId] = useState("1");
   return (
       <TouchableOpacity
-          onPress={() => {navigation.navigate('CartView', {info: { shoppingSessionId}})}}
+          onPress={() => {navigation.navigate('EmployerCartView', {info: { shoppingSessionId}})}}
           style={[
             styles.checkOut,
             {

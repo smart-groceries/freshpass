@@ -73,7 +73,17 @@ export type RootStackParamList = {
       shoppingSessionId: any;
     }
   };
+  GrocerOrderCompletion: {
+    info: {
+      shoppingSessionId: any;
+    }
+  };
   CartView: {
+    info: {
+      shoppingSessionId: string;
+    }
+  };
+  EmployerCartView: {
     info: {
       shoppingSessionId: string;
     }
