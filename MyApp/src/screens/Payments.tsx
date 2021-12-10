@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useIsFocused} from '@react-navigation/native';
 import {useMutation, useQuery} from '@apollo/client';
 import {GET_CARD_INFO_BY_USER_ID} from '../graphql/queries';
 import {DELETE_CARD_INFO} from '../graphql/mutations';
@@ -42,6 +42,7 @@ const Payments = ({route, navigation}: Props) => {
   const [empty, setEmpty] = useState(true);
   const {error, loading, data, refetch} = useQuery(GET_CARD_INFO_BY_USER_ID, {
     variables: {account_id: user.id},
+    pollInterval: 1000,
   });
 
   const [
@@ -64,12 +65,18 @@ const Payments = ({route, navigation}: Props) => {
 
   useEffect(() => {}, [paymentMethod]);
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      refetch();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    refetch();
+  }, [isFocused]);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     refetch();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   // query to get payment info for user
   // const {error, loading, data} = useQuery();

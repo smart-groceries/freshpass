@@ -13,7 +13,7 @@ import {
 
 import {RootStackParamList} from '../navigation/RootStackParamList';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useIsFocused} from '@react-navigation/native';
 import {useMutation, useQuery} from '@apollo/client';
 import {GET_BANK_INFO_BY_ID} from '../graphql/queries';
 import {DELETE_BANK_INFO} from '../graphql/mutations';
@@ -66,12 +66,17 @@ const BankAccountScreen = ({route, navigation}: Props) => {
 
   useEffect(() => {}, [bankInfo]);
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      refetch();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    refetch();
+  }, [useIsFocused]);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     refetch();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   const obscureBankNumber = (text: string) => {
     // const hiddenPart = text.slice(0, -4);

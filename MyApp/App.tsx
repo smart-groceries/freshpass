@@ -88,7 +88,7 @@ function HomeTabs() {
       })}>
       <Tab.Screen name="Account" component={AccountScreen} />
 
-      <Tab.Screen name="Stores" component={TestStartSession} />
+      <Tab.Screen name="Stores" component={StoreLocator} />
 
       <Tab.Screen
         name="Lists"
