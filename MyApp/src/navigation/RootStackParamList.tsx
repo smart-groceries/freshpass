@@ -129,6 +129,7 @@ export type RootStackParamList = {
       grocerId: string;
       listOfItems: any;
       shoppingSessionId: string;
+      isGrocer: boolean;
     };
   };
   ShoppingListView: {
@@ -136,9 +137,6 @@ export type RootStackParamList = {
       shoppingListId: string;
     };
   };
-
-  
-
   AddItem: {
     grocer_id: number;
   };
