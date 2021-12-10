@@ -50,6 +50,7 @@ const AccountScreen = ({route, navigation}: Props) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
+    console.log('here');
     setUser({
       ...user,
       id: route.params.user.id,
@@ -60,6 +61,7 @@ const AccountScreen = ({route, navigation}: Props) => {
   }, [isFocused]);
 
   useEffect(() => {
+    console.log('here2');
     const unsubscribe = navigation.addListener('focus', () => {
       setUser({
         ...user,

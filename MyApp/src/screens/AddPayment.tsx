@@ -78,7 +78,7 @@ export default function AddPayment({route, navigation}: Props) {
       if (error) {
         return Alert.alert('Error', 'Could Not Add Card Information');
       }
-      console.log(route.params.user.id);
+      // console.log(route.params.user.id);
       navigation.navigate('PaymentMethods', {
         user: {
           id: route.params.user.id,

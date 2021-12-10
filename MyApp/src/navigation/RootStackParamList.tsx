@@ -13,9 +13,9 @@ export type RootStackParamList = {
   Create: undefined;
   Forgot: undefined;
   PaymentConfirm: {
-      info: {
+    info: {
       shoppingSessionId: any;
-    }
+    };
   };
   Account: {
     user: {
@@ -66,17 +66,17 @@ export type RootStackParamList = {
   OrderRejected: {
     info: {
       shoppingSessionId: any;
-    }
+    };
   };
   OrderPending: {
     info: {
       shoppingSessionId: any;
-    }
+    };
   };
   CartView: {
     info: {
       shoppingSessionId: string;
-    }
+    };
   };
   Lists: {
     user: {
@@ -97,9 +97,9 @@ export type RootStackParamList = {
       grocerId: string;
       listOfItems: any;
       shoppingSessionId: string;
-    }
+    };
   };
-  ShoppingListView:  undefined;
+  ShoppingListView: undefined;
 
   ChangePassword: {user: {id: number; password: string}};
   StoreLocator: undefined;
@@ -125,6 +125,15 @@ export type RootStackParamList = {
     };
   };
   Bank: {
+    grocer: {
+      account_id: number;
+      email: string;
+      balance: number;
+      address: string;
+      grocer_name: string;
+    };
+  };
+  AddBank: {
     grocer: {
       account_id: number;
       email: string;
