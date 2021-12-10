@@ -99,7 +99,11 @@ export type RootStackParamList = {
       shoppingSessionId: string;
     }
   };
-  ShoppingListView:  undefined;
+  ShoppingListView:  {
+    info: {
+      shoppingListId: string;
+    }
+  };
 
   ChangePassword: {user: {id: number; password: string}};
   StoreLocator: undefined;

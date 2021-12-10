@@ -27,10 +27,7 @@ const ShoppingListComponent = ({navigation,props}:Props) => {
   const onPress = (name: string) => {
     setListName(name);
   };
-
-  const[shoppingListID] = useState(props.item.shopping_list_id)
-  console.log(props.item.items)
-  
+  const[shoppingListID] = useState(props.item.shopping_list_id)  
   return (
     <View style={[styles.List, {flexDirection: 'row'}]}>
       <View style={[styles.listInfoContainer, {flexDirection: 'column'}]}>
@@ -39,7 +36,7 @@ const ShoppingListComponent = ({navigation,props}:Props) => {
       </View>
       <View>
         <TouchableOpacity
-        onPress={() => navigation.navigate('ShoppingListView',props.item.items)}
+        onPress={() => navigation.navigate('ShoppingListView',props.item.shopping_list_id)}
         style={styles.button}>
           <Text>View List</Text>
         </TouchableOpacity>
