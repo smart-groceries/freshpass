@@ -265,7 +265,6 @@ export default function App() {
               name="AddItem"
               component={AddItem}
               options={{title: 'Add Item To Catalog'}}
-              name="AddBank"
             />
             <Stack.Screen
               name="EmployerCartView"
@@ -280,9 +279,8 @@ export default function App() {
             <Stack.Screen
               component={AddBankAccountScreen}
               options={{headerShown: true}}
-              name= 'Add Bank Account Information'
+              name="Add Bank Account Information"
             />
-            
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>
