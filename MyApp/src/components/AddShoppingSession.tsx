@@ -63,10 +63,10 @@ export default class AddIcon extends React.Component<AddIconProps> {
           <MenuTrigger>{this.renderAddIcon()}</MenuTrigger>
           <MenuOptions>
             <MenuOption onSelect = {() => {this.props.navigateToAddScreen()}}>
-              <Text style={styles.menuText}> Add Item Through Catalog</Text>
+              <Text style={styles.menuText}>Add Item Through Catalog</Text>
             </MenuOption>
             <MenuOption>
-              <Text style={styles.menuText}>Farthest</Text>
+              <Text style={styles.menuText}>Add Item Through Barcode </Text>
             </MenuOption>
           </MenuOptions>
         </Menu>

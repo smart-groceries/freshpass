@@ -133,7 +133,11 @@ function StoreHomeTabs() {
         options={{headerTitle: 'Account', title: 'Account'}}
       />
 
-      <Tab.Screen name="Scanner" component={BarcodeScanner} />
+      <Tab.Screen
+        name="Scanner"
+        component={GrocerFetchOrder}
+        options={{headerTitle: 'Get Order'}}
+      />
 
       <Tab.Screen
         name="Catalog"

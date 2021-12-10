@@ -34,6 +34,7 @@ type Props = {
 
 const AddItemSelectionScreen = ({route, navigation}: Props) => {
     const [knownItems, setKnownItems] = useState(route.params.info.listOfItems);
+    const [isGrocer, setIsGrocer] = useState(route.params.info.isGrocer);
     const [shoppingSessionId, setShoppingSessionId] = useState(route.params.info.shoppingSessionId);
     const [grocerId, setGrocerId] = useState(route.params.info.grocerId);
     const [empty, setEmpty] = useState(true);
@@ -105,7 +106,11 @@ const AddItemSelectionScreen = ({route, navigation}: Props) => {
       }, [getItemsResult.data]);
       
     const navigateToCart = () => {
-      navigation.navigate('CartView', {info: {shoppingSessionId}})
+      if (isGrocer) {
+        navigation.navigate('EmployerCartView', {info: {shoppingSessionId}})
+      } else {
+        navigation.navigate('CartView', {info: {shoppingSessionId}})
+      }
     }
 
     const getListOfItems = () => {

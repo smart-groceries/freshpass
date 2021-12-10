@@ -172,7 +172,7 @@ const CartView = ({route, navigation}: CartProp) => {
   }
 
   const navigateToAddScreen = () => {
-    navigation.navigate('AddItemSelectionScreen', {info: {grocerId, listOfItems, shoppingSessionId}})
+    navigation.navigate('AddItemSelectionScreen', {info: {grocerId, listOfItems, shoppingSessionId, isGrocer: true}})
   }
 
   const addItem = (
