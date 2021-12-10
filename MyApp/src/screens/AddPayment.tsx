@@ -78,15 +78,22 @@ export default function AddPayment({route, navigation}: Props) {
       if (error) {
         return Alert.alert('Error', 'Could Not Add Card Information');
       }
-      // console.log(route.params.user.id);
-      navigation.navigate('PaymentMethods', {
-        user: {
-          id: route.params.user.id,
-          email: route.params.user.email,
-          fname: route.params.user.fname,
-          lname: route.params.user.lname,
+      Alert.alert('Card Added', 'Card has been added successfully.', [
+        {
+          text: 'Ok',
+          style: 'default',
+          onPress: () => navigation.pop(),
         },
-      });
+      ]);
+      // console.log(route.params.user.id);
+      // navigation.navigate('PaymentMethods', {
+      //   user: {
+      //     id: route.params.user.id,
+      //     email: route.params.user.email,
+      //     fname: route.params.user.fname,
+      //     lname: route.params.user.lname,
+      //   },
+      // });
       // return Alert.alert(
       //   'Created',
       //   data.addCardInfo.message,

@@ -55,7 +55,17 @@ const AddBankAccountScreen = ({route, navigation}: Props) => {
       if (error) {
         return Alert.alert('Error', 'Could not add Bank Account Information');
       }
-      navigation.navigate('Bank', {grocer});
+      Alert.alert(
+        'Bank Account Added',
+        'Bank Account has been added successfully.',
+        [
+          {
+            text: 'Ok',
+            style: 'default',
+            onPress: () => navigation.pop(),
+          },
+        ],
+      );
     }
   }, [bankAccountInfo]);
 

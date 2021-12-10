@@ -34,6 +34,7 @@ const BankAccountScreen = ({route, navigation}: Props) => {
 
   const {data, loading, error, refetch} = useQuery(GET_BANK_INFO_BY_ID, {
     variables: {account_id: grocer.account_id},
+    pollInterval: 1000,
   });
 
   const [bankInfo, setBankInfo] = useState({
