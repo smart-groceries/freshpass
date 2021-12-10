@@ -138,6 +138,33 @@ export default function StoreLocator({navigation}: Props) {
             <Text style={styles.storename}>6290 Pacific Coast Hwy</Text>
           </Callout>
         </Marker>
+        <Marker
+          coordinate={{
+            latitude: 33.79385160286719,
+            longitude: -118.14131296720306,
+          }}
+          image={require('./../assets/store_icon.png')}
+
+          // navigate to initialize session screen
+          // onPress={() => navigation.navigate('Landing')}
+        >
+          <Callout>
+            <Text style={styles.storename}>1930 N. Lakewood Blvd</Text>
+          </Callout>
+        </Marker>
+        <Marker
+          coordinate={{
+            latitude: 33.77194470671316,
+            longitude: -118.15747808465352,
+          }}
+          image={require('./../assets/store_icon.png')}>
+          <Callout>
+            <Text style={styles.storename}>2930 E 4th St</Text>
+          </Callout>
+        </Marker>
+        <Marker
+        coordinate={{latitude: region.latitude, longitude: region.longitude}}>
+        </Marker>
       </MapView>
     </View>
   );

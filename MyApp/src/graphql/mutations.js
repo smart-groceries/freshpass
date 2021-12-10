@@ -306,7 +306,7 @@ export const UPDATE_ITEM_IN_SHOPPING_LIST = gql`
     $barcode_id: Int!,
     $field_name: String!,
     $new_value: String!,
-    $shopping_list_id: Int
+    $shopping_list_id: Int!
   ) {
     updateItemInShoppingList(
       barcode_id: $barcode_id,
@@ -351,7 +351,7 @@ export const UPDATE_ITEM_IN_STORE_CATALOG = gql`
       field_name: $field_name, 
       name: "updateIteminStoreCatalog",
       new_value: $new_value, 
-      tore_id: $store_id
+      store_id: $store_id
     ) {
         message
     }
