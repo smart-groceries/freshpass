@@ -73,7 +73,7 @@ const GrocerOrderCompletion = ({navigation}: Props) => {
       </View>
       <RNBounceable
         style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.navigate('StoreHome')}>
         <Text style={styles.buttonText}>Exit</Text>
       </RNBounceable>
     </View>
